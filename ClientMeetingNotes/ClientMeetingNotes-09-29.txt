@@ -1,0 +1,33 @@
+Client Meeting Notes
+(Week of September 27, 2021)
+
+Introductions were made
+
+There are 3 main user groups: Teacher/Instructor/Professor, Student and Teaching Assistant.
+-These users can be grouped together into classes:
+	-Instructor can be involved in multiple classes(Only one per class)
+	-Students(Only one class for now?)(possible multiple classes in future?)
+	-Teaching Assistants(Only one class for now)
+
+The primary aim for this software is to facilitate students applying different ethical theories to individual case studies.
+	-Student has to be able to use multiple theories to explain one case study.
+	-There will be mutiple case studies available.
+	-A report will be genereated based upon the student replies on an individual basis.
+
+There should be the option for a mobile option in the future.
+	-should decide on a framework that will allow this easily
+	-discussions will be had to determine whether this will be inside the scope of this project.
+	
+There are concerns over privacy and security of the information stored in the database for this project
+	-Servers have to be Canadian hosted
+	-Follow FIPA requirements
+	-requirements of Okangan College have to be met
+	-security of access to the database as well as accounts has to be up to par
+
+Non-essential features:
+	-lesson tool
+	-lesson activities
+	-allow the tool to be generalizable so that other professor/instructors/teachers can use it for different courses and course structures
+
+ 
+
