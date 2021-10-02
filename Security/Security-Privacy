@@ -1,0 +1,30 @@
+The security of a websites information is crucial and there are 
+specific regulations in place as per the Canadian Centre for Cyber 
+security. The link to the entire PDF of Baseline Cyber Security 
+Controls for Small and Medium Organizations can be found below:
+https://cyber.gc.ca/en/guidance/baseline-cyber-security-controls-small-and-medium-organizations
+
+The OWASP (Open Web Application Security Project) has created
+the Application Security Verification Standard that proposes 
+a list of security requirements and controls for web applications
+The link to their website is below:
+https://owasp.org/
+
+OWASP offers a security API that protects against 
+Broken obeject level authorization
+Broken user authentication
+Excessive data exposure
+Lack of resources and rate limiting 
+Broken function level authorization
+Mass assignment 
+Security misconfiguration
+Injection
+Improper assets management 
+Insufficient logging and monitoring 
+https://owasp.org/www-project-api-security/
+
+Some other security APIs also include
+MCAM Authentication 
+OAuth
+Postman 
+SoapUI 
