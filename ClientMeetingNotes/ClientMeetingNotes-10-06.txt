@@ -1,0 +1,15 @@
+Client Meeting Notes
+(Week of October 4, 2021)
+
+We discussed the progress that we made this week, just stating that each of us had our own explorations that we had to do in different areas of the project.
+
+It was agreed that we won't use the time meeting with Dr. Lowe-Walker to discuss the changes this week as we will reserve the time for questions about the project impeding progress.
+
+We will leave the changes and improvements to teh milestones that we will be providing.
+
+Web hosting:
+	-The biggest issue that we had this week was that we weren't sure how the database for this project will be hosted
+	-The web hosting that we have been provided with will be from okanaganbcwebhosting.ca
+	-The domain name is https://www.lowe-walker.org/
+	-We tried to find out whether we would be able to use the framework we were planning on using by asking Dr. Lowe-Walker about what they gave her as options but weren't able to get everything straight.
+	-It is currently set up for c-panel but we may be able to change this or work with this
