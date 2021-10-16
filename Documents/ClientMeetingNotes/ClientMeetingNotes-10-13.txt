@@ -1,0 +1,18 @@
+Client Meeting Notes
+(Week of October 11, 2021)
+
+We had four questions this week:
+
+-Should the TA's and the instructors both have acces to the exact same report?
+	-yes
+-Will the student have to fill the entire dashboard everytime in its entirety?
+	-No
+-Should the student havce the option to only use one or two ethical theories?
+	-Yes, as there may be assignments that focus on one theory or contrasting two theories.
+-Can the students save halfway through and return to finish there work later?
+	-yes (possible auto-save feature)
+
+Our client had a few tasks for us to complete that will be beneficial to her and the projects future:
+-We should find a secure way to allow only the students in the course to be able to sign up to the dashboard, possibly through some sort of email, or class link.
+-We have to come up with a description for and an expected workload for a job that would be maintaining the app going forward.
+-We need to try to come up with a way to incorporate the 2nd term class of this winter session taught by Dr Lowe-Walker. We can use them as testers and have them run through an assignment on the dashboard.
