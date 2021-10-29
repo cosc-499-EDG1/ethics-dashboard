@@ -1,4 +1,4 @@
-import { Table, Column, Model, PrimaryKey, Scopes, DefaultScope, CreatedAt, UpdatedAt, DataType, Unique, AutoIncrement } from 'sequelize-typescript';
+import { Table, Column, Model, PrimaryKey, Scopes, DefaultScope, CreatedAt, UpdatedAt, DataType, Unique, AutoIncrement, Default } from 'sequelize-typescript';
 import { Blob } from 'buffer';
 
 // DefaultScope does not include 'password'
@@ -32,11 +32,15 @@ export default class Account extends Model<Account> {
     @Column
     password: string;
 
+    @Default('student')
     @Column
     type: AccountType;
 
     @Column(DataType.BLOB('long'))
-    avatar: Blob;
+    get avatar(): Blob {
+        return this.getDataValue('avatar') ?? 
+        `https://ui-avatars.com/api/?name=${this.getDataValue('first_name')}+${this.getDataValue('last_name')}&background=random`;
+    }
 
     @CreatedAt
     @Column

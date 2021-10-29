@@ -30,7 +30,7 @@ class AccountController {
         const { username, email, password } = req.body;
         //TODO: Check for duplicate username/email.
         const passwordHash = await bcrypt.hash(password, bcrypt.genSaltSync(10));
-        const account = new Account({ ...req.body, password: passwordHash });
+        const account = new Account({ ...req.body, type: 'student', password: passwordHash });
         account
             .save()
             .then(async () => {
