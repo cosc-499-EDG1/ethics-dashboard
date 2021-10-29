@@ -21,8 +21,15 @@ We have two separate runtimes in this project, node-src is for the backend frame
 
 1. Open `node-src` in the terminal.
 2. Run `npm install` to install node.
-3. Run the node application with `node index.js` in the terminal.
+3. Run the node application with `node build/index.js` in the terminal.
 4. If you get SequelizeConnectionError: Unknown database 'cosc499', use MySQL Workbench or DBForge to create the `cosc499` schema.
+
+Guide for using SequelizeTS: https://www.npmjs.com/package/sequelize-typescript
+
+#### Running Node Tests
+1. Open `node-src` in the terminal.
+2. Run `npm run test` to run the tests.
+3. If you have database errors, make sure you don't have any other instance of the app running.
 
 ### Running React Application
 
