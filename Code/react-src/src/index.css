@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.App {
+  @apply h-screen;
+}
+
 .site-main {
-  @apply min-h-screen bg-blue-500 flex items-center justify-center;
+  @apply flex-col h-screen pt-16 bg-blue-500 flex items-center justify-center;
 }
 
 .navbar-link {
