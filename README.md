@@ -35,5 +35,6 @@ Guide for using SequelizeTS: https://www.npmjs.com/package/sequelize-typescript
 
 1. Open `react-src` in the terminal.
 2. Run `npm install` to install dependencies.
-3. Run the react dev environment with `npm start` in the terminal.
-4. In the future, run `npm test` to run the tests.
+3. Run `npm install -D tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9` to install TailwindCSS
+4. Run the react dev environment with `npm start` in the terminal.
+5. In the future, run `npm test` to run the tests.
