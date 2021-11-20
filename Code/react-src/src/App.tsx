@@ -5,6 +5,8 @@ import PrivateRoute from "./components/functional-components/privateroute.compon
 import Home from "./components/home/home";
 import Navbar from "./components/navbar";
 import Stakeholders from "./components/stakeholders/stakeholders";
+import UtilitarianismOptions from "./components/utilitarianism/utilitarianism-options";
+import UtilitarianismStakeholders from "./components/utilitarianism/utilitarianism-stakeholders";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
             <div>Dashboard Component</div>
           </Route>
           <Route path="/stakeholders" component={Stakeholders} />
+          <Route path="/utilitarianism-options" component={UtilitarianismOptions} />
+          <Route path="/utilitarianism-stakeholders" component={UtilitarianismStakeholders} />
           <PrivateRoute
             authed={true} // TODO: Replace with isLoggedIn function
             exact

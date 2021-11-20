@@ -11,7 +11,7 @@
 }
 
 .site-dashboard {
-  @apply flex-col h-screen bg-yellow-100 flex;
+  @apply flex-col bg-yellow-100 flex;
 }
 
 .dashboard-title {
@@ -26,8 +26,12 @@
   @apply text-3xl bg-white rounded-lg w-2/3 p-3;
 }
 
-.stakeholder-entry {
+.dashboard-entry {
   @apply px-20 pt-10 w-full justify-center border-none;
+}
+
+.dashboard-drag {
+  @apply mx-20 my-5 px-5 pt-5 w-11/12 justify-center border-black border-2;
 }
 
 .navbar-link {
@@ -41,3 +45,4 @@
     @apply bg-gray-900 text-white p-4;
   }
 }
+
