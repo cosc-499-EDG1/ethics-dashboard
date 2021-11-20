@@ -1,11 +1,12 @@
-import { useStoreActions } from "easy-peasy";
 import { FunctionComponent, useEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
+import { useStoreActions, useStoreState } from "../../stores/main.store";
 
 interface HomeProps {}
 
 const Home: FunctionComponent<HomeProps> = () => {
-  const login = useStoreActions((actions: MainModel) => actions.login);
+  const login = useStoreActions((actions) => actions.login);
+  const isLoggedIn = useStoreState((state) => state.isLoggedIn);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -45,6 +46,11 @@ const Home: FunctionComponent<HomeProps> = () => {
             {errorMessage && (
               <div className="text-red-500 text-center italic font-bold">
                 {errorMessage}
+              </div>
+            )}
+            {isLoggedIn && (
+              <div className="text-green-500 text-center italic font-bold">
+                You are already logged in!
               </div>
             )}
             <div className="mb-4">

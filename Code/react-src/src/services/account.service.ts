@@ -1,7 +1,7 @@
 import http from '../helpers/http';
 
 class AccountService {
-    login(data: { email: string, password: string }) {
+    login<T>(data: LoginData): Promise<T> {
         return http.post('/account/login', data);
     }
 }
