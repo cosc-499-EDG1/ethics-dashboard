@@ -27,7 +27,7 @@ export const initApp = async (): Promise<Server> => {
     await db.sync({ force: true });
 
     /* Routes */
-    app.use('/api/accounts', accounts);
+    app.use('/api/account', accounts);
     /* End Routes */
 
     const PORT = process.env.PORT || 8080;
