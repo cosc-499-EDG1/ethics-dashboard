@@ -1,13 +1,37 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { Link } from "react-router-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { textChangeRangeIsUnchanged } from "typescript";
 
 interface UtilitarianismStakeholdersProps {}
 
+const stakeholderItems = [
+    {
+        id: '0',
+        option: 'Option 1',
+        optionName: 'Option 1 (Inputed from Ethical Issues page)',
+    },
+    {
+        id: '1',
+        option: 'Option 2',
+        optionName: 'Option 2 (Inputed from Ethical Issues page)',
+    }
+];
+
 const UtilitarianismStakeholders: FunctionComponent<UtilitarianismStakeholdersProps> = () => {
-    return(
+    const [stakeholders, updateStakeholders] = useState(stakeholderItems);
+
+    function handleOnDragEnd(result: any) {
+        if (!result.destination) return;
+        const items = Array.from(stakeholders);
+        const [reorderedItem] = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, reorderedItem);
+
+        updateStakeholders(items);
+    }
+    return (
         <div className="site-dashboard">
-            <DragDropContext onDragEnd={(...props)=>{console.log(props)}}>
+            <DragDropContext onDragEnd={handleOnDragEnd}>
                 <div className="dashboard-title">
                     <div className="dashboard-title-text">
                         <h1>Utilitarianism</h1>
@@ -28,24 +52,30 @@ const UtilitarianismStakeholders: FunctionComponent<UtilitarianismStakeholdersPr
                 <Droppable droppableId="droppable-1">
                     {(provided, snapshot) => (
                     <div ref={provided.innerRef} {...provided.droppableProps}>
-                        <Draggable draggableId={"draggable-1"} index={0}>
-                        {(provided, snapshot) => (
-                            <div className="dashboard-drag" ref={provided.innerRef} {...provided.draggableProps}>
-                                <img className="w-10" src={`${process.env.PUBLIC_URL}dragging.png`} alt="dragging.png" {...provided.dragHandleProps}></img>
-                                <label className="text-3xl font-bold">
-                                    Option 1
-                                    <p className="w-full border-none font-normal text-xl bg-gray-300 my-1 p-3">
-                                        Option 1 (Inputed from Ethical Issues page)
-                                    </p>
-                                    <textarea rows={5} className="w-full border-none" placeholder="Short-term consequences...">
-                                    </textarea>
-                                    <textarea rows={5} className="w-full border-none" placeholder="Long-term consequences...">
-                                    </textarea>
-                                </label>
-                            </div>
-                        )}
-                        </Draggable>
-                        <Draggable draggableId={"draggable-2"} index={1}>
+                        {stakeholders.map(({id, option, optionName}, index) => {
+                            return (
+                            <Draggable key={id} draggableId={id} index={index}>
+                            {(provided, snapshot) => (
+                                <li>
+                                    <div className="dashboard-drag" ref={provided.innerRef} {...provided.draggableProps}>
+                                        <img className="w-10" src={`${process.env.PUBLIC_URL}dragging.png`} alt="dragging.png" {...provided.dragHandleProps}></img>
+                                        <label className="text-3xl font-bold">
+                                            {option}
+                                            <p className="w-full border-none font-normal text-xl bg-gray-300 my-1 p-3">
+                                                {optionName}
+                                            </p>
+                                            <textarea rows={5} className="w-full border-none" placeholder="Short-term consequences...">
+                                            </textarea>
+                                            <textarea rows={5} className="w-full border-none" placeholder="Long-term consequences...">
+                                            </textarea>
+                                        </label>
+                                    </div>
+                                </li>
+                            )}
+                            </Draggable>
+                            );
+                        })}
+                        {/* <Draggable draggableId={"draggable-2"} index={1}>
                         {(provided, snapshot) => (
                             <div className="dashboard-drag" ref={provided.innerRef} {...provided.draggableProps}>
                                 <img className="w-10" src={`${process.env.PUBLIC_URL}dragging.png`} alt="dragging.png" {...provided.dragHandleProps}></img>
@@ -61,7 +91,7 @@ const UtilitarianismStakeholders: FunctionComponent<UtilitarianismStakeholdersPr
                                 </label>
                             </div>
                         )}
-                        </Draggable>
+                        </Draggable> */}
                         {provided.placeholder}
                     </div>
                     )}
