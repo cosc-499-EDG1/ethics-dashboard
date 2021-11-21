@@ -1,20 +1,24 @@
 import { FunctionComponent, useState } from "react";
 import { Link } from "react-router-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { textChangeRangeIsUnchanged } from "typescript";
 
 interface UtilitarianismStakeholdersProps {}
 
 const stakeholderItems = [
     {
         id: '0',
-        option: 'Option 1',
-        optionName: 'Option 1 (Inputed from Ethical Issues page)',
+        option: 'Stakeholder 1',
+        optionName: 'Stakeholder 1 (Inputed from Stakeholders page)',
     },
     {
         id: '1',
-        option: 'Option 2',
-        optionName: 'Option 2 (Inputed from Ethical Issues page)',
+        option: 'Stakeholder 2',
+        optionName: 'Stakeholder 2 (Inputed from Stakeholders page)',
+    },
+    {
+        id: '2',
+        option: 'Stakeholder 3',
+        optionName: 'Stakeholder 3 (Inputed from Stakeholders page)',
     }
 ];
 
@@ -64,9 +68,7 @@ const UtilitarianismStakeholders: FunctionComponent<UtilitarianismStakeholdersPr
                                             <p className="w-full border-none font-normal text-xl bg-gray-300 my-1 p-3">
                                                 {optionName}
                                             </p>
-                                            <textarea rows={5} className="w-full border-none" placeholder="Short-term consequences...">
-                                            </textarea>
-                                            <textarea rows={5} className="w-full border-none" placeholder="Long-term consequences...">
+                                            <textarea rows={5} className="w-full border-none" placeholder="Provide Reasoning...">
                                             </textarea>
                                         </label>
                                     </div>

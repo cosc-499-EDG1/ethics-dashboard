@@ -7,6 +7,7 @@ import Navbar from "./components/navbar";
 import Stakeholders from "./components/stakeholders/stakeholders";
 import UtilitarianismOptions from "./components/utilitarianism/utilitarianism-options";
 import UtilitarianismStakeholders from "./components/utilitarianism/utilitarianism-stakeholders";
+import UtilitarianismPleasure from "./components/utilitarianism/utilitarianism-pleasure";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/stakeholders" component={Stakeholders} />
           <Route path="/utilitarianism-options" component={UtilitarianismOptions} />
           <Route path="/utilitarianism-stakeholders" component={UtilitarianismStakeholders} />
+          <Route path="/utilitarianism-pleasure" component={UtilitarianismPleasure} />
           <PrivateRoute
             authed={true} // TODO: Replace with isLoggedIn function
             exact
