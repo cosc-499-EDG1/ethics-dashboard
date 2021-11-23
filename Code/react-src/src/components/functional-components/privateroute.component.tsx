@@ -11,14 +11,12 @@ const PrivateRoute: FunctionComponent<PrivateRouteProps> = ({
   authed,
   ...rest
 }) => {
-  console.log(authed);
   return (
     <Route
       {...rest}
       render={(props) => {
         console.log(!authed);
         if (!authed) {
-          console.log("Redirect");
           return (
             <Redirect
               to={{ pathname: "/login", state: { from: props.location } }}

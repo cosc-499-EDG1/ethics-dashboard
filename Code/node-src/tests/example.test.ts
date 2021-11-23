@@ -49,25 +49,25 @@ describe('Sample Test', () => {
  */
 describe('Routes', () => {
     //Test account creation route
-    it('CREATE /accounts/create integration test', done => {
-        request(app).post('/api/accounts/create').send({ username: 'test', email: 'test', password: 'test' }).expect(200).end(done);
+    it('CREATE /account/create integration test', done => {
+        request(app).post('/api/account/create').send({ username: 'test', email: 'test', password: 'test' }).expect(200).end(done);
     });
 
     //Test duplicate account creation
-    it('CREATE /accounts/create Duplicate account integration test', done => {
-        request(app).post('/api/accounts/create').send({ username: 'test', email: 'test', password: 'test' }).expect(400).end(done);
+    it('CREATE /account/create Duplicate account integration test', done => {
+        request(app).post('/api/account/create').send({ username: 'test', email: 'test', password: 'test' }).expect(400).end(done);
     });
 
     //Test fetching all accounts
-    it('GET /accounts integration test', done => {
-        request(app).get('/api/accounts').expect(200).end(done);
+    it('GET /account integration test', done => {
+        request(app).get('/api/account').expect(200).end(done);
     });
 
     //Test login route and keep the token for further use
     let token: string;
-    it('POST /accounts/login integration test', done => {
+    it('POST /account/login integration test', done => {
         request(app)
-            .post('/api/accounts/login')
+            .post('/api/account/login')
             .send({ username: 'test', password: 'test' })
             .expect(200)
             .end((err, res) => {
@@ -79,11 +79,11 @@ describe('Routes', () => {
     //Should test a normal user account accessing admin actions (403 forbidden)
     it('DELETE /accounts/delete User integration test', done => {
         expect(token).toBeDefined();
-        request(app).delete('/api/accounts/delete/1').set('Authorization', `Bearer ${token}`).expect(403).end(done);
+        request(app).delete('/api/account/delete/1').set('Authorization', `Bearer ${token}`).expect(403).end(done);
     });
 
     //Should test an admin account accessing admin actions (200 ok)
     it('DELETE /accounts/delete Admin integration test', done => {
-        request(app).delete('/api/accounts/delete/1').set('Authorization', `Bearer ${adminToken}`).expect(200).end(done);
+        request(app).delete('/api/account/delete/1').set('Authorization', `Bearer ${adminToken}`).expect(200).end(done);
     });
 });
