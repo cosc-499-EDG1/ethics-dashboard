@@ -1,5 +1,6 @@
 import { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
+import StakeholderPleasureInput from "./stakeholder-pleasure-input";
 
 interface UtilitarianismPleasureProps {}
 
@@ -30,87 +31,9 @@ const UtilitarianismPleasure: FunctionComponent<UtilitarianismPleasureProps> = (
                         <p className="text-4xl font-bold text-blue-500">
                             Short-term Consequences
                         </p>
-                        <div className="w-full border-none font-normal bg-gray-300 my-1 p-3">
-                            <p className="text-xl">
-                                Stakeholder 1
-                            </p>
-                            <p className="text-sm">
-                                Stakeholder 1 (Inputed from Stakeholders page)
-                            </p>
-                        </div>
-                        <div className="flex flex-wrap">
-                            <div className="w-3/6 h-24 my-2 flex justify-center items-center bg-white">
-                                <p className="inline mx-3">Pleasure</p>
-                                <input type="range" min="1" max="10" defaultValue="5"></input>
-                                <p className="inline mx-3">Pain</p>
-                            </div>
-                            <div className="w-3/6 h-24 my-2 grid place-items-center bg-yellow-300">
-                                <input type="text" className="w-4/6 h-6 border-2 border-black bg-white" placeholder="Explanation..."></input>
-                                <div className="inline-flex text-base">
-                                    <p className="inline mx-2">Pleasure: </p>
-                                    <label>High
-                                    <input type="radio" name="pleasure" value="High" className="mx-2"></input>
-                                    </label>
-                                    <label>Low
-                                    <input type="radio" name="pleasure" value="Low" className="mx-2"></input>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="w-full border-none font-normal bg-gray-300 my-1 p-3">
-                            <p className="text-xl">
-                                Stakeholder 2
-                            </p>
-                            <p className="text-sm">
-                                Stakeholder 2 (Inputed from Stakeholders page)
-                            </p>
-                        </div>
-                        <div className="flex flex-wrap">
-                            <div className="w-3/6 h-24 my-2 flex justify-center items-center bg-white">
-                                <p className="inline mx-3">Pleasure</p>
-                                <input type="range" min="1" max="10" defaultValue="5"></input>
-                                <p className="inline mx-3">Pain</p>
-                            </div>
-                            <div className="w-3/6 h-24 my-2 grid place-items-center bg-yellow-300">
-                                <input type="text" className="w-4/6 h-6 border-2 border-black bg-white" placeholder="Explanation..."></input>
-                                <div className="inline-flex text-base">
-                                    <p className="inline mx-2">Pleasure: </p>
-                                    <label>High
-                                    <input type="radio" name="pleasure" value="High" className="mx-2"></input>
-                                    </label>
-                                    <label>Low
-                                    <input type="radio" name="pleasure" value="Low" className="mx-2"></input>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="w-full border-none font-normal bg-gray-300 my-1 p-3">
-                            <p className="text-xl">
-                                Stakeholder 3
-                            </p>
-                            <p className="text-sm">
-                                Stakeholder 3 (Inputed from Stakeholders page)
-                            </p>
-                        </div>
-                        <div className="flex flex-wrap">
-                            <div className="w-3/6 h-24 my-2 flex justify-center items-center bg-white">
-                                <p className="inline mx-3">Pleasure</p>
-                                <input type="range" min="1" max="10" defaultValue="5"></input>
-                                <p className="inline mx-3">Pain</p>
-                            </div>
-                            <div className="w-3/6 h-24 my-2 grid place-items-center bg-yellow-300">
-                                <input type="text" className="w-4/6 h-6 border-2 border-black bg-white" placeholder="Explanation..."></input>
-                                <div className="inline-flex text-base">
-                                    <p className="inline mx-2">Pleasure: </p>
-                                    <label>High
-                                    <input type="radio" name="pleasure" value="High" className="mx-2"></input>
-                                    </label>
-                                    <label>Low
-                                    <input type="radio" name="pleasure" value="Low" className="mx-2"></input>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                        <StakeholderPleasureInput stakeholder={{id: 1, data: "Stakeholder 1 (Inputed from Stakeholders page)"}} />
+                        <StakeholderPleasureInput stakeholder={{id: 2, data: "Stakeholder 2 (Inputed from Stakeholders page)"}} />
+                        <StakeholderPleasureInput stakeholder={{id: 3, data: "Stakeholder 3 (Inputed from Stakeholders page)"}} />
                     </label>
                 </div>
                 <div className="dashboard-aggregate">
