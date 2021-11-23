@@ -21,25 +21,21 @@ const Stakeholders: FunctionComponent<StakeholderProps> = () => {
                     
                 </p>
             </div>
-            <div className="stakeholder-entry">
+            <div className="dashboard-entry">
                 <label className="text-3xl font-bold">
                     Stakeholder 1
-                    <textarea className="w-full border-none">
-                        Stakeholder Title
+                    <textarea className="w-full border-none" placeholder="Stakeholder Title">
                     </textarea>
-                    <textarea rows={10} className="w-full border-none" >
-                        Description Here...
+                    <textarea rows={10} className="w-full border-none" placeholder="Description Here...">
                     </textarea>
                 </label>
             </div>
-            <div className="stakeholder-entry">
+            <div className="dashboard-entry">
                 <label className="text-3xl font-bold">
                     Stakeholder 2
-                    <textarea className="w-full border-none">
-                        Stakeholder Title
+                    <textarea className="w-full border-none" placeholder="Stakeholder Title">
                     </textarea>
-                    <textarea rows={10} className="w-full border-none" >
-                        Description Here...
+                    <textarea rows={10} className="w-full border-none" placeholder="Description Here...">
                     </textarea>
                 </label>
             </div>

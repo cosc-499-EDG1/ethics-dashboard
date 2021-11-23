@@ -26,8 +26,20 @@
   @apply text-3xl bg-white rounded-lg w-2/3 p-3;
 }
 
-.stakeholder-entry {
+.dashboard-entry {
   @apply px-20 pt-10 w-full justify-center border-none;
+}
+
+.dashboard-drag {
+  @apply mx-20 my-5 px-5 pt-5 w-11/12 justify-center border-black border-2;
+}
+
+.dashboard-consequences {
+  @apply mx-20 my-5 px-5 pt-5 w-10/12 justify-center border-black border-2;
+}
+
+.dashboard-aggregate {
+  @apply mx-20 my-5 px-5 w-6/12 justify-center border-black border-2;
 }
 
 .navbar-link {
@@ -41,3 +53,8 @@
     @apply bg-gray-900 text-white p-4;
   }
 }
+
+li {
+  list-style-type: none;
+}
+
