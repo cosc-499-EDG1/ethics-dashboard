@@ -49,13 +49,22 @@ describe('Sample Test', () => {
  */
 describe('Routes', () => {
     //Test account creation route
-    it('CREATE /account/create integration test', done => {
-        request(app).post('/api/account/create').send({ username: 'test', email: 'test', password: 'test' }).expect(200).end(done);
+    it('CREATE /account/register integration test', done => {
+        request(app).post('/api/account/register').send({ username: 'test', email: 'test', password: 'test' }).expect(200).end(done);
     });
 
     //Test duplicate account creation
-    it('CREATE /account/create Duplicate account integration test', done => {
-        request(app).post('/api/account/create').send({ username: 'test', email: 'test', password: 'test' }).expect(400).end(done);
+    it('CREATE /account/register Duplicate account integration test', done => {
+        request(app)
+            .post('/api/account/register')
+            .send({ username: 'test', email: 'test', password: 'test' })
+            .expect(200)
+            .expect(res => {
+                if (res.body.message !== 'Username or email already exists') {
+                    throw new Error('Duplicate account creation failed');
+                }
+            })
+            .end(done);
     });
 
     //Test fetching all accounts
