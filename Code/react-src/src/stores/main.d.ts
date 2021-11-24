@@ -7,11 +7,19 @@ export type MainModel = {
   setAuthToken: Action<MainModel, string>;
   isLoggedIn: Computed<MainModel, boolean>;
   login: Thunk<MainModel, LoginData>;
-}
+  register: Thunk<MainModel, RegisterData>;
+};
 
 interface AccountResponse {
   data: {
     account: Account;
     token: string;
-  }
+  };
+}
+
+interface RegisterResponse {
+  data: {
+    message: string;
+    success: boolean;
+  };
 }

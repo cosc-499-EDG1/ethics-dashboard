@@ -5,7 +5,7 @@ import { Router } from 'express';
 export const accounts = Router();
 
 // Creation
-accounts.post('/create', AccountController.create);
+accounts.post('/register', AccountController.create);
 // Login
 accounts.post('/login', AccountController.authenticate);
 

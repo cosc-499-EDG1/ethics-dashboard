@@ -32,6 +32,9 @@ export default class Account extends Model<Account> {
     @Column
     password: string;
 
+    @Column
+    class_code: string;
+
     @Default('student')
     @Column
     type: AccountType;

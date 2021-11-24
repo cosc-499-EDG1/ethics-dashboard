@@ -7,7 +7,7 @@ import {
   computed,
 } from "easy-peasy";
 import AccountService from "../services/account.service";
-import { AccountResponse, MainModel } from "./main";
+import { AccountResponse, MainModel, RegisterResponse } from "./main";
 
 const MainStore = createStore<MainModel>(
   persist(
@@ -31,13 +31,26 @@ const MainStore = createStore<MainModel>(
       }),
 
       login: thunk(async (actions, payload: LoginData) => {
-        const response = await AccountService.login<AccountResponse>(payload);
-        if (response.data.token) {
-          // If the response has a token that means we logged in successfully!
-          actions.setAccount(response.data.account);
-          actions.setAuthToken(response.data.token);
+        try {
+          const response = await AccountService.login<AccountResponse>(payload);
+          if (response.data.token) {
+            // If the response has a token that means we logged in successfully!
+            actions.setAccount(response.data.account);
+            actions.setAuthToken(response.data.token);
+          }
+          return response.data;
+        } catch (err) {
+          return { message: "Error contacting API" };
         }
-        return response.data;
+      }),
+
+      register: thunk(async (actions, payload: RegisterData) => {
+        try {
+          const response = await AccountService.register<RegisterResponse>(payload);
+          return response.data;
+        } catch (err) {
+          return { message: "Error contacting API" };
+        }
       }),
     },
     {

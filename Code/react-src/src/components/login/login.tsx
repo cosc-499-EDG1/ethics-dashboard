@@ -13,13 +13,16 @@ const Home: FunctionComponent<HomeProps> = () => {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [redirect, setRedirect] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setErrorMessage("");
   }, []);
 
   const attemptLogin = async () => {
+    setIsLoading(true);
     const data = await login({ username: username, password: password });
+    setIsLoading(false);
     setErrorMessage(data.message);
     if (data.token) {
       setRedirect("/");
@@ -29,6 +32,20 @@ const Home: FunctionComponent<HomeProps> = () => {
 
   if (redirect) {
     return <Redirect to={{ pathname: redirect, state: { from: "/login" } }} />;
+  }
+
+  if (isLoggedIn) {
+    return (
+      <div className="site-main">
+        <div className="bg-yellow-200 p-5 flex items-center justify-center flex-col w-6/12 rounded-lg shadow-lg">
+          <div className="w-full max-w-s">
+            <div className="text-green-500 text-center italic font-bold">
+              You are already logged in!
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -43,14 +60,14 @@ const Home: FunctionComponent<HomeProps> = () => {
             }}
             noValidate
           >
-            {errorMessage && (
+            {errorMessage && !isLoading && (
               <div className="text-red-500 text-center italic font-bold">
                 {errorMessage}
               </div>
             )}
-            {isLoggedIn && (
-              <div className="text-green-500 text-center italic font-bold">
-                You are already logged in!
+            {isLoading && (
+              <div className="flex justify-center">
+                <div className="loading-spinner w-16 h-16"></div>
               </div>
             )}
             <div className="mb-4">
@@ -90,12 +107,11 @@ const Home: FunctionComponent<HomeProps> = () => {
                 <button
                   className="bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="submit"
-                  onClick={attemptLogin}
                 >
                   Sign In
                 </button>
                 <Link
-                  to="/forgotpassword"
+                  to="/register"
                   className="inline-block align-baseline font-bold text-sm text-gray-500 hover:text-gray-800 m-5"
                 >
                   Don't have an account?{" "}
