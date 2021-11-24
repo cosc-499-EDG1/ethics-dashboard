@@ -1,4 +1,3 @@
-import React from "react";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import "./App.css";
 import PrivateRoute from "./components/functional-components/privateroute.component";
@@ -10,13 +9,14 @@ import UtilitarianismStakeholders from "./components/utilitarianism/utilitariani
 import UtilitarianismPleasure from "./components/utilitarianism/utilitarianism-pleasure";
 
 import { StoreProvider } from "easy-peasy";
-import MainStore from "./stores/main.store";
+import MainStore from "./stores/index.store";
 
 
 import Home from "./components/home/home";
 import Login from "./components/login/login";
 import Register from "./components/register/register";
 import Issues from "./components/Issues/Issues";
+import Logout from "./components/login/logout";
 
 
 function App() {
@@ -37,6 +37,7 @@ function App() {
             <Route path="/utilitarianism-options" component={UtilitarianismOptions} />
             <Route path="/utilitarianism-stakeholders" component={UtilitarianismStakeholders} />
             <Route path="/utilitarianism-pleasure" component={UtilitarianismPleasure} />
+            <Route path="/logout" component={Logout} />
             <PrivateRoute
               authed={true} // TODO: Replace with isLoggedIn function
               exact
