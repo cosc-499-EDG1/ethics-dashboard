@@ -17,6 +17,7 @@ import Login from "./components/login/login";
 import Register from "./components/register/register";
 import Issues from "./components/Issues/Issues";
 import Logout from "./components/login/logout";
+import MyAccount from "./components/account/myaccount";
 
 
 function App() {
@@ -39,10 +40,9 @@ function App() {
             <Route path="/utilitarianism-pleasure" component={UtilitarianismPleasure} />
             <Route path="/logout" component={Logout} />
             <PrivateRoute
-              authed={true} // TODO: Replace with isLoggedIn function
               exact
               path={"/myaccount"}
-              component={Home}
+              component={MyAccount}
             />
           </Switch>
         </div>

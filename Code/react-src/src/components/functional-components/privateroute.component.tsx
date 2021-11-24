@@ -1,32 +1,11 @@
-import { Component, FunctionComponent } from "react";
-import { Route, Redirect, RouteProps } from "react-router-dom";
+import { Redirect, Route, RouteProps } from "react-router";
+import { useStoreState } from "../../stores/index.store";
 
-interface PrivateRouteProps extends RouteProps {
-  authed: boolean;
-  component: FunctionComponent;
+export default function ProtectedRoute({ ...routeProps }: RouteProps) {
+  const isLoggedIn = useStoreState((state) => state.accounts.isLoggedIn);
+  if (isLoggedIn) {
+    return <Route {...routeProps} />;
+  } else {
+    return <Redirect to={{ pathname: "/Login" }} />;
+  }
 }
-
-const PrivateRoute: FunctionComponent<PrivateRouteProps> = ({
-  component,
-  authed,
-  ...rest
-}) => {
-  return (
-    <Route
-      {...rest}
-      render={(props) => {
-        console.log(!authed);
-        if (!authed) {
-          return (
-            <Redirect
-              to={{ pathname: "/login", state: { from: props.location } }}
-            />
-          );
-        }
-        return <Component {...props} />;
-      }}
-    />
-  );
-};
-
-export default PrivateRoute;
