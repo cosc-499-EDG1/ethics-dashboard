@@ -16,11 +16,23 @@ jobs:
         steps:
             - uses: actions/checkout@v2
               with:
-                submodules: 'true'
+                  submodules: 'true'
             - name: Use Node.js 14.x
               uses: actions/setup-node@v1
               with:
                   node-version: '14.x'
+            - name: Shutdown Ubuntu MySQL (SUDO)
+              run: sudo service mysql stop
+            - name: Create Database
+              uses: getong/mariadb-action@v1.1
+              with:
+                  host port: 3306
+                  container port: 3306
+                  character set server: 'utf8mb4'
+                  collation server: 'utf8mb4_general_ci'
+                  mariadb version: 'latest'
+                  mysql database: 'cosc499'
+                  mysql root password: password
             - name: Install
               working-directory: ./Code/node-src
               run: |
