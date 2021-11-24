@@ -23,6 +23,9 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
           <Link to="/dashboard" className="navbar-link">
             Dashboard
           </Link>
+          <Link to="/issues" className="navbar-link">
+            Issues
+          </Link>
         </div>
       </div>
     </nav>
