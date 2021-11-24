@@ -52,11 +52,7 @@
 }
 
 .btn {
-  @apply p-2 mt-4 bg-white rounded-md;
-
-  &-inner {
-    @apply bg-gray-900 text-white p-4;
-  }
+  @apply text-white font-bold py-2 px-4 rounded bg-yellow-600 hover:bg-yellow-500;
 }
 
 li {

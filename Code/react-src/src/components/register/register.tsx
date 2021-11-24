@@ -89,7 +89,7 @@ const Home: FunctionComponent<HomeProps> = () => {
                   <div className="flex items-center justify-around">
                     <Link to="/login">
                       <button
-                        className="bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        className="btn"
                         type="button"
                       >
                         Login
@@ -236,7 +236,7 @@ const Home: FunctionComponent<HomeProps> = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center justify-around">
                 <button
-                  className="bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  className="btn"
                   type="submit"
                 >
                   Register
