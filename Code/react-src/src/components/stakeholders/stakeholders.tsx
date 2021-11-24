@@ -21,32 +21,38 @@ const Stakeholders: FunctionComponent<StakeholderProps> = () => {
                     
                 </p>
             </div>
-            <form
-            id="loginForm"
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
-            noValidate
-            >
-                <div className="dashboard-entry">
-                    <label className="text-3xl font-bold">
-                        Stakeholder 1
-                        <textarea className="w-full border-none" placeholder="Stakeholder Title">
-                        </textarea>
-                        <textarea rows={10} className="w-full border-none" placeholder="Description Here...">
-                        </textarea>
-                    </label>
-                </div>
-                <div className="dashboard-entry">
-                    <label className="text-3xl font-bold">
-                        Stakeholder 2
-                        <textarea className="w-full border-none" placeholder="Stakeholder Title">
-                        </textarea>
-                        <textarea rows={10} className="w-full border-none" placeholder="Description Here...">
-                        </textarea>
-                    </label>
-                </div>
-            </form>
+            <div className="dashboard-entry">
+                <label className="text-3xl font-bold">
+                    Stakeholder 1
+                    <textarea className="w-full border-none" placeholder="Stakeholder Title">
+                    </textarea>
+                    <textarea rows={10} className="w-full border-none" placeholder="Description Here...">
+                    </textarea>
+                </label>
+            </div>
+            <div className="dashboard-entry">
+                <label className="text-3xl font-bold">
+                    Stakeholder 2
+                    <textarea className="w-full border-none" placeholder="Stakeholder Title">
+                    </textarea>
+                    <textarea rows={10} className="w-full border-none" placeholder="Description Here...">
+                    </textarea>
+                </label>
+            </div>
+            <div className="dashboard-entry">
+                <label className="text-3xl font-bold">
+                    Stakeholder 3
+                    <textarea className="w-full border-none" placeholder="Stakeholder Title">
+                    </textarea>
+                    <textarea rows={10} className="w-full border-none" placeholder="Description Here...">
+                    </textarea>
+                </label>
+            </div>
+            <div className="flex justify-center items-center m-6">
+                <button className="bg-yellow-600 hover:bg-yellow-500 text-white font-bold w-1/12 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                <Link to="/">Submit</Link>
+                </button>
+            </div>
         </div>
     );
 

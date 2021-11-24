@@ -25,6 +25,11 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
       show: isLoggedIn,
     },
     {
+      name: "Ethical Issues",
+      path: "/Issues",
+      show: isLoggedIn,
+    },
+    {
       name: "Stakeholders",
       path: "/stakeholders",
       show: isLoggedIn,
@@ -32,11 +37,6 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
     {
       name: "Utilitarianism",
       path: "/utilitarianism-options",
-      show: isLoggedIn,
-    },
-    {
-      name: "Issues",
-      path: "/Issues",
       show: isLoggedIn,
     },
     {

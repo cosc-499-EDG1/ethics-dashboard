@@ -81,6 +81,16 @@ const UtilitarianismPleasure: FunctionComponent<UtilitarianismPleasureProps> = (
                     </div>
                 </div>
             </div>
+            <div className="flex justify-center items-center m-6">
+                <div className="grid grid-cols-2 gap-4">
+                    <button className="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    <Link to="/utilitarianism-stakeholders">Go Back</Link>
+                    </button>
+                    <button className="bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    <Link to="/">Submit</Link>
+                    </button>
+                </div>
+            </div>
         </div>
     );
 
