@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { Op } from 'sequelize';
 import { secret } from '../config/jwt.config';
 import Account from '../models/account.model';
 
@@ -27,19 +28,29 @@ class AccountController {
     };
 
     create = async (req, res, next) => {
-        const { username, email, password } = req.body;
-        //TODO: Check for duplicate username/email.
+        const { username, password, email } = req.body;
+        const existing = await Account.findOne({ where: {
+            [Op.or]: [
+              { username: username },
+              { email: email }
+            ]
+        }});
+        if (existing) {
+            res.send({
+                message: 'Username or email already exists',
+            });
+            return;
+        }
         const passwordHash = await bcrypt.hash(password, bcrypt.genSaltSync(10));
         const account = new Account({ ...req.body, type: 'student', password: passwordHash });
         account
             .save()
-            .then(async () => {
-                const acc = await Account.findOne({ where: { username: account.username } });
-                res.json(acc);
+            .then(() => {
+                res.status(200).json({ message: 'Account created successfully. You may now log in.', success: true });
             })
             .catch(err => {
                 res.status(400).json({
-                    message: 'Error creating user account.',
+                    message: `Error creating user account.`,
                 });
             });
     };

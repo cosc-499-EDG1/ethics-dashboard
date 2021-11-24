@@ -14,6 +14,7 @@ import MainStore from "./stores/main.store";
 
 import Home from "./components/home/home";
 import Login from "./components/login/login";
+import Register from "./components/register/register";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
             <Route path="/dashboard">
               <div>Dashboard Component</div>
             </Route>
