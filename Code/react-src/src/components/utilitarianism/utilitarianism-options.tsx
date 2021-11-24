@@ -46,6 +46,11 @@ const UtilitarianismOptions: FunctionComponent<UtilitarianismOptionsProps> = () 
                     </textarea>
                 </label>
             </div>
+            <div className="flex justify-center items-center m-6">
+                <button className="bg-yellow-600 hover:bg-yellow-500 text-white font-bold w-1/12 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                <Link to="/utilitarianism-stakeholders">Submit</Link>
+                </button>
+            </div>
         </div>
     );
 
