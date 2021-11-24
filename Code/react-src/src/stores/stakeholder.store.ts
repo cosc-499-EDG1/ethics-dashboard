@@ -1,7 +1,7 @@
 import { Action, action } from "easy-peasy";
 
 export interface StakeholderModel {
-  stakeholders: Stakeholder | null;
+  stakeholders: { [key: string]: Stakeholder};
   setStakeholder: Action<StakeholderModel , Stakeholder>;
 }
 
@@ -13,10 +13,10 @@ interface Stakeholder {
 }
 
 const stakeholderStore: StakeholderModel = {
-  stakeholders: {name: "", data: {}},   // Confused
+  stakeholders: {},
 
   setStakeholder: action((state, payload) => {
-    state.stakeholders[payload.name] = payload.data;
+    state.stakeholders[payload.name] = payload;
   }),
 }
 

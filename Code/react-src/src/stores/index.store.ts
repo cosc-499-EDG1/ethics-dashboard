@@ -1,6 +1,6 @@
 import { createStore, createTypedHooks, persist } from "easy-peasy";
 import accountStore, { AccountModel } from "./account.store";
-import { StakeholderModel } from "./stakeholder.store";
+import stakeholderStore, { StakeholderModel } from "./stakeholder.store";
 
 
 export interface MainModel {
