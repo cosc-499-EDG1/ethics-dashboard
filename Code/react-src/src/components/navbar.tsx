@@ -1,31 +1,165 @@
-import { FunctionComponent } from "react";
-import { Link } from "react-router-dom";
+import { FunctionComponent, useEffect, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { useStoreState } from "../stores/index.store";
 
 interface NavbarProps {}
 
 const Navbar: FunctionComponent<NavbarProps> = () => {
-  return (
-    //Write a navbar component using Tailwind with links to Home, Login and Dashboard
-    <nav className="flex items-center fixed w-screen justify-between flex-wrap bg-white p-6 shadow-md">
-      <div className="flex items-center flex-shrink-0 text-black mr-6">
-        <span className="font-semibold text-xl tracking-tight">
-          Ethics Dashboard
+  const isLoggedIn = useStoreState((state) => state.accounts.isLoggedIn);
+  const account = useStoreState((state) => state.accounts.account);
+
+  // Re-render when logged in state changes.
+  useEffect(() => {}, [isLoggedIn]);
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const navLinks = [
+    {
+      name: "Home",
+      path: "/",
+      show: true,
+    },
+    {
+      name: "Dashboard",
+      path: "/dashboard",
+      show: isLoggedIn,
+    },
+    {
+      name: "Stakeholders",
+      path: "/stakeholders",
+      show: isLoggedIn,
+    },
+    {
+      name: "Utilitarianism",
+      path: "/utilitarianism-options",
+      show: isLoggedIn,
+    },
+    {
+      name: "Issues",
+      path: "/Issues",
+      show: isLoggedIn,
+    },
+    {
+      name: (
+        <span style={{ verticalAlign: "sub" }}>
+          <img
+            src={account?.avatar}
+            alt={account?.first_name}
+            className="w-8 h-8 inline rounded-full"
+          />{" "}
+          {account?.first_name} {account?.last_name}
         </span>
-      </div>
-      <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-        <div className="text-sm lg:flex-grow">
-          <Link to="/" className="navbar-link">
-            Home
-          </Link>
-          <Link to="/login" className="navbar-link">
-            Login
-          </Link>
-          <Link to="/dashboard" className="navbar-link">
-            Dashboard
-          </Link>
-          <Link to="/issues" className="navbar-link">
-            Issues
-          </Link>
+      ),
+      path: "/myaccount",
+      show: isLoggedIn,
+      right: true,
+    },
+    {
+      name: <span style={{ verticalAlign: "sub" }}>Logout</span>,
+      path: "/logout",
+      show: isLoggedIn,
+      right: true,
+    },
+    {
+      name: "Login",
+      path: "/login",
+      show: !isLoggedIn,
+      right: true,
+    },
+    {
+      name: "Register",
+      path: "/register",
+      show: !isLoggedIn,
+      right: true,
+    },
+  ];
+
+  return (
+    <nav className="bg-white shadow-lg fixed w-full">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="flex justify-between">
+          <div className="flex w-full">
+            <div>
+              <Link to="/" className="flex items-center py-4 px-2">
+                <span className="font-semibold text-gray-500 text-lg">
+                  Ethics Dashboard
+                </span>
+              </Link>
+            </div>
+            <div className="hidden md:flex items-center ml-4">
+              <div>
+                {navLinks
+                  .filter((link) => !link.right && link.show)
+                  .map((link, index) => {
+                    return (
+                      <NavLink
+                        key={index}
+                        to={link.path}
+                        exact={link.path === "/"}
+                        activeClassName="nav-link-active"
+                        className="nav-link"
+                      >
+                        {link.name}
+                      </NavLink>
+                    );
+                  })}
+              </div>
+            </div>
+            <div className="hidden md:flex items-center ml-auto">
+              <div>
+                {navLinks
+                  .filter((link) => link.right && link.show)
+                  .map((link, index) => {
+                    return (
+                      <NavLink
+                        to={link.path}
+                        key={index}
+                        activeClassName="nav-link-active"
+                        className="nav-link"
+                      >
+                        {link.name}
+                      </NavLink>
+                    );
+                  })}
+              </div>
+            </div>
+            <div className="md:hidden flex items-center absolute right-8 top-3.5">
+              <button
+                className="outline-none mobile-menu-button"
+                onClick={() => setMenuOpen(!menuOpen)}
+              >
+                <svg
+                  className="w-8 h-8 text-gray-500 hover:text-yellow-500"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+              </button>
+            </div>
+            <ul className={`${!menuOpen && "hidden"} md:hidden text-right mt-12 pb-5`}>
+              {navLinks
+                .filter((link) => link.show)
+                .map((link, index) => {
+                  return (
+                    <li key={index} className="p-3">
+                      <NavLink
+                        to={link.path}
+                        exact={true}
+                        activeClassName="nav-link-active"
+                        className="nav-link"
+                      >
+                        {link.name}
+                      </NavLink>
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
         </div>
       </div>
     </nav>

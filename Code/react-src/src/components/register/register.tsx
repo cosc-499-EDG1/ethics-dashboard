@@ -1,12 +1,12 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { useStoreActions, useStoreState } from "../../stores/main.store";
+import { useStoreActions, useStoreState } from "../../stores/index.store"
 
 interface HomeProps {}
 
 const Home: FunctionComponent<HomeProps> = () => {
-  const register = useStoreActions((actions) => actions.register);
-  const isLoggedIn = useStoreState((state) => state.isLoggedIn);
+  const register = useStoreActions((actions) => actions.accounts.register);
+  const isLoggedIn = useStoreState((state) => state.accounts.isLoggedIn);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
