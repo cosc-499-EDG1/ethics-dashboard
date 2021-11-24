@@ -1,0 +1,16 @@
+Client Meeting Notes 24/11/2021
+
+We talked about the peer testing that we are undertaking this week and how it could inform our decisions going forward.
+Dr. Lowe-walker told us that she will be meeting with other ethics professors over the requirement report that we 
+gave her. We expect to have some feedback from that upcoming event. This may add some more aspects to focus on within
+the analyses.
+
+--For Utilitarianism page 3-6, what's the difference between using the checkboxes on the pleasure and using the slider for pleasure?
+
+The sliders are in place to measure the extent to which each consequence is a pleasure or a pain. The checkboxes are in
+place in order to differentiate between a higher and lower power pleasure.
+
+--For the final page on Utilitarianism, in the section for the ethical decision/course of action is the user inputting the text, or would you like this to be system generated?
+
+The ethical decision/course of action section of the final utilitarianism analysis will be an area for the student to input text.
+This will not be system generated. 
