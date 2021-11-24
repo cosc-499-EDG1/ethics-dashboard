@@ -30,6 +30,10 @@
   @apply px-20 pt-10 w-full justify-center border-none;
 }
 
+.user-entry {
+  @apply px-20 pt-10 w-full justify-center border-none;
+}
+
 .navbar-link {
   @apply block mt-4 lg:inline-block lg:mt-1 text-blue-600 hover:text-blue-900 mr-4;
 }

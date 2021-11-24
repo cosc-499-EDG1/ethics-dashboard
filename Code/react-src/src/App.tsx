@@ -7,8 +7,10 @@ import Stakeholders from "./components/stakeholders/stakeholders";
 import { StoreProvider } from "easy-peasy";
 import MainStore from "./stores/main.store";
 
+
 import Home from "./components/home/home";
 import Login from "./components/login/login";
+import Issues from "./components/Issues/Issues";
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
+            <Route path="/Issues" component={Issues} />
             <Route path="/dashboard">
               <div>Dashboard Component</div>
             </Route>
