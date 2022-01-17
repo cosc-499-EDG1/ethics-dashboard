@@ -42,11 +42,13 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
     {
       name: (
         <span style={{ verticalAlign: "sub" }}>
-          <img
-            src={account?.avatar}
-            alt={account?.first_name}
-            className="w-8 h-8 inline rounded-full"
-          />{" "}
+          {account?.avatar && (
+            <img
+              src={account.avatar as unknown as string}
+              alt={account?.first_name}
+              className="w-8 h-8 inline rounded-full"
+            />
+          )}{" "}
           {account?.first_name} {account?.last_name}
         </span>
       ),
@@ -141,7 +143,11 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 </svg>
               </button>
             </div>
-            <ul className={`${!menuOpen && "hidden"} md:hidden text-right mt-12 pb-5`}>
+            <ul
+              className={`${
+                !menuOpen && "hidden"
+              } md:hidden text-right mt-12 pb-5`}
+            >
               {navLinks
                 .filter((link) => link.show)
                 .map((link, index) => {

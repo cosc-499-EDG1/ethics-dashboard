@@ -1,13 +1,29 @@
-import http from '../helpers/http';
+import Account from "../../../node-src/build/app/models/account.model";
+import http from "../helpers/http";
+import { LoginData, RegisterData } from "../stores/account.store";
 
+export interface AccountResponse {
+  data: {
+    account?: Account;
+    token?: string;
+    message?: string;
+  };
+}
+
+export interface RegisterResponse {
+  data: {
+    message: string;
+    success: boolean;
+  };
+}
 class AccountService {
-    login<T>(data: LoginData): Promise<T> {
-        return http.post('/account/login', data);
-    }
+  login(data: LoginData): Promise<AccountResponse> {
+    return http.post("/account/login", data);
+  }
 
-    register<T>(data: RegisterData): Promise<T> {
-        return http.post('/account/register', data);
-    }
+  register(data: RegisterData): Promise<RegisterResponse> {
+    return http.post("/account/register", data);
+  }
 }
 
 export default new AccountService();

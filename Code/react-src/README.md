@@ -1,70 +1,38 @@
-# Getting Started with Create React App
+### Developing React Frontend
+1. Running Development Server
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+```bash
+npm start
+```
+This will start the development server, which will auto-refresh on any changes making it easy to code and see your changes in real time.
 
-## Available Scripts
+2. Creating a Store
 
-In the project directory, you can run:
+Stores are used for fetching and storing data from the backend server, the nice thing about a store is it can be used in multiple components. This is a good way to keep your data in one place without needing to fetch it on every page.
 
-### `npm start`
+    - I recommend you create the model on the backend before creating the frontend store so you can easily type the data you'll be working with. (See `Account` type in account.store.ts)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+    - Models can be imported from the backend and used as types (seen in `account.store`) or you can create your own type but it will not be kept in sync with the backend.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+    - Stores don't nesscesarily need to fetch data from the backend, they can be used to store data that just needs to be persistent between pages.
 
-### `npm test`
+3. Creating a Service
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Services are used to connect the routes on the backend with functions on the frontend. `account.service` shows an example. Note the different types of HTTP requests you can perform here (GET, POST, PUT, DELETE).
 
-### `npm run build`
+4. Using store in a component
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+import { useStoreActions, useStoreState } from "../../stores/index.store";
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+.
+.
+.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+const login = useStoreActions((actions) => actions.accounts.login);
+const isLoggedIn = useStoreState((state) => state.accounts.isLoggedIn);
+```
+As you can see, the store actions(thunks included) and state can be imported into any component and used as needed. These should be fully typed to make development easier.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Make sure to add any new stores to index.store.ts and include it in the definition. Or else you will not be able to use it.

@@ -1,25 +1,26 @@
-import dbConfig from './config/db.config';
 import { Sequelize } from 'sequelize-typescript';
-import { Dialect } from 'sequelize/types';
+import dotenv from 'dotenv';
+dotenv.config({ path: 'db.env' });
 
 /* MODELS */
 import Account from './models/account.model';
 
 /**
- * Models must also be added in the 'models' field of this.
- * TODO: swap to process.env
+ * Models must also be added to this.
  */
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-    host: dbConfig.HOST,
+const MODELS = [Account];
+
+const sequelize = new Sequelize(process.env.DB_NAME ?? 'cosc499', process.env.DB_USER ?? 'root', process.env.DB_PASSWORD ?? 'password', {
+    host: process.env.DB_HOST ?? 'localhost',
     quoteIdentifiers: false,
-    dialect: dbConfig.dialect as Dialect,
+    dialect: 'mysql',
     pool: {
-        max: dbConfig.pool.max,
-        min: dbConfig.pool.min,
-        acquire: dbConfig.pool.acquire,
-        idle: dbConfig.pool.idle,
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000,
     },
-    models: [Account],
+    models: MODELS,
 });
 
 const db = sequelize;

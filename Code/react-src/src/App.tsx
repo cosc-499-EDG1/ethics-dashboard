@@ -1,5 +1,4 @@
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
-import "./App.css";
 import PrivateRoute from "./components/functional-components/privateroute.component";
 import Navbar from "./components/navbar";
 import Stakeholders from "./components/stakeholders/stakeholders";
@@ -11,6 +10,7 @@ import UtilitarianismPleasure from "./components/utilitarianism/utilitarianism-p
 import { StoreProvider } from "easy-peasy";
 import MainStore from "./stores/index.store";
 
+import './styles/main.css';
 
 import Home from "./components/home/home";
 import Login from "./components/login/login";

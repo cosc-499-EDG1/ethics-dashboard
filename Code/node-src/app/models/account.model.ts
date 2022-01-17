@@ -37,7 +37,7 @@ export default class Account extends Model<Account> {
 
     @Default('student')
     @Column
-    type: AccountType;
+    type: 'manager' | 'professor' | 'teaching_assistant' | 'student';
 
     @Column(DataType.BLOB('long'))
     get avatar(): Blob {
