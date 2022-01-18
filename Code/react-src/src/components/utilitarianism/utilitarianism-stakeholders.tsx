@@ -43,7 +43,7 @@ const UtilitarianismStakeholders: FunctionComponent<UtilitarianismStakeholdersPr
                     <div className="dashboard-title-description">
                         <p>
                         Provide reasons why you have included each stakeholder. Move stakeholders up or down to rank according to the 
-                        degree of impact. (Stakeholder 1 experiences the highest impact) Note: You may want to removed stakeholders if you 
+                        degree of impact. (Stakeholder 1 experiences the highest impact) Note: You may want to remove stakeholders if you 
                         can’t identify how they will be impacted or if there is very little impact. Also, you may add stakeholders at any time.
                         </p>
                     </div>
