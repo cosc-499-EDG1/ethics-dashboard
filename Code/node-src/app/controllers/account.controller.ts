@@ -1,8 +1,9 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { Op } from 'sequelize';
-import { secret } from '../config/jwt.config';
 import Account from '../models/account.model';
+import dotenv from 'dotenv';
+dotenv.config({ path: 'jwt.env' });
 
 class AccountController {
     authenticate = async (req, res, next) => {
@@ -23,7 +24,7 @@ class AccountController {
             return;
         }
         account.password = '';
-        const token = jwt.sign({ sub: account.id }, secret, { expiresIn: '7d' });
+        const token = jwt.sign({ sub: account.id }, process.env.JSON_WEB_TOKEN_SECRET ?? '12345', { expiresIn: '7d' });
         res.send({ account, token });
     };
 

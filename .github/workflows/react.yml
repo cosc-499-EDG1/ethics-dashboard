@@ -4,11 +4,10 @@
 name: React CI
 
 on:
-    push:
-        branches: [main]
-    pull_request:
-        branches: [main]
-
+  workflow_run:
+    workflows: ["Node CI"]
+    types:
+      - completed
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -21,6 +20,11 @@ jobs:
               uses: actions/setup-node@v1
               with:
                   node-version: '14.x'
+            - name: Build Backend Type Definitions
+              working-directory: ./Code/node-src
+              run: |
+                npm install --frozen-lockfile
+                npm run build --if-present --emitDeclarationOnly
             - name: Install
               working-directory: ./Code/react-src
               run: |

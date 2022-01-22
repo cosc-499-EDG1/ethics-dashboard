@@ -1,6 +1,21 @@
-import AccountService from "../services/account.service";
+import AccountService, { AccountResponse } from "../services/account.service";
 
 import { Action, action, Computed, computed, Thunk, thunk } from "easy-peasy";
+import Account from "../../../node-src/build/app/models/account.model";
+
+export interface LoginData {
+  username: string;
+  password: string;
+}
+
+export interface RegisterData {
+  username: string;
+  password: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  class_code: string;
+}
 
 export interface AccountModel {
   account: Account | null;
@@ -11,20 +26,6 @@ export interface AccountModel {
   isLoggedIn: Computed<AccountModel, boolean>;
   login: Thunk<AccountModel, LoginData>;
   register: Thunk<AccountModel, RegisterData>;
-}
-
-interface AccountResponse {
-  data: {
-    account: Account;
-    token: string;
-  };
-}
-
-interface RegisterResponse {
-  data: {
-    message: string;
-    success: boolean;
-  };
 }
 
 const accountStore: AccountModel = {
@@ -53,8 +54,8 @@ const accountStore: AccountModel = {
 
   login: thunk(async (actions, payload: LoginData) => {
     try {
-      const response = await AccountService.login<AccountResponse>(payload);
-      if (response.data.token) {
+      const response = await AccountService.login(payload);
+      if (response.data.token && response.data.account) {
         // If the response has a token that means we logged in successfully!
         actions.setAccount(response.data.account);
         actions.setAuthToken(response.data.token);
@@ -67,7 +68,7 @@ const accountStore: AccountModel = {
 
   register: thunk(async (actions, payload: RegisterData) => {
     try {
-      const response = await AccountService.register<RegisterResponse>(payload);
+      const response = await AccountService.register(payload);
       return response.data;
     } catch (err) {
       return { message: "Error contacting API" };

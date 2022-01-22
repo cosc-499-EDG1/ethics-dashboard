@@ -2,9 +2,9 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { useStoreActions, useStoreState } from "../../stores/index.store"
 
-interface HomeProps {}
+interface RegisterProps {}
 
-const Home: FunctionComponent<HomeProps> = () => {
+const Register: FunctionComponent<RegisterProps> = () => {
   const register = useStoreActions((actions) => actions.accounts.register);
   const isLoggedIn = useStoreState((state) => state.accounts.isLoggedIn);
 
@@ -250,4 +250,4 @@ const Home: FunctionComponent<HomeProps> = () => {
   );
 };
 
-export default Home;
+export default Register;

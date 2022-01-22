@@ -2,9 +2,9 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { useStoreActions, useStoreState } from "../../stores/index.store";
 
-interface HomeProps {}
+interface LogoutProps {}
 
-const Home: FunctionComponent<HomeProps> = () => {
+const Logout: FunctionComponent<LogoutProps> = () => {
   const logout = useStoreActions((actions) => actions.accounts.logout);
 
   const [redirect, setRedirect] = useState("");
@@ -32,4 +32,4 @@ const Home: FunctionComponent<HomeProps> = () => {
   );
 };
 
-export default Home;
+export default Logout;
