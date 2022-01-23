@@ -44,7 +44,18 @@
 
 .dashboard-aggregate {
   @apply mx-20 my-5 px-5 w-6/12 justify-center border-black border-2;
+}
 
+.dashboard-optionsblock {
+  @apply mx-20 mt-5 px-5 w-10/12 justify-center;
+}
+
+.dashboard-options {
+  @apply mx-4 p-4 justify-center border-black border-2;
+}
+
+.dashboard-motivation {
+  @apply mx-4 my-5 p-4 justify-center border-black border-2;
 }
 
 .navbar-link {
