@@ -49,7 +49,7 @@ const UtilitarianismPleasure: FunctionComponent<UtilitarianismPleasureProps> = (
                                 <p className="inline mx-3">Pain</p>
                             </div>
                             <p className="text-4xl font-bold text-red-700">
-                                Aggregate of short-term outcomes
+                                Aggregate of long-term outcomes
                             </p>
                             <div className="h-24 my-2 flex justify-center items-center bg-white">
                                 <p className="inline mx-3">Pleasure</p>
@@ -70,7 +70,7 @@ const UtilitarianismPleasure: FunctionComponent<UtilitarianismPleasureProps> = (
                                 <p className="inline mx-3">Pain</p>
                             </div>
                             <p className="text-4xl font-bold text-red-700">
-                                Aggregate of short-term outcomes
+                                Aggregate of long-term outcomes
                             </p>
                             <div className="h-24 my-2 flex justify-center items-center bg-white">
                                 <p className="inline mx-3">Pleasure</p>
