@@ -66,9 +66,8 @@ class AccountController {
         const account = new Account({ ...rest, username, email, first_name, last_name, type: 'student', password: passwordHash });
         account
             .save()
-            .then(() => {
-                classGroup.students.push(account);
-                classGroup.save();
+            .then(async () => { 
+                account.$add('studentClassList', classGroup);
                 res.status(200).json({ message: 'Account created successfully. You may now log in.', success: true });
             })
             .catch(err => {
