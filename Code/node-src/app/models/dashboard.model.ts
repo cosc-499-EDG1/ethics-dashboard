@@ -10,7 +10,7 @@ import Account from './account/account.model';
     ],
 }))
 @Table
-export default class Dashboard extends Model<Dashboard> {
+export default class Dashboard extends Model {
     @PrimaryKey
     @AutoIncrement
     @Column

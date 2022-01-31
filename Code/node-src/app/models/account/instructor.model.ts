@@ -3,7 +3,7 @@ import Account from './account.model';
 import ClassGroup from '../classgroup.model';
 
 @Table
-export default class Instructor extends Model<Instructor> {
+export default class Instructor extends Model {
     @ForeignKey(() => Account)
     @Column
     instructorId: number;

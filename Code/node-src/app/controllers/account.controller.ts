@@ -61,12 +61,11 @@ class AccountController {
             return;
         }
 
-        const rest: any = {};
         const passwordHash = await bcrypt.hash(password, bcrypt.genSaltSync(10));
-        const account = new Account({ ...rest, username, email, first_name, last_name, type: 'student', password: passwordHash });
+        const account = new Account({ username, email, first_name, last_name, type: 'student', password: passwordHash });
         account
             .save()
-            .then(async () => { 
+            .then(async () => {
                 account.$add('studentClassList', classGroup);
                 res.status(200).json({ message: 'Account created successfully. You may now log in.', success: true });
             })
@@ -75,6 +74,21 @@ class AccountController {
                     message: `Error creating user account.`,
                 });
             });
+    };
+
+    getClassGroups = async (req, res, next) => {
+        const account = req.account as Account;
+        const student = await account.$get('studentClassList');
+        const teaching_assistant = await account.$get('taClassList');
+        const instructor = await account.$get('instructorClassList');
+        if (!student && !teaching_assistant && !instructor) {
+            return res.sendStatus(404);
+        }
+        return res.send({
+            student: student,
+            teaching_assistant: teaching_assistant,
+            instructor: instructor,
+        });
     };
 
     findAll = (req, res, next) => {

@@ -20,3 +20,6 @@ accounts.put('/update/:id', authorize(), AccountController.update);
 
 // Delete an account with id
 accounts.delete('/delete/:id', authorize(), AccountController.delete);
+
+// Retrieve class groups for own account
+accounts.get('/classes', authorize(), AccountController.getClassGroups);

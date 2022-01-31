@@ -43,6 +43,7 @@ import Instructor from './instructor.model';
                 as: 'instructorClassList',
             },
         ],
+        attributes: ['id', 'username', 'email', 'first_name', 'last_name', 'type', 'avatar', 'studentClassList', 'taClassList', 'instructorClassList', 'createdAt', 'updatedAt'],
     },
     studentClasses: {
         include: [
@@ -51,6 +52,7 @@ import Instructor from './instructor.model';
                 as: 'studentClassList',
             },
         ],
+        attributes: ['id', 'username', 'email', 'first_name', 'last_name', 'type', 'avatar', 'studentClassList', 'createdAt', 'updatedAt'],
     },
     taClasses: {
         include: [
@@ -59,18 +61,21 @@ import Instructor from './instructor.model';
                 as: 'taClassList',
             },
         ],
+        attributes: ['id', 'username', 'email', 'first_name', 'last_name', 'type', 'avatar', 'taClassList', 'createdAt', 'updatedAt'],
     },
     instructorClasses: {
         include: [
             {
                 model: ClassGroup,
                 as: 'instructorClassList',
+                through: { attributes: ['code', 'name'] },
             },
         ],
+        attributes: ['id', 'username', 'email', 'first_name', 'last_name', 'type', 'avatar', 'instructorClassList', 'createdAt', 'updatedAt'],
     },
 }))
 @Table
-export default class Account extends Model<Account> {
+export default class Account extends Model {
     @PrimaryKey
     @AutoIncrement
     @Column

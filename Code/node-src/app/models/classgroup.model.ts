@@ -21,6 +21,7 @@ import Instructor from './account/instructor.model';
     ],
 }))
 @Scopes(() => ({
+    none: {},
     students: {
         include: [
             {
@@ -47,7 +48,7 @@ import Instructor from './account/instructor.model';
     },
 }))
 @Table
-export default class ClassGroup extends Model<ClassGroup> {
+export default class ClassGroup extends Model {
     @PrimaryKey
     @AutoIncrement
     @Column
@@ -78,16 +79,4 @@ export default class ClassGroup extends Model<ClassGroup> {
     @UpdatedAt
     @Column
     updatedAt: Date;
-
-    getStudentCount(): number {
-        return this.getDataValue('students').length;
-    }
-
-    getTACount(): number {
-        return this.getDataValue('teaching_assistants').length;
-    }
-
-    getInstructorCount(): number {
-        return this.getDataValue('instructors').length;
-    }
 }

@@ -56,6 +56,20 @@ describe('Routes', () => {
             });
     });
 
+    //Test fetching classes student should be apart of
+    it('GET /account/classes integration test', done => {
+        request(app)
+            .get('/api/account/classes')
+            .set('Authorization', `Bearer ${token}`)
+            .expect(200)
+            .end((err, res) => {
+                if (!res.body.student.length) {
+                    throw new Error('Class assignment failed, received: ' + res.body);
+                }
+                done();
+            });
+    });
+
     //Test fetching all accounts
     it('GET /account integration test', done => {
         expect(token).toBeDefined();

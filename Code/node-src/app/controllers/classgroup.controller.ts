@@ -31,8 +31,7 @@ class ClassGroupController {
             return;
         }
 
-        const rest: any = {};
-        const classGroup = new ClassGroup({ ...rest, code: class_code, name });
+        const classGroup = new ClassGroup({ code: class_code, name });
         classGroup
             .save()
             .then(() => {
