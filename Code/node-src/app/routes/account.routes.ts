@@ -10,10 +10,10 @@ accounts.post('/register', AccountController.create);
 accounts.post('/login', AccountController.authenticate);
 
 // Retrieve all accounts
-accounts.get('/', AccountController.findAll);
+accounts.get('/', authorize(), AccountController.findAll);
 
 // Retrieve a single account by id
-accounts.get('/find/:id', AccountController.findOne);
+accounts.get('/find/:id', authorize(), AccountController.findOne);
 
 // Update an account with id
 accounts.put('/update/:id', authorize(), AccountController.update);
