@@ -26,7 +26,7 @@ const DeontologyOptions: FunctionComponent<DeontologyOptionsProps> = () => {
             <div className="md:flex">
                 <div className="dashboard-optionsblock">
                     <div className="md:flex">
-                        <div className="md:block">
+                        <div className="min-w-384px">
                             <div className="dashboard-options">
                                 <label className="text-3xl font-bold">
                                     Option 1
@@ -59,7 +59,7 @@ const DeontologyOptions: FunctionComponent<DeontologyOptionsProps> = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="md:block">
+                        <div className="min-w-384px">
                             <div className="dashboard-options">
                                 <label className="text-3xl font-bold">
                                     Option 2
@@ -69,25 +69,25 @@ const DeontologyOptions: FunctionComponent<DeontologyOptionsProps> = () => {
                                 </label>
                             </div>
                             <div className="dashboard-motivation">
-                                <div className="text-3xl font-bold">
+                                <div className="text-3xl font-bold text-gray-400">
                                     What is your motivation?
                                     <br></br>
-                                    <input type="checkbox" value="your-interests"></input>
+                                    <input type="checkbox" value="your-interests" disabled></input>
                                     <label className="mx-4 text-lg">Serves your interests</label><br></br>
-                                    <input type="checkbox" value="someones-interests"></input>
+                                    <input type="checkbox" value="someones-interests" disabled></input>
                                     <label className="mx-4 text-lg">Serves the interests of someone else you want to impress</label><br></br>
-                                    <input type="checkbox" value="look-good"></input>
+                                    <input type="checkbox" value="look-good" disabled></input>
                                     <label className="mx-4 text-lg">It will look good</label><br></br>
-                                    <input type="checkbox" value="long-run"></input>
+                                    <input type="checkbox" value="long-run" disabled></input>
                                     <label className="mx-4 text-lg">It will pay off in the long run</label><br></br>
-                                    <input type="checkbox" value="everybody-wins"></input>
+                                    <input type="checkbox" value="everybody-wins" disabled></input>
                                     <label className="mx-4 text-lg">Everybody wins</label><br></br>
-                                    <input type="checkbox" value="revenge"></input>
+                                    <input type="checkbox" value="revenge" disabled></input>
                                     <label className="mx-4 text-lg">Revenge</label><br></br>
-                                    <input type="checkbox" value="other"></input>
+                                    <input type="checkbox" value="other" disabled></input>
                                     <label className="mx-4 text-lg">Other</label>
-                                    <input type="text"></input><br></br>
-                                    <input type="checkbox" value="right-thing"></input>
+                                    <input type="text" disabled></input><br></br>
+                                    <input type="checkbox" value="right-thing" disabled></input>
                                     <label className="mx-4 text-lg">It's the right thing to do</label><br></br>
                                 </div>
                             </div>

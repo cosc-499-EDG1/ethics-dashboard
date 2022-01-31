@@ -8,6 +8,8 @@ import UtilitarianismStakeholders from "./components/utilitarianism/utilitariani
 import UtilitarianismPleasure from "./components/utilitarianism/utilitarianism-pleasure";
 
 import DeontologyOptions from "./components/deontology/deontology-options";
+import DeontologyHypothetical from "./components/deontology/deontology-hypothetical";
+import DeontologyCategorical from "./components/deontology/deontology-categorical";
 
 import { StoreProvider } from "easy-peasy";
 import MainStore from "./stores/index.store";
@@ -41,6 +43,8 @@ function App() {
             <Route path="/utilitarianism-stakeholders" component={UtilitarianismStakeholders} />
             <Route path="/utilitarianism-pleasure" component={UtilitarianismPleasure} />
             <Route path="/deontology-options" component={DeontologyOptions} />
+            <Route path="/deontology-hypothetical" component={DeontologyHypothetical} />
+            <Route path="/deontology-categorical" component={DeontologyCategorical} />
             <Route path="/logout" component={Logout} />
             <PrivateRoute
               exact
