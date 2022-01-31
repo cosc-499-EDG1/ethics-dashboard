@@ -1,4 +1,4 @@
-import Account from "../../../node-src/build/app/models/account.model";
+import Account from "../../../node-src/build/app/models/account/account.model";
 import http from "../helpers/http";
 import { LoginData, RegisterData } from "../stores/account.store";
 
