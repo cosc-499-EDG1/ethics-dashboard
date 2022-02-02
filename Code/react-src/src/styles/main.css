@@ -43,15 +43,23 @@
 }
 
 .dashboard-aggregate {
-  @apply mx-20 my-5 px-5 w-6/12 justify-center border-black border-2;
+  @apply mx-20 my-5 px-5 w-6/12 min-h-128 max-h-144 justify-center overflow-y-auto border-black border-2;
 }
 
 .dashboard-optionsblock {
-  @apply mx-20 mt-5 px-5 w-10/12 justify-center;
+  @apply mx-20 mt-5 px-5 pt-4 min-w-512px justify-center overflow-x-auto border-black border-2;
+}
+
+.dashboard-hypotheticalblock {
+  @apply mx-20 mt-5 px-5 justify-center w-10/12;
 }
 
 .dashboard-options {
   @apply mx-4 p-4 justify-center border-black border-2;
+}
+
+.dashboard-hypothetical {
+  @apply mx-4 p-4 justify-center bg-white border-black border-2;
 }
 
 .dashboard-motivation {
