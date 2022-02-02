@@ -1,7 +1,7 @@
 import AccountService, { AccountResponse } from "../services/account.service";
 
 import { Action, action, Computed, computed, Thunk, thunk } from "easy-peasy";
-import Account from "../../../node-src/build/app/models/account.model";
+import Account from "../../../node-src/build/app/models/account/account.model";
 
 export interface LoginData {
   username: string;

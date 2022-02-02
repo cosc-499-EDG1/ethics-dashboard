@@ -1,10 +1,11 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { Op } from 'sequelize';
-import Account from '../models/account.model';
 import dotenv from 'dotenv';
 dotenv.config({ path: 'jwt.env' });
 
+import Account from '../models/account/account.model';
+import ClassGroup from '../models/classgroup.model';
 class AccountController {
     authenticate = async (req, res, next) => {
         const { username, password } = req.body;
@@ -29,24 +30,43 @@ class AccountController {
     };
 
     create = async (req, res, next) => {
-        const { username, password, email } = req.body;
-        const existing = await Account.findOne({ where: {
-            [Op.or]: [
-              { username: username },
-              { email: email }
-            ]
-        }});
+        const { username, password, email, first_name, last_name, class_code } = req.body;
+        if (!username || !password || !email || !first_name || !last_name || !class_code) {
+            res.status(400).send({
+                message: 'Invalid form data.',
+            });
+            return;
+        }
+        const existing = await Account.findOne({
+            where: {
+                [Op.or]: [{ username: username }, { email: email }],
+            },
+        });
         if (existing) {
             res.send({
                 message: 'Username or email already exists',
             });
             return;
         }
+
+        const classGroup = await ClassGroup.findOne({
+            where: {
+                code: class_code,
+            },
+        });
+        if (!classGroup) {
+            res.send({
+                message: 'Invalid class code',
+            });
+            return;
+        }
+
         const passwordHash = await bcrypt.hash(password, bcrypt.genSaltSync(10));
-        const account = new Account({ ...req.body, type: 'student', password: passwordHash });
+        const account = new Account({ username, email, first_name, last_name, type: 'student', password: passwordHash });
         account
             .save()
-            .then(() => {
+            .then(async () => {
+                account.$add('studentClassList', classGroup);
                 res.status(200).json({ message: 'Account created successfully. You may now log in.', success: true });
             })
             .catch(err => {
@@ -54,6 +74,21 @@ class AccountController {
                     message: `Error creating user account.`,
                 });
             });
+    };
+
+    getClassGroups = async (req, res, next) => {
+        const account = req.account as Account;
+        const student = await account.$get('studentClassList');
+        const teaching_assistant = await account.$get('taClassList');
+        const instructor = await account.$get('instructorClassList');
+        if (!student && !teaching_assistant && !instructor) {
+            return res.sendStatus(404);
+        }
+        return res.send({
+            student: student,
+            teaching_assistant: teaching_assistant,
+            instructor: instructor,
+        });
     };
 
     findAll = (req, res, next) => {
@@ -76,7 +111,7 @@ class AccountController {
 
     delete = (req, res, next) => {
         const account = req.account as Account;
-        if (!account.type || !account.isAdmin()) {
+        if (!account.type || (!account.isAdmin() && !account.isProfessor())) {
             return res.sendStatus(403);
         }
         //TODO: IMPLEMENT

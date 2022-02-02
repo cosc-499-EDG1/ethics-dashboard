@@ -1,5 +1,5 @@
 import jwt from 'express-jwt';
-import Account from '../models/account.model';
+import Account from '../models/account/account.model';
 import dotenv from 'dotenv';
 dotenv.config({ path: 'jwt.env' });
 
