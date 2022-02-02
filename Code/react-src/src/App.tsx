@@ -20,6 +20,7 @@ import Register from "./components/register/register";
 import Issues from "./components/Issues/Issues";
 import Logout from "./components/login/logout";
 import MyAccount from "./components/account/myaccount";
+import DashboardHome from "./components/dashboard-home/dashboard-home";
 
 
 function App() {
@@ -33,9 +34,8 @@ function App() {
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/Issues" component={Issues} />
-            <Route path="/dashboard">
-              <div>Dashboard Component</div>
-            </Route>
+            <Route path="/dashboard" component={DashboardHome}/>
+           
             <Route path="/stakeholders" component={Stakeholders} />
             <Route path="/utilitarianism-options" component={UtilitarianismOptions} />
             <Route path="/utilitarianism-stakeholders" component={UtilitarianismStakeholders} />
