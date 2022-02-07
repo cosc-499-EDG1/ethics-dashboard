@@ -10,6 +10,7 @@ import UtilitarianismPleasure from "./components/utilitarianism/utilitarianism-p
 import DeontologyOptions from "./components/deontology/deontology-options";
 import DeontologyHypothetical from "./components/deontology/deontology-hypothetical";
 import DeontologyCategorical from "./components/deontology/deontology-categorical";
+import DeontologyTestingCategorical from "./components/deontology/deontology-testing-categorical";
 
 import { StoreProvider } from "easy-peasy";
 import MainStore from "./stores/index.store";
@@ -45,6 +46,7 @@ function App() {
             <Route path="/deontology-options" component={DeontologyOptions} />
             <Route path="/deontology-hypothetical" component={DeontologyHypothetical} />
             <Route path="/deontology-categorical" component={DeontologyCategorical} />
+            <Route path="/deontology-testing-categorical" component={DeontologyTestingCategorical} />
             <Route path="/logout" component={Logout} />
             <PrivateRoute
               exact

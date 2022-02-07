@@ -18,11 +18,6 @@ const DeontologyCategorical: FunctionComponent<DeontologyCategoricalProps> = () 
                     <p>Unlike hypothetical imperatives, categorical imperatives are not relative to a desire or goal</p>
                 </div>
             </div>
-            <div className="pt-30">
-                <p>
-                    
-                </p>
-            </div>
             <div className="md:flex">
                 <div className="dashboard-hypotheticalblock">
                     <div className="dashboard-options">
