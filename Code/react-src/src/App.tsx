@@ -11,6 +11,7 @@ import DeontologyOptions from "./components/deontology/deontology-options";
 import DeontologyHypothetical from "./components/deontology/deontology-hypothetical";
 import DeontologyCategorical from "./components/deontology/deontology-categorical";
 import DeontologyTestingCategorical from "./components/deontology/deontology-testing-categorical";
+import DeontologyMoralLaw from "./components/deontology/deontology-moral-law";
 
 import { StoreProvider } from "easy-peasy";
 import MainStore from "./stores/index.store";
@@ -47,6 +48,7 @@ function App() {
             <Route path="/deontology-hypothetical" component={DeontologyHypothetical} />
             <Route path="/deontology-categorical" component={DeontologyCategorical} />
             <Route path="/deontology-testing-categorical" component={DeontologyTestingCategorical} />
+            <Route path="/deontology-moral-law" component={DeontologyMoralLaw} />
             <Route path="/logout" component={Logout} />
             <PrivateRoute
               exact

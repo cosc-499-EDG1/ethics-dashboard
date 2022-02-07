@@ -7,7 +7,7 @@ const DeontologyTestingCategorical: FunctionComponent<DeontologyTestingCategoric
     return(
         <div className="site-dashboard">
             <div className="pt-20 px-20 flex justify-between">
-                <div className="font-bold text-7xl w-1/3">
+                <div className="font-bold text-7xl mr-8">
                     <h1>Deontology</h1>
                 </div>
                 <div className="text-3xl text-center font-bold bg-white rounded-lg w-256 py-4 px-2">
