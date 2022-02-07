@@ -7,6 +7,7 @@ import { Server } from 'http';
 /* Import Routes Here */
 import { accounts } from './routes/account.routes';
 import { classGroups } from './routes/classgroup.routes';
+import { dashboards } from './routes/dashboard.routes';
 /* End Import Routes */
 
 export const app = express();
@@ -33,6 +34,7 @@ export const initApp = async (): Promise<Server> => {
     /* Routes */
     app.use('/api/account', accounts);
     app.use('/api/groups', classGroups);
+    app.use('/api/dashboard', dashboards);
     /* End Routes */
 
     const PORT = process.env.PORT || 8080;
