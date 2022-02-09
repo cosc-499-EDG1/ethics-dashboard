@@ -11,6 +11,11 @@ import DeontologyOptions from "./components/deontology/deontology-options";
 import DeontologyHypothetical from "./components/deontology/deontology-hypothetical";
 import DeontologyCategorical from "./components/deontology/deontology-categorical";
 
+import VirtueEthicsBall from "./components/virtueEthics/VirtueEthics-Ball";
+import VirtueEthicsCharacter from "./components/virtueEthics/virtueEthics-Character";
+import VirtueEthicsStakeholders from "./components/virtueEthics/virtueEthics-Stakeholders";
+import VirtueEthicsRankBal from "./components/virtueEthics/virtueEthics-RankBalance";
+
 import { StoreProvider } from "easy-peasy";
 import MainStore from "./stores/index.store";
 
@@ -45,6 +50,11 @@ function App() {
             <Route path="/deontology-options" component={DeontologyOptions} />
             <Route path="/deontology-hypothetical" component={DeontologyHypothetical} />
             <Route path="/deontology-categorical" component={DeontologyCategorical} />
+            <Route path="/virtueEthics-Ball" component={VirtueEthicsBall} />
+            <Route path="/virtueEthics-Character" component={VirtueEthicsCharacter} />
+            <Route path="/virtueEthics-Stakeholders" component={VirtueEthicsStakeholders} />
+            <Route path="/virtueEthics-RankBalance" component={VirtueEthicsRankBal} />
+            
             <Route path="/logout" component={Logout} />
             <PrivateRoute
               exact

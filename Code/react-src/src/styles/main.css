@@ -66,6 +66,14 @@
   @apply mx-4 my-5 p-4 justify-center border-black border-2;
 }
 
+.dashboard-character {
+  @apply mx-20 my-5 px-5 pt-5 w-10/12 justify-center border-black border-2;
+}
+
+.dashboard-virtueRank {
+  @apply mx-20 my-5 px-5 pt-5 w-10/12 justify-center border-black border-2;
+}
+
 .navbar-link {
   @apply block mt-4 lg:inline-block lg:mt-1 text-blue-600 hover:text-blue-900 mr-4;
 }
