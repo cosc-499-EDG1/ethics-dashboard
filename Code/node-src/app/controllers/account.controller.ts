@@ -1,13 +1,14 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { Op } from 'sequelize';
+import { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 dotenv.config({ path: 'jwt.env' });
 
 import Account from '../models/account/account.model';
 import ClassGroup from '../models/classgroup.model';
 class AccountController {
-    authenticate = async (req, res, next) => {
+    authenticate = async (req: Request, res: Response, next: NextFunction) => {
         const { username, password } = req.body;
         if (!username || !password) {
             res.send({
@@ -29,7 +30,7 @@ class AccountController {
         res.send({ account, token });
     };
 
-    create = async (req, res, next) => {
+    create = async (req: Request, res: Response, next: NextFunction) => {
         const { username, password, email, first_name, last_name, class_code } = req.body;
         if (!username || !password || !email || !first_name || !last_name || !class_code) {
             res.status(400).send({
@@ -76,8 +77,8 @@ class AccountController {
             });
     };
 
-    getClassGroups = async (req, res, next) => {
-        const account = req.account as Account;
+    getClassGroups = async (req: Request, res: Response, next: NextFunction) => {
+        const account = req.account;
         const student = await account.$get('studentClassList');
         const teaching_assistant = await account.$get('taClassList');
         const instructor = await account.$get('instructorClassList');
@@ -91,12 +92,12 @@ class AccountController {
         });
     };
 
-    findAll = (req, res, next) => {
+    findAll = (req: Request, res: Response, next: NextFunction) => {
         //TODO: IMPLEMENT
         return res.sendStatus(200);
     };
 
-    findOne = (req, res, next) => {
+    findOne = (req: Request, res: Response, next: NextFunction) => {
         //TODO: IMPLEMENT
         return res.sendStatus(200);
     };
@@ -104,14 +105,14 @@ class AccountController {
     /**
      * For account security, check the type of req.account in these functions.
      */
-    update = async (req, res, next) => {
+    update = async (req: Request, res: Response, next: NextFunction) => {
         //TODO: IMPLEMENT
         return res.sendStatus(200);
     };
 
-    delete = (req, res, next) => {
-        const account = req.account as Account;
-        if (!account.type || (!account.isAdmin() && !account.isProfessor())) {
+    delete = (req: Request, res: Response, next: NextFunction) => {
+        const account = req.account;
+        if (!account.isAdmin()) {
             return res.sendStatus(403);
         }
         //TODO: IMPLEMENT
