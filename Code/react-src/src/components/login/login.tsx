@@ -23,6 +23,9 @@ const Login: FunctionComponent<LoginProps> = () => {
   }, []);
 
   const attemptLogin = async () => {
+    if (!username || !password) {
+      return;
+    }
     setIsLoading(true);
     const data = await login({ username: username, password: password });
     setIsLoading(false);
