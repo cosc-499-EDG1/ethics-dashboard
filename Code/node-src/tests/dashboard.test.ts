@@ -8,35 +8,25 @@ import { app } from '../app/app';
  */
 describe('Routes', () => {
     //Test dashboard creation route
-    it('CREATE /dashboard/create integration test', done => {
-        request(app).post('/api/dashboard/create').set('Authorization', `Bearer ${global.adminToken}`).send({ name: 'Dashboard Test', type: 'dashboard' }).expect(200).expect(res => {
-            if (res.body.message !== 'Dashboard created successfully') {
-                throw new Error('Checking dashboard creation failed, received: ' + res.body.message);
-            }
-        }).end(done);
+    it('CREATE /dashboard/create integration test', async () => {
+        const req = await request(app).post('/api/dashboard/create').set('Authorization', `Bearer ${global.adminToken}`).send({ name: 'Dashboard Test', type: 'dashboard' });
+        expect(req.statusCode).toBe(200);
+        expect(req.body.message).toContain('Dashboard created successfully');
     });
 
-    it('CREATE /dashboard/create user integration test', done => {
-        request(app).post('/api/dashboard/create').set('Authorization', `Bearer ${global.userToken}`).send({ name: 'Dashboard Test User', type: 'dashboard' }).expect(200).expect(res => {
-            if (res.body.message !== 'Dashboard created successfully') {
-                throw new Error('Checking dashboard creation failed, received: ' + res.body.message);
-            }
-        }).end(done);
+    it('CREATE /dashboard/create user integration test', async () => {
+        const req = await request(app).post('/api/dashboard/create').set('Authorization', `Bearer ${global.userToken}`).send({ name: 'Dashboard Test User', type: 'dashboard' });
+        expect(req.statusCode).toBe(200);
+        expect(req.body.message).toContain('Dashboard created successfully');
     });
 
-    it('GET /dashboard/find/id authorization integration test', done => {
-        request(app)
-            .get('/api/dashboard/find/1')
-            .set('Authorization', `Bearer ${global.userToken}`)
-            .expect(403)
-            .end(done);
+    it('GET /dashboard/find/id authorization integration test', async () => {
+        const req = await request(app).get('/api/dashboard/find/1').set('Authorization', `Bearer ${global.userToken}`);
+        expect(req.statusCode).toBe(403);
     });
 
-    it('GET /dashboard/find/id integration test', done => {
-        request(app)
-            .get('/api/dashboard/find/2')
-            .set('Authorization', `Bearer ${global.userToken}`)
-            .expect(200)
-            .end(done);
+    it('GET /dashboard/find/id integration test', async () => {
+        const req = await request(app).get('/api/dashboard/find/2').set('Authorization', `Bearer ${global.userToken}`);
+        expect(req.statusCode).toBe(200);
     });
 });
