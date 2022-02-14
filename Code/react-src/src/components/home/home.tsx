@@ -7,7 +7,7 @@ interface HomeProps {}
 const Home: FunctionComponent<HomeProps> = () => {
   return (
     <div className="site-main">
-      <div className="bg-yellow-200 p-5 flex items-center justify-center flex-col w-6/12 rounded-lg shadow-lg">
+      <div className="bg-secondary p-5 flex items-center justify-center flex-col w-6/12 rounded-lg shadow-lg">
         <div className="w-full max-w-s">
           <h1 className="text-3xl font-bold text-center">
             Welcome to the Ethics Dashboard!

@@ -1,6 +1,9 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { useStoreActions, useStoreState } from "../../stores/index.store";
+import { Button } from "../global/button";
+import { Form } from "../global/form";
+import { FormInput } from "../global/forminput";
 
 interface LoginProps {}
 
@@ -37,7 +40,7 @@ const Login: FunctionComponent<LoginProps> = () => {
   if (isLoggedIn) {
     return (
       <div className="site-main">
-        <div className="bg-yellow-200 p-5 flex items-center justify-center flex-col w-6/12 rounded-lg shadow-lg">
+        <div className="bg-secondary p-5 flex items-center justify-center flex-col w-6/12 rounded-lg shadow-lg">
           <div className="w-full max-w-s">
             <div className="text-green-500 text-center italic font-bold">
               You are already logged in!
@@ -48,84 +51,56 @@ const Login: FunctionComponent<LoginProps> = () => {
     );
   }
 
+  const formInputs = [
+    <FormInput
+      key="username"
+      label="Username"
+      type="text"
+      placeholder="Username"
+      value={username}
+      onChange={(e) => setUsername(e.target.value)}
+    />,
+    <FormInput
+      key="password"
+      label="Password"
+      type="password"
+      placeholder="******************"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+    />,
+  ];
+
+  const formActions = [
+    <div className="flex items-center justify-around">
+      <Button text={"Sign In"} formSubmit={true} />
+      <Link
+        to="/register"
+        className="inline-block align-baseline font-bold text-sm text-gray-500 hover:text-gray-800 m-5"
+      >
+        Don't have an account?{" "}
+        <span className="text-primary underline">Sign Up</span>
+      </Link>
+    </div>,
+    <Link
+      to="/forgotpassword"
+      className="inline-block align-baseline font-bold text-sm text-gray-500 hover:text-gray-800"
+    >
+      Forgot Password?
+    </Link>,
+  ];
+
   return (
     <div className="site-main">
-      <div className="bg-yellow-200 p-5 flex items-center justify-center flex-col w-6/12 rounded-lg shadow-lg">
+      <div className="bg-secondary p-5 flex items-center justify-center flex-col w-6/12 rounded-lg shadow-lg">
         <div className="w-full max-w-s">
-          <form
-            id="loginForm"
-            onSubmit={(e) => {
-              e.preventDefault();
-              attemptLogin();
-            }}
-            noValidate
-          >
-            {errorMessage && !isLoading && (
-              <div className="text-red-500 text-center italic font-bold">
-                {errorMessage}
-              </div>
-            )}
-            {isLoading && (
-              <div className="flex justify-center">
-                <div className="loading-spinner w-16 h-16"></div>
-              </div>
-            )}
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="username"
-              >
-                Username
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="username"
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div className="mb-6">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="password"
-              >
-                Password
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="password"
-                type="password"
-                placeholder="******************"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center justify-around">
-                <button
-                  className="btn"
-                  type="submit"
-                >
-                  Sign In
-                </button>
-                <Link
-                  to="/register"
-                  className="inline-block align-baseline font-bold text-sm text-gray-500 hover:text-gray-800 m-5"
-                >
-                  Don't have an account?{" "}
-                  <span className="text-yellow-600 underline">Sign Up</span>
-                </Link>
-              </div>
-              <Link
-                to="/forgotpassword"
-                className="inline-block align-baseline font-bold text-sm text-gray-500 hover:text-gray-800"
-              >
-                Forgot Password?
-              </Link>
-            </div>
-          </form>
+          <Form
+            inputs={formInputs}
+            actions={formActions}
+            isLoading={isLoading}
+            wasSuccess={false}
+            onSubmit={attemptLogin}
+            message={errorMessage}
+          />
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ const MyAccount: FunctionComponent<MyAccountProps> = () => {
     }
     return (
     <div className="site-main">
-      <div className="bg-yellow-200 p-5 flex items-center justify-center flex-col w-6/12 rounded-lg shadow-lg">
+      <div className="bg-secondary p-5 flex items-center justify-center flex-col w-6/12 rounded-lg shadow-lg">
         <div className="w-full max-w-s">
           <div className="flex flex-col">
             <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
