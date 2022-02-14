@@ -14,6 +14,7 @@ import {
     HasMany,
     Length,
     BelongsToMany,
+    BelongsTo,
 } from 'sequelize-typescript';
 import { Blob } from 'buffer';
 import ClassGroup from '../classgroup.model';
