@@ -16,6 +16,8 @@ import VirtueEthicsCharacter from "./components/virtueEthics/virtueEthics-Charac
 import VirtueEthicsStakeholders from "./components/virtueEthics/virtueEthics-Stakeholders";
 import VirtueEthicsRankBal from "./components/virtueEthics/virtueEthics-RankBalance";
 
+import CareEthics from "./components/care/care-ethics";
+
 import { StoreProvider } from "easy-peasy";
 import MainStore from "./stores/index.store";
 
@@ -54,6 +56,7 @@ function App() {
             <Route path="/virtueEthics-Character" component={VirtueEthicsCharacter} />
             <Route path="/virtueEthics-Stakeholders" component={VirtueEthicsStakeholders} />
             <Route path="/virtueEthics-RankBalance" component={VirtueEthicsRankBal} />
+            <Route path="/care-ethics" component={CareEthics} />
             
             <Route path="/logout" component={Logout} />
             <PrivateRoute
