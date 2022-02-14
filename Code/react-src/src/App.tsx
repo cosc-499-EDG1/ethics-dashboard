@@ -10,6 +10,8 @@ import UtilitarianismPleasure from "./components/utilitarianism/utilitarianism-p
 import DeontologyOptions from "./components/deontology/deontology-options";
 import DeontologyHypothetical from "./components/deontology/deontology-hypothetical";
 import DeontologyCategorical from "./components/deontology/deontology-categorical";
+import DeontologyTestingCategorical from "./components/deontology/deontology-testing-categorical";
+import DeontologyMoralLaw from "./components/deontology/deontology-moral-law";
 
 import VirtueEthicsBall from "./components/virtueEthics/VirtueEthics-Ball";
 import VirtueEthicsCharacter from "./components/virtueEthics/virtueEthics-Character";
@@ -52,12 +54,13 @@ function App() {
             <Route path="/deontology-options" component={DeontologyOptions} />
             <Route path="/deontology-hypothetical" component={DeontologyHypothetical} />
             <Route path="/deontology-categorical" component={DeontologyCategorical} />
+            <Route path="/deontology-testing-categorical" component={DeontologyTestingCategorical} />
+            <Route path="/deontology-moral-law" component={DeontologyMoralLaw} />
             <Route path="/virtueEthics-Ball" component={VirtueEthicsBall} />
             <Route path="/virtueEthics-Character" component={VirtueEthicsCharacter} />
             <Route path="/virtueEthics-Stakeholders" component={VirtueEthicsStakeholders} />
             <Route path="/virtueEthics-RankBalance" component={VirtueEthicsRankBal} />
             <Route path="/care-ethics" component={CareEthics} />
-            
             <Route path="/logout" component={Logout} />
             <PrivateRoute
               exact
