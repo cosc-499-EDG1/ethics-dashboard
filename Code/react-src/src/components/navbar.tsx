@@ -131,7 +131,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 onClick={() => setMenuOpen(!menuOpen)}
               >
                 <svg
-                  className="w-8 h-8 text-gray-500 hover:text-yellow-500"
+                  className="w-8 h-8 text-gray-500 hover:text-primary"
                   fill="none"
                   strokeLinecap="round"
                   strokeLinejoin="round"

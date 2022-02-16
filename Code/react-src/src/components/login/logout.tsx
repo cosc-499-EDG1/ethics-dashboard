@@ -22,7 +22,7 @@ const Logout: FunctionComponent<LogoutProps> = () => {
 
   return (
     <div className="site-main">
-      <div className="bg-yellow-200 p-5 flex items-center justify-center flex-col w-6/12 rounded-lg shadow-lg">
+      <div className="bg-secondary p-5 flex items-center justify-center flex-col w-6/12 rounded-lg shadow-lg">
         <div className="w-full max-w-s">
           You have been logged out. You will be redirected to the login page in
           5 seconds.
