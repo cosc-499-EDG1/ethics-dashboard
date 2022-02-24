@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { QueryTypes } from 'sequelize';
-import { initApp } from '../app';
+import { initApp } from '../app/app';
 import { db } from '../app/database';
 import dotenv from 'dotenv';
 dotenv.config({ path: 'jwt.env' });

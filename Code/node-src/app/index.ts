@@ -1,44 +1,30 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import cors from 'cors';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { QueryTypes } from 'sequelize';
+import { initApp } from './app';
 import { db } from './database';
-import { Server } from 'http';
 
-/* Import Routes Here */
-import { accounts } from './routes/account.routes';
-import { classGroups } from './routes/classgroup.routes';
-import { dashboards } from './routes/dashboard.routes';
-/* End Import Routes */
+setImmediate(async () => {
+    await initApp();
 
-export const app = express();
-
-export const initApp = async (): Promise<Server> => {
-    //TODO: setup cors on deployment server
-    const corsOptions = {
-        origin: ['http://localhost:3000'],
-    };
-
-    app.use(cors(corsOptions));
-
-    // parse requests of content-type - application/json
-    app.use(bodyParser.json({ limit: '16MB' }));
-
-    // parse requests of content-type - application/x-www-form-urlencoded
-    app.use(bodyParser.urlencoded({ extended: true }));
-
-    //Init DB - uncomment the await db.sync() once you want to keep data in the DB.
-    // remember to comment the "force: true" one afterwards
-    //await db.sync();
-    await db.sync({ force: true });
-
-    /* Routes */
-    app.use('/api/account', accounts);
-    app.use('/api/groups', classGroups);
-    app.use('/api/dashboard', dashboards);
-    /* End Routes */
-
-    const PORT = process.env.PORT || 8080;
-    return app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}.`);
-    });
-};
+    /* Debug Accounts */
+    if ((process.env.NODE_ENV ?? 'development') === 'development') {
+        const createUser = async (username, email, first_name, last_name, password, type) => {
+            const passwordHash = await bcrypt.hash(password, bcrypt.genSaltSync(10));
+            const sql = `
+                   INSERT IGNORE INTO Accounts (username, email, first_name, last_name, type, password)
+                   VALUES ('${username}', '${email}', '${first_name}', '${last_name}', '${type}', '${passwordHash}');
+                 `;
+            db.getQueryInterface();
+            return db.query(sql, { type: QueryTypes.INSERT });
+        };
+        await createUser('admin', 'admin@admin.com', 'Admin', 'Admin', 'admin', 'manager');
+        await createUser('user', 'user@user.com', 'User', 'User', 'user', 'student');
+        const sql = `
+                   INSERT IGNORE INTO ClassGroups (code, name)
+                   VALUES ('AAAAA', 'test class group');
+             `;
+        db.getQueryInterface();
+        db.query(sql, { type: QueryTypes.INSERT });
+    }
+});
