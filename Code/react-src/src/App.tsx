@@ -20,6 +20,8 @@ import VirtueEthicsRankBal from "./components/virtueEthics/virtueEthics-RankBala
 
 import CareEthics from "./components/care/care-ethics";
 
+import MyProgressReport from "./components/my-progress/my-progress-report";
+
 import { StoreProvider } from "easy-peasy";
 import MainStore from "./stores/index.store";
 
@@ -61,6 +63,7 @@ function App() {
             <Route path="/virtueEthics-Stakeholders" component={VirtueEthicsStakeholders} />
             <Route path="/virtueEthics-RankBalance" component={VirtueEthicsRankBal} />
             <Route path="/care-ethics" component={CareEthics} />
+            <Route path="/my-progress-report" component={MyProgressReport} />
             <Route path="/logout" component={Logout} />
             <PrivateRoute
               exact
