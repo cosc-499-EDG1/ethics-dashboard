@@ -19,7 +19,7 @@ const OptionsPleasureOutput: FunctionComponent<OptionsPleasureOutputProps> =
             </p>
             <div className="h-24 my-2 flex justify-center items-center bg-white">
                 <p className="inline mx-3">Pleasure</p>
-                <input className="average-slider" type="range" min="10" max="100" value={option.valueST}></input>
+                <input className="average-slider" type="range" min="0" max="100" value={option.valueST}></input>
                 <p className="inline mx-3">Pain</p>
             </div>
             <p className="mt-5 text-3xl font-bold text-red-700">
@@ -27,7 +27,7 @@ const OptionsPleasureOutput: FunctionComponent<OptionsPleasureOutputProps> =
             </p>
             <div className="h-24 my-2 flex justify-center items-center bg-white">
                 <p className="inline mx-3">Pleasure</p>
-                <input className="average-slider" type="range" min="10" max="100" value={option.valueLT}></input>
+                <input className="average-slider" type="range" min="0" max="100" value={option.valueLT}></input>
                 <p className="inline mx-3">Pain</p>
             </div>
         </label>
