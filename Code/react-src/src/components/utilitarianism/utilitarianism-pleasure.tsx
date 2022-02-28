@@ -1,10 +1,32 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { Link } from "react-router-dom";
 import StakeholderPleasureInput from "./stakeholder-pleasure-input";
+import OptionsPleasureOutput from "./options-pleasure-output";
 
 interface UtilitarianismPleasureProps {}
+const numStakeholder = 3;
+var stakeholderValues = new Array(numStakeholder);
+for (let value = 0; value < stakeholderValues.length; value++) {
+    stakeholderValues[value] = 50;
+}
 
 const UtilitarianismPleasure: FunctionComponent<UtilitarianismPleasureProps> = () => {
+    const [valueChanged, setValue] = useState(50);
+
+    const changedValue = async (value: string, id: string) => {
+        const cValue = parseInt(value) * 10;
+        const cID = parseInt(id);
+        var average = 0;
+        for (let i = 0; i < stakeholderValues.length; i++) {
+            if (i === (cID-1)) {
+                stakeholderValues[i] = cValue;
+            }
+            average = average + stakeholderValues[i];
+        }
+        average = average / numStakeholder;
+        setValue(average);
+    };
+
     return(
         <div className="site-dashboard">
             <div className="dashboard-title">
@@ -31,54 +53,14 @@ const UtilitarianismPleasure: FunctionComponent<UtilitarianismPleasureProps> = (
                         <p className="text-4xl font-bold text-blue-500">
                             Short-term Consequences
                         </p>
-                        <StakeholderPleasureInput stakeholder={{id: 1, data: "Stakeholder 1 (Inputed from Stakeholders page)"}} />
-                        <StakeholderPleasureInput stakeholder={{id: 2, data: "Stakeholder 2 (Inputed from Stakeholders page)"}} />
-                        <StakeholderPleasureInput stakeholder={{id: 3, data: "Stakeholder 3 (Inputed from Stakeholders page)"}} />
+                        <StakeholderPleasureInput stakeholder={{id: 1, data: "Stakeholder 1 (Inputed from Stakeholders page)", value: 5, onChange: (e) => changedValue(e.target.value, e.target.id)}} />
+                        <StakeholderPleasureInput stakeholder={{id: 2, data: "Stakeholder 2 (Inputed from Stakeholders page)", value: 5, onChange: (e) => changedValue(e.target.value, e.target.id)}} />
+                        <StakeholderPleasureInput stakeholder={{id: 3, data: "Stakeholder 3 (Inputed from Stakeholders page)", value: 5, onChange: (e) => changedValue(e.target.value, e.target.id)}} />
                     </label>
                 </div>
                 <div className="dashboard-aggregate">
-                    <div className="bg-gray-300 p-6 my-6">
-                        <label className="text-3xl font-bold">
-                            Option 1
-                            <p className="text-4xl font-bold text-blue-700">
-                                Aggregate of short-term outcomes
-                            </p>
-                            <div className="h-24 my-2 flex justify-center items-center bg-white">
-                                <p className="inline mx-3">Pleasure</p>
-                                <input type="range" min="1" max="10" value="5"></input>
-                                <p className="inline mx-3">Pain</p>
-                            </div>
-                            <p className="text-4xl font-bold text-red-700">
-                                Aggregate of long-term outcomes
-                            </p>
-                            <div className="h-24 my-2 flex justify-center items-center bg-white">
-                                <p className="inline mx-3">Pleasure</p>
-                                <input type="range" min="1" max="10" value="5"></input>
-                                <p className="inline mx-3">Pain</p>
-                            </div>
-                        </label>
-                    </div>
-                    <div className="bg-gray-300 p-6 my-6">
-                        <label className="text-3xl font-bold">
-                            Option 2
-                            <p className="text-4xl font-bold text-blue-700">
-                                Aggregate of short-term outcomes
-                            </p>
-                            <div className="h-24 my-2 flex justify-center items-center bg-white">
-                                <p className="inline mx-3">Pleasure</p>
-                                <input type="range" min="1" max="10" value="5"></input>
-                                <p className="inline mx-3">Pain</p>
-                            </div>
-                            <p className="text-4xl font-bold text-red-700">
-                                Aggregate of long-term outcomes
-                            </p>
-                            <div className="h-24 my-2 flex justify-center items-center bg-white">
-                                <p className="inline mx-3">Pleasure</p>
-                                <input type="range" min="1" max="10" value="5"></input>
-                                <p className="inline mx-3">Pain</p>
-                            </div>
-                        </label>
-                    </div>
+                    <OptionsPleasureOutput option={{id: 1, valueST: valueChanged, valueLT: 50}} />
+                    <OptionsPleasureOutput option={{id: 2, valueST: 50, valueLT: 50}} />
                 </div>
             </div>
             <div className="flex justify-center items-center m-6">
