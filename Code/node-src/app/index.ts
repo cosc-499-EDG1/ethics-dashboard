@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import moment from 'moment';
 import { QueryTypes } from 'sequelize';
 import { initApp } from './app';
 import { db } from './database';
@@ -20,11 +21,18 @@ setImmediate(async () => {
         };
         await createUser('admin', 'admin@admin.com', 'Admin', 'Admin', 'admin', 'manager');
         await createUser('user', 'user@user.com', 'User', 'User', 'user', 'student');
-        const sql = `
+        var sql = `
                    INSERT IGNORE INTO ClassGroups (code, name)
                    VALUES ('AAAAA', 'test class group');
              `;
         db.getQueryInterface();
         db.query(sql, { type: QueryTypes.INSERT });
+
+        sql = `SELECT id FROM Account WHERE username = admin`;
+        db.getQueryInterface();
+        var adminId = db.query(sql, {type:QueryTypes.SELECT});
+        sql = `INSERT INTO Dashboards (name, ownerId, createdAt, updatedAt) VALUES ('adminDashboard',1, ` + moment().format("YYYY-MM-DD hh:mm:ss") + `, ` + moment().format("YYYY-MM-DD hh:mm:ss") + `)`;
+        db.getQueryInterface();
+        db.query(sql, {type: QueryTypes.INSERT});
     }
 });

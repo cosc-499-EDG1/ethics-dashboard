@@ -4,6 +4,7 @@ import { QueryTypes } from 'sequelize';
 import { initApp } from '../app/app';
 import { db } from '../app/database';
 import dotenv from 'dotenv';
+import moment from 'moment';
 dotenv.config({ path: 'jwt.env' });
 
 /**
@@ -30,12 +31,19 @@ beforeAll(async () => {
     const userToken = jwt.sign({ sub: userResult[0] }, process.env.JSON_WEB_TOKEN_SECRET ?? '12345', { expiresIn: '7d' });
     global.userToken = userToken;
 
-    const sql = `
+    var sql = `
            INSERT INTO ClassGroups (code, name)
            VALUES ('AAAAA', 'test class group');
      `;
     db.getQueryInterface();
     db.query(sql, { type: QueryTypes.INSERT });
+
+    sql = `SELECT id FROM Account WHERE username = admin`;
+    db.getQueryInterface();
+    var adminId = db.query(sql, {type:QueryTypes.SELECT});
+    sql = `INSERT INTO Dashboards (name, ownerId, createdAt, updatedAt) VALUES ('adminDashboard',1, ` + moment().format("YYYY-MM-DD hh:mm:ss") + `, ` + moment().format("YYYY-MM-DD hh:mm:ss") + `)`;
+    db.getQueryInterface();
+    db.query(sql, {type: QueryTypes.INSERT});
 });
 
 /**
