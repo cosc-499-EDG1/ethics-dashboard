@@ -85,19 +85,16 @@ interface DashboardProps {
 
 const DashboardCard: FunctionComponent<DashboardProps> = (props) => {
   const handleDashboardClick = () => {
-    console.log("clicked");
     props.clickHandler();
   };
 
   const handleEditClick = (e: MouseEvent) => {
     e.stopPropagation();
-    console.log("clicked 2");
     props.editHandler();
   };
 
   const handleDeleteClick = (e: MouseEvent) => {
     e.stopPropagation();
-    console.log("clicked 3");
     props.deleteHandler();
   };
 
@@ -214,7 +211,6 @@ const DeleteDashboardModal: FunctionComponent<DeleteDashboardModalProps> = (
             <Button text={"Delete"} formSubmit={true} />,
             <Button
               text={"Close"}
-              classes="cursor-pointer user-select-none"
               onClick={handleClose}
             />,
           ]}

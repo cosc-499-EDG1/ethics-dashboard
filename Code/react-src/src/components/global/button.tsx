@@ -15,5 +15,5 @@ export const Button = ({ text, formSubmit, classes, onClick }: ButtonProps) => {
       </button>
     );
   }
-  return <div className={`btn ${classes}`} onClick={onClick}>{text}</div>;
+  return <div className={`btn cursor-pointer select-none ${classes}`} onClick={onClick}>{text}</div>;
 };

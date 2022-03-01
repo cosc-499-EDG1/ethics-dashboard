@@ -1,4 +1,4 @@
-import AccountService, { AccountResponse } from "../services/account.service";
+import AccountService from "../services/account.service";
 
 import { Action, action, Computed, computed, Thunk, thunk } from "easy-peasy";
 import Account from "../../../node-src/build/models/account/account.model";
