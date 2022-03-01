@@ -74,6 +74,19 @@
   @apply mx-20 my-5 px-5 pt-5 w-10/12 justify-center border-black border-2;
 }
 
+.draggable {
+  /* just to size it to content */
+  display: inline-block;
+  /* opaque background is important for performance */
+  background: white;
+  /* avoid selecting text while dragging */
+  user-select: none;
+}
+
+.ball {
+  @apply w-10 h-10 rounded-full bg-red-400;
+}
+
 .navbar-link {
   @apply block mt-4 lg:inline-block lg:mt-1 text-blue-600 hover:text-blue-900 mr-4;
 }
