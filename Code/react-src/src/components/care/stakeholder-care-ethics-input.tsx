@@ -5,6 +5,7 @@ interface StakeholderCareEthicsInputProps {
         id: number;
         data: string;
         desc: string;
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     }
 }
 
@@ -24,7 +25,7 @@ const StakeholderCareEthicsInput: FunctionComponent<StakeholderCareEthicsInputPr
                     Attentiveness
                 </p>
                 <p className="inline mx-3 font-bold text-xl">Low</p>
-                <input className="w-8/12" type="range" min="1" max="10" defaultValue="5"></input>
+                <input className="w-8/12" type="range" min="0" max="10" defaultValue="5" onChange={stakeholder.onChange} id={stakeholder.id.toString()+"-1"}></input>
                 <p className="inline mx-3 font-bold text-xl">High</p>
             </div>
             <div className="w-6/12 text-center my-2">
@@ -32,7 +33,7 @@ const StakeholderCareEthicsInput: FunctionComponent<StakeholderCareEthicsInputPr
                     Competence
                 </p>
                 <p className="inline mx-3 font-bold text-xl">Low</p>
-                <input className="w-8/12" type="range" min="1" max="10" defaultValue="5"></input>
+                <input className="w-8/12" type="range" min="0" max="10" defaultValue="5" onChange={stakeholder.onChange} id={stakeholder.id.toString()+"-2"}></input>
                 <p className="inline mx-3 font-bold text-xl">High</p>
             </div>
         </div>
@@ -41,7 +42,7 @@ const StakeholderCareEthicsInput: FunctionComponent<StakeholderCareEthicsInputPr
                 Responsiveness
             </p>
             <p className="inline mx-3 font-bold text-xl">Low</p>
-            <input className="w-8/12" type="range" min="1" max="10" defaultValue="5"></input>
+            <input className="w-8/12" type="range" min="0" max="10" defaultValue="5" onChange={stakeholder.onChange} id={stakeholder.id.toString()+"-3"}></input>
             <p className="inline mx-3 font-bold text-xl">High</p>
         </div>
     </div>
