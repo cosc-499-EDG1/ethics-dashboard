@@ -6,7 +6,7 @@ import Stakeholder from "../models/stakeholder.model";
 import Dashboard from '../models/dashboard.model';
 import  {DashboardModel, DashboardData } from '../../../react-src/src/stores/dashboard.store'
 
-export default class StakeholderController {
+class StakeholderController {
 
 
 
@@ -52,3 +52,4 @@ export default class StakeholderController {
     };
 }
 
+export default new StakeholderController();
