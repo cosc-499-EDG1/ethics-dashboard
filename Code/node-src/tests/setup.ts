@@ -36,14 +36,14 @@ beforeAll(async () => {
            VALUES ('AAAAA', 'test class group');
      `;
     db.getQueryInterface();
-    db.query(sql, { type: QueryTypes.INSERT });
+    await db.query(sql, { type: QueryTypes.INSERT });
 
-    sql = `SELECT id FROM Account WHERE username = admin`;
-    db.getQueryInterface();
-    var adminId = db.query(sql, {type:QueryTypes.SELECT});
-    sql = `INSERT INTO Dashboards (name, ownerId, createdAt, updatedAt) VALUES ('adminDashboard',1, ` + moment().format("YYYY-MM-DD hh:mm:ss") + `, ` + moment().format("YYYY-MM-DD hh:mm:ss") + `)`;
-    db.getQueryInterface();
-    db.query(sql, {type: QueryTypes.INSERT});
+    // sql = `SELECT id FROM Account WHERE username = admin`;
+    // db.getQueryInterface();
+    // var adminId = db.query(sql, {type:QueryTypes.SELECT});
+    // sql = `INSERT INTO Dashboards (name, ownerId, createdAt, updatedAt) VALUES ('adminDashboard',1, ` + moment().format("YYYY-MM-DD hh:mm:ss") + `, ` + moment().format("YYYY-MM-DD hh:mm:ss") + `)`;
+    // db.getQueryInterface();
+    // db.query(sql, {type: QueryTypes.INSERT});
 });
 
 /**

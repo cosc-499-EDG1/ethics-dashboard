@@ -26,7 +26,7 @@ setImmediate(async () => {
                    VALUES ('AAAAA', 'test class group');
              `;
         db.getQueryInterface();
-        db.query(sql, { type: QueryTypes.INSERT });
+        await db.query(sql, { type: QueryTypes.INSERT });
 
         // sql = `SELECT id FROM Account WHERE username = admin`;
         // db.getQueryInterface();
