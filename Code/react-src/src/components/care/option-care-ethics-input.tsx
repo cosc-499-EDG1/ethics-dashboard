@@ -5,6 +5,7 @@ interface OptionCareEthicsInputProps {
         id: number;
         data: string;
         color: string;
+        value: number;
     }
 }
 
@@ -21,7 +22,7 @@ const OptionCareEthicsInput: FunctionComponent<OptionCareEthicsInputProps> =
             
             <div className="mt-1 mb-3 h-20 flex justify-center items-center bg-white">
                 <p className="inline mx-3 font-bold text-xl">Low</p>
-                <input className="w-8/12" type="range" min="1" max="10" value="5"></input>
+                <input className="average-slider" type="range" min="0" max="100" value={option.value} id={option.id.toString()}></input>
                 <p className="inline mx-3 font-bold text-xl">High</p>
             </div>
         </div>
