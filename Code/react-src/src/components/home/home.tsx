@@ -1,10 +1,17 @@
-import React from "react";
 import { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
+import { useStoreState } from "../../stores/index.store";
+import DashboardHome from "./dashboards";
 
 interface HomeProps {}
 
 const Home: FunctionComponent<HomeProps> = () => {
+  const isLoggedIn = useStoreState((state) => state.accounts.isLoggedIn);
+
+  if (isLoggedIn) {
+    return <DashboardHome />;
+  }
+
   return (
     <div className="site-main">
       <div className="bg-secondary p-5 flex items-center justify-center flex-col w-6/12 rounded-lg shadow-lg">
@@ -21,7 +28,8 @@ const Home: FunctionComponent<HomeProps> = () => {
           <div className="bg-white w-1/3 m-5 p-5 rounded-lg shadow-lg flex flex-col text-center">
             <h1 className="text-2xl font-bold">Existing Account</h1>
             <p className="text-xl">
-              Login to view your existing case studies and dashboards. Progress will be saved automatically.
+              Login to view your existing case studies and dashboards. Progress
+              will be saved automatically.
             </p>
             <Link to="/login" className="btn m-2">
               Login

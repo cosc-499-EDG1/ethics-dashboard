@@ -5,8 +5,9 @@ module.exports = {
   darkMode: "class",
   theme: {
     colors: {
-      primary: "#ca8a04",
-      secondary: "#fef08a",
+      primary: "#42a5f5",
+      secondary: "#e3f2fd",
+      main: "#90caf9",
       ...colors,
     },
     extend: {

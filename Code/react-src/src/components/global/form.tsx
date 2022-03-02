@@ -19,7 +19,6 @@ export const Form = ({
 }: FormProps) => {
   return (
     <form
-      id="loginForm"
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit(e);
@@ -40,9 +39,13 @@ export const Form = ({
           <div className="loading-spinner w-16 h-16"></div>
         </div>
       )}
-      {inputs.map((input) => input)}
+      {inputs.map((input, i) => {
+        return <React.Fragment key={i}>{input}</React.Fragment>;
+      })}
       <div className="flex items-center justify-between">
-        {actions.map((action) => action)}
+        {actions.map((action, i) => {
+          return <React.Fragment key={i}>{action}</React.Fragment>;
+        })}
       </div>
     </form>
   );

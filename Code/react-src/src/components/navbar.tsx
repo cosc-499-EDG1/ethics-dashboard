@@ -8,6 +8,10 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
   const isLoggedIn = useStoreState((state) => state.accounts.isLoggedIn);
   const account = useStoreState((state) => state.accounts.account);
 
+  
+  // const currentDashboard = useStoreState((state) => state.dashboard.currentId);
+  const currentDashboard = 1;
+
   // Re-render when logged in state changes.
   useEffect(() => {}, [isLoggedIn]);
 
@@ -22,33 +26,35 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
     {
       name: "Dashboard",
       path: "/dashboard",
-      show: isLoggedIn,
+      show: !!currentDashboard,
     },
-    {
-      name: "Ethical Issues",
-      path: "/Issues",
-      show: isLoggedIn,
-    },
-    {
-      name: "Stakeholders",
-      path: "/stakeholders",
-      show: isLoggedIn,
-    },
-    {
-      name: "Utilitarianism",
-      path: "/utilitarianism-options",
-      show: isLoggedIn,
-    },
+    // {
+    //   name: "Ethical Issues",
+    //   path: "/Issues",
+    //   show: isLoggedIn,
+    // },
+    // {
+    //   name: "Stakeholders",
+    //   path: "/stakeholders",
+    //   show: isLoggedIn,
+    // },
+    // {
+    //   name: "Utilitarianism",
+    //   path: "/utilitarianism-options",
+    //   show: isLoggedIn,
+    // },
     {
       name: (
-        <span style={{ verticalAlign: "sub" }}>
+        <span className="relative pl-8">
           {account?.avatar && (
-            <img
-              src={account.avatar as unknown as string}
-              alt={account?.first_name}
-              className="w-8 h-8 inline rounded-full"
-            />
-          )}{" "}
+            <span className="absolute -left-1 -top-1 max-w-full">
+              <img
+                src={account.avatar as unknown as string}
+                alt={account?.first_name}
+                className="w-8 h-8 rounded-full max-w-max"
+              />
+            </span>
+          )}
           {account?.first_name} {account?.last_name}
         </span>
       ),
@@ -57,7 +63,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
       right: true,
     },
     {
-      name: <span style={{ verticalAlign: "sub" }}>Logout</span>,
+      name: <span>Logout</span>,
       path: "/logout",
       show: isLoggedIn,
       right: true,
