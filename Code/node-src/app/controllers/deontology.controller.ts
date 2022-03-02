@@ -1,29 +1,31 @@
 import dotenv from 'dotenv';
-dotenv.config({path: 'jwt.env'});
+dotenv.config({ path: 'jwt.env' });
 import { Request, Response, NextFunction } from 'express';
 import { useStoreState, State} from "../../../react-src/node_modules/easy-peasy";
-import option from "../models/option.model";
+import Deontology_Categorical from '../models/deontology_categorical.model';
 import Dashboard from '../models/dashboard.model';
-import  {DashboardModel, DashboardData } from '../../../react-src/src/stores/dashboard.store'
+import  {DashboardModel, DashboardData } from '../../../react-src/src/stores/dashboard.store';
 
-class OptionController {
+class DeontologyController {
 
     create = async (req: Request, res: Response, next: NextFunction) => {
-        const {title, description, number} = req.body;
-        if (!title || !description || !number) {
+        const {motivations, description, moral_law_1, moral_law_2, moral_law_3, moral_law_4, moral_law_5} = req.body;
+        if (!motivations || !description || !moral_law_1) {
             res.status(400).send({
                 message: 'Invalid form data.',
             });
             return;  
         }
+        const account = req.account;
         const dash = useStoreState((state: State<DashboardModel>) => state.dashboard_id);
 
-        const opt = new option({option_title: title, option_desc: description, option_num: number, dashboard_id: dash});
-        opt.save().then( async () => {
-            res.status(200).json({ message: 'Option created successfully.', success: true});
-        }).catch(err => {
+        const deontology = new Deontology_Categorical({motivations: motivations, deontology_categorical_desc: description, moral_law_1: moral_law_1, moral_law_2: moral_law_2, moral_law_3: moral_law_3, moral_law_4: moral_law_4, moral_law_5: moral_law_5,  dashboard_id: dash});
+        deontology.save().then(async () => {
+            res.status(200).json({ message: 'Deontology created successfully.', success: true});
+        })
+        .catch(err => {
             res.status(400).json({
-                message: 'Error creating option' , 
+                message: 'Error creating deontology' , 
             });
         });
     };
@@ -48,4 +50,4 @@ class OptionController {
     };
 }
 
-export default new OptionController();
+export default new DeontologyController();
