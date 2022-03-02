@@ -1,5 +1,9 @@
-import { FormEvent, FunctionComponent, useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { FormEvent, FunctionComponent, useEffect, useState } from "react";
+import { Redirect, useHistory } from "react-router-dom";
+import Dashboard from "../../../../node-src/build/models/dashboard.model";
+import AccountService from "../../services/account.service";
+import DashboardService from "../../services/dashboard.service";
+import { useStoreActions } from "../../stores/index.store";
 import { Button } from "../global/button";
 import { Form } from "../global/form";
 import { FormInput } from "../global/forminput";
@@ -7,30 +11,54 @@ import { FormInput } from "../global/forminput";
 interface DashboardHomeProps {}
 
 const DashboardHome: FunctionComponent<DashboardHomeProps> = () => {
+  const history = useHistory();
+
+  const setCurrentDashboard = useStoreActions(
+    (actions) => actions.dashboard.setDashboardId
+  );
+
+  const [dashboards, setDashboards] = useState<Dashboard[] | null>(null);
+
+  useEffect(() => {
+    const getDashboards = async () => {
+      const dashboards = await AccountService.getDashboards();
+      setDashboards(dashboards.data);
+    };
+    getDashboards();
+  }, []);
+
   const [redirect, setRedirect] = useState("");
   const [showEdit, setShowEdit] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [showCreate, setShowCreate] = useState(false);
   const [editDashboardName, setEditDashboardName] = useState("");
 
+  const [currentEditDashboard, setCurrentEditDashboard] = useState<number>(0);
+
   const handleCardClicked = (dashboardId: number) => {
+    setCurrentDashboard(dashboardId);
     setRedirect(`/dashboard/${dashboardId}`);
   };
 
-  const handleEditClick = () => {
+  const handleEditClick = (dashboardId: number) => {
     setShowDelete(false);
     setShowCreate(false);
     setShowEdit(true);
-    setEditDashboardName("Dashboard Name");
+    setCurrentEditDashboard(dashboardId);
+    setEditDashboardName(
+      dashboards?.find((dashboard) => dashboard.id === dashboardId)?.name ?? ""
+    );
   };
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (dashboardId: number) => {
+    setCurrentEditDashboard(dashboardId);
     setShowEdit(false);
     setShowCreate(false);
     setShowDelete(true);
   };
 
   const handleCreateClick = () => {
+    setCurrentEditDashboard(0);
     setShowEdit(false);
     setShowDelete(false);
     setShowCreate(true);
@@ -47,28 +75,55 @@ const DashboardHome: FunctionComponent<DashboardHomeProps> = () => {
           <h1 className="text-3xl font-bold text-center">My Dashboards</h1>
         </div>
         <div className="flex flex-wrap justify-center mt-2">
-          <DashboardCard
-            clickHandler={handleCardClicked}
-            editHandler={handleEditClick}
-            deleteHandler={handleDeleteClick}
-          />
+          {dashboards &&
+            dashboards.map((dashboard: Dashboard) => (
+              <DashboardCard
+                dashboardName={dashboard.name}
+                dashboardId={dashboard.id}
+                clickHandler={handleCardClicked}
+                editHandler={handleEditClick}
+                deleteHandler={handleDeleteClick}
+              />
+            ))}
+
           <CreateDashboardCard clickHandler={handleCreateClick} />
         </div>
       </div>
 
       {showCreate && (
-        <CreateDashboardModal closeModal={() => setShowCreate(false)} />
+        <CreateDashboardModal
+          closeModal={(refresh: boolean) => {
+            if (refresh) {
+              history.go(0);
+            }
+            setShowCreate(false);
+          }}
+        />
       )}
 
       {showEdit && (
         <EditDashboardModal
+          id={currentEditDashboard}
           dashboardName={editDashboardName}
-          closeModal={() => setShowEdit(false)}
+          closeModal={(refresh: boolean) => {
+            if (refresh) {
+              history.go(0);
+            }
+            setShowEdit(false);
+          }}
         />
       )}
 
       {showDelete && (
-        <DeleteDashboardModal closeModal={() => setShowDelete(false)} />
+        <DeleteDashboardModal
+          id={currentEditDashboard}
+          closeModal={(refresh: boolean) => {
+            if (refresh) {
+              history.go(0);
+            }
+            setShowDelete(false);
+          }}
+        />
       )}
     </div>
   );
@@ -78,6 +133,8 @@ const dashboardCardClasses =
   "relative w-72 h-48 m-1 p-2 rounded-lg shadow-lg flex flex-col text-center justify-between hover:bg-warmGray-200 hover:text-warmGray-700 select-none cursor-pointer";
 
 interface DashboardProps {
+  dashboardName: string;
+  dashboardId: number;
   clickHandler: Function;
   editHandler: Function;
   deleteHandler: Function;
@@ -85,17 +142,17 @@ interface DashboardProps {
 
 const DashboardCard: FunctionComponent<DashboardProps> = (props) => {
   const handleDashboardClick = () => {
-    props.clickHandler();
+    props.clickHandler(props.dashboardId);
   };
 
   const handleEditClick = (e: MouseEvent) => {
     e.stopPropagation();
-    props.editHandler();
+    props.editHandler(props.dashboardId);
   };
 
   const handleDeleteClick = (e: MouseEvent) => {
     e.stopPropagation();
-    props.deleteHandler();
+    props.deleteHandler(props.dashboardId);
   };
 
   return (
@@ -103,7 +160,7 @@ const DashboardCard: FunctionComponent<DashboardProps> = (props) => {
       onClick={handleDashboardClick}
       className={`bg-white ${dashboardCardClasses}`}
     >
-      <h1 className="text-2xl font-bold">Dashboard 1</h1>
+      <h1 className="text-2xl font-bold">{props.dashboardName}</h1>
       <h1 className="text-2xl font-bold absolute m-auto top-1/3 left-0 right-0 pointer-events-none">
         View
       </h1>
@@ -138,6 +195,7 @@ const CreateDashboardCard: FunctionComponent<CreateDashboardProps> = (
 };
 
 interface EditDashboardModalProps {
+  id: number;
   dashboardName: string;
   closeModal: Function;
 }
@@ -147,9 +205,12 @@ const EditDashboardModal: FunctionComponent<EditDashboardModalProps> = (
 ) => {
   const [dashboardName, setDashboardName] = useState(props.dashboardName);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    // Update dashboard name in store
-    props.closeModal();
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    await DashboardService.updateDashboard({
+      id: props.id,
+      name: dashboardName,
+    });
+    props.closeModal(true);
   };
 
   const handleClose = () => {
@@ -186,15 +247,17 @@ const EditDashboardModal: FunctionComponent<EditDashboardModalProps> = (
 };
 
 interface DeleteDashboardModalProps {
+  id: number;
   closeModal: Function;
 }
 
 const DeleteDashboardModal: FunctionComponent<DeleteDashboardModalProps> = (
   props
 ) => {
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     // Delete dashboard from user account (set deleted = true)
-    props.closeModal();
+    await DashboardService.deleteDashboard({ id: props.id });
+    props.closeModal(true);
   };
 
   const handleClose = () => {
@@ -209,10 +272,7 @@ const DeleteDashboardModal: FunctionComponent<DeleteDashboardModalProps> = (
           inputs={[]}
           actions={[
             <Button text={"Delete"} formSubmit={true} />,
-            <Button
-              text={"Close"}
-              onClick={handleClose}
-            />,
+            <Button text={"Close"} onClick={handleClose} />,
           ]}
           isLoading={false}
           message={""}
@@ -233,9 +293,11 @@ const CreateDashboardModal: FunctionComponent<CreateDashboardModalProps> = (
 ) => {
   const [dashboardName, setDashboardName] = useState("");
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    // Create dashboard for user account
-    props.closeModal();
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const response = await DashboardService.createDashboard({
+      name: dashboardName,
+    });
+    props.closeModal(true);
   };
 
   const handleClose = () => {

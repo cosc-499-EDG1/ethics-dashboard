@@ -26,7 +26,6 @@ export default class Dashboard extends Model {
     @BelongsTo(() => Account)
     owner: Account;
 
-    //TODO: Add each dashboard subtype here
     @Column
-    type: string; //temporary
+    deleted: boolean;
 }

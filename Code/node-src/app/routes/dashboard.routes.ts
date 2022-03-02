@@ -7,14 +7,14 @@ export const dashboards = Router();
 // Creation
 dashboards.post('/create', authorize(), DashboardController.create);
 
-// Retrieve all class groups
+// Retrieve all dashboards
 dashboards.get('/', authorize(), DashboardController.findAll);
 
-// Retrieve a single group by id
+// Retrieve a single dashboard by id
 dashboards.get('/find/:id', authorize(), DashboardController.findOne);
 
-// Update a group with id
+// Update a dashboard with id
 dashboards.put('/update/:id', authorize(), DashboardController.update);
 
-// Delete a group with id
+// Delete a dashboard with id
 dashboards.delete('/delete/:id', authorize(), DashboardController.delete);

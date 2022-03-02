@@ -9,8 +9,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
   const account = useStoreState((state) => state.accounts.account);
 
   
-  // const currentDashboard = useStoreState((state) => state.dashboard.currentId);
-  const currentDashboard = 1;
+  const currentDashboard = useStoreState((state) => state.dashboard.dashboard_id);
 
   // Re-render when logged in state changes.
   useEffect(() => {}, [isLoggedIn]);
@@ -26,6 +25,11 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
     {
       name: "Dashboard",
       path: "/dashboard",
+      show: !!currentDashboard,
+    },
+    {
+      name: "My Progress",
+      path: "/my-progress-report",
       show: !!currentDashboard,
     },
     // {

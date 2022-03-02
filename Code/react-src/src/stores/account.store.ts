@@ -2,6 +2,7 @@ import AccountService from "../services/account.service";
 
 import { Action, action, Computed, computed, Thunk, thunk } from "easy-peasy";
 import Account from "../../../node-src/build/models/account/account.model";
+import MainStore, { useStoreActions } from "./index.store";
 
 export interface LoginData {
   username: string;

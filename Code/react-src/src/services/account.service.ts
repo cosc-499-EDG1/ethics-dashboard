@@ -1,5 +1,6 @@
 import Account from "../../../node-src/build/models/account/account.model";
 import ClassGroup from "../../../node-src/build/models/classgroup.model";
+import Dashboard from "../../../node-src/build/models/dashboard.model";
 import http, { authHeader } from "../helpers/http";
 import { LoginData, RegisterData } from "../stores/account.store";
 
@@ -26,6 +27,10 @@ export interface ClassDataResponse {
   };
 }
 
+export interface DashboardResponse {
+  data: Dashboard[];
+}
+
 class AccountService {
   login(data: LoginData): Promise<AccountResponse> {
     return http.post("/account/login", data);
@@ -37,6 +42,10 @@ class AccountService {
 
   getClasses(): Promise<ClassDataResponse> {
     return http.get("/account/classes", authHeader());
+  }
+
+  getDashboards(): Promise<DashboardResponse> {
+    return http.get("/account/dashboards", authHeader());
   }
 }
 
