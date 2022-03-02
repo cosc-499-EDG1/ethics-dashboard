@@ -1,11 +1,41 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { Link } from "react-router-dom";
 import StakeholderCareEthicsInput from "./stakeholder-care-ethics-input";
 import OptionCareEthicsInput from "./option-care-ethics-input";
 
 interface CareEthicsProps {}
 
+const numStakeholder = 2;
+var stakeholderValues = new Array(numStakeholder);
+for (let value = 0; value < stakeholderValues.length; value++) {
+    stakeholderValues[value] = new Array(3);
+    for (let value1 = 0; value1 < stakeholderValues[value].length; value1++) {
+        stakeholderValues[value][value1] = 50;
+    }
+}
+
 const CareEthics: FunctionComponent<CareEthicsProps> = () => {
+    const [valueChanged, setValue] = useState(50);
+
+    const changedValue = async (value: string, id: string) => {
+        const cValue = parseInt(value) * 10;
+        var idString = id.split("-");
+        const cID = parseInt(idString[0]);
+        const docID = parseInt(idString[1]);
+        var average = 0;
+        for (let i = 0; i < stakeholderValues.length; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (i === (cID-1)) {
+                    if (j === (docID-1)) {
+                        stakeholderValues[i][j] = cValue;
+                    }
+                }
+                average = average + stakeholderValues[i][j];
+            }
+        }
+        average = average / (numStakeholder*3);
+        setValue(average);
+    };
     return(
         <div className="site-dashboard">
             <div className="pt-20 px-20 flex justify-between">
@@ -29,14 +59,14 @@ const CareEthics: FunctionComponent<CareEthicsProps> = () => {
                         </label>
                     </div>
                     <div className="mb-4 max-h-128 overflow-y-auto">
-                        <StakeholderCareEthicsInput stakeholder={{id: 1, data: "Stakeholder 1", desc: "The engineer asked to design the VW defeat..."}} />
-                        <StakeholderCareEthicsInput stakeholder={{id: 2, data: "Stakeholder 2", desc: "The decision makers at VW who asked..."}} />
+                        <StakeholderCareEthicsInput stakeholder={{id: 1, data: "Stakeholder 1", desc: "The engineer asked to design the VW defeat...", onChange: (e) => changedValue(e.target.value, e.target.id)}} />
+                        <StakeholderCareEthicsInput stakeholder={{id: 2, data: "Stakeholder 2", desc: "The decision makers at VW who asked...", onChange: (e) => changedValue(e.target.value, e.target.id)}} />
                     </div>
                 </div>
                 <div className="ml-10 mr-20 mt-10 pb-4 justify-center w-4/12 bg-gray-300">
                     <div className="p-4 max-h-128 overflow-y-auto justify-center">
-                        <OptionCareEthicsInput option={{id: 1, data: "Option 1", color: "text-black"}} />
-                        <OptionCareEthicsInput option={{id: 2, data: "Option 2", color: "text-gray-400"}} />
+                        <OptionCareEthicsInput option={{id: 1, data: "Option 1", color: "text-black", value: valueChanged}} />
+                        <OptionCareEthicsInput option={{id: 2, data: "Option 2", color: "text-gray-400", value: 50}} />
                     </div>
                 </div>
             </div>

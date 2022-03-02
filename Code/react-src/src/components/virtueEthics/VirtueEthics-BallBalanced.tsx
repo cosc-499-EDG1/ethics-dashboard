@@ -7,7 +7,7 @@ interface VirtueEthicsProps {}
 
 
 
-const VirtueEthicsBall: FunctionComponent<VirtueEthicsProps> = () => {
+const VirtueEthicsBallBalanced: FunctionComponent<VirtueEthicsProps> = () => {
     return(
         <div className="site-dashboard">
             <div className="dashboard-title">
@@ -31,9 +31,18 @@ const VirtueEthicsBall: FunctionComponent<VirtueEthicsProps> = () => {
 
             <div className="dashboard-character h-29">
                 <label className="text-4xl font-bold">
-                    Virtuous Balancing Excercise
-                        <p className="text-2xl font-bold text-blue-500">
-                            Move the spheres around the unbalance circle and submit when balanced
+                CONGRATULATIONS!
+                        <p className="text-2xl font-bold text-blue-500 py-2">
+                        Your soul is now in a stable
+equilibrium which is
+essential to understanding
+virtue. However, this
+achievement is fleeting. Life
+will constantly challenge
+your ability to balance the
+many influences that will
+make it difficult to see the
+virtuous path. 
                         </p>
                 </label>
             </div>
@@ -42,44 +51,43 @@ const VirtueEthicsBall: FunctionComponent<VirtueEthicsProps> = () => {
 
                         
 
-                        <Draggable>                       
-                            <div className="bg-blue-400 w-28 h-28 rounded-full relative right-6 bottom-36">
+                                          
+                            <div className="bg-blue-400 w-28 h-28 rounded-full relative left-80 bottom-36">
                                     <div className="text-sm text-center py-10">Conventions</div>
                             </div>
-                        </Draggable>
+                       
 
-                        <Draggable>
-                            <div className="bg-green-900 w-28 h-28 rounded-full relative right-6 bottom-30">
+                        
+                            <div className="bg-green-900 w-28 h-28 rounded-full relative left-36 bottom-30">
                                     <div className="text-sm text-center py-10">Expectations</div>
                             </div>
-                        </Draggable>
+                        
 
-                        <Draggable>
-                            <div className="bg-green-400 w-28 h-28 rounded-full relative right-8 top-32">
+                        
+                            <div className="bg-green-400 w-28 h-28 rounded-full relative left-24 top-36">
                                     <div className="text-sm text-center py-10">Attachments</div>
                             </div>
-                        </Draggable>
+                 
 
                         <div className="bg-gray-400 w-96 h-96 rounded-full text-center font-bold py-4">Your soul</div>
                         
 
-                        <Draggable>
-                            <div className="bg-orange-400 w-28 h-28 rounded-full relative bottom-36">
+                            <div className="bg-orange-400 w-28 h-28 rounded-full relative right-24 bottom-36">
                                     <div className="text-sm text-center py-10">Traditions</div>
                             </div>
-                        </Draggable>
+                
 
-                        <Draggable>
-                            <div className="bg-blue-800 w-28 h-28 rounded-full">
+                   
+                            <div className="bg-blue-800 w-28 h-28 rounded-full relative right-40">
                                     <div className="text-sm text-center py-10">Impulses</div>
                             </div>
-                        </Draggable>
+                
 
-                        <Draggable>
-                            <div className="bg-red-400 w-28 h-28 rounded-full relative right-60 top-36">
+                
+                            <div className="bg-red-400 w-28 h-28 rounded-full relative right-80 top-36">
                                     <div className="text-sm text-center py-10">Desires</div>
                             </div>
-                        </Draggable>
+                     
                         </div>
 
 
@@ -88,10 +96,10 @@ const VirtueEthicsBall: FunctionComponent<VirtueEthicsProps> = () => {
             <div className="flex justify-center items-center m-6">
                 <div className="grid grid-cols-2 gap-4">
                     <button className="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    <Link to="/home">Go Back</Link>
+                    <Link to="/virtueEthics-Ball">Go Back</Link>
                     </button>
                     <button className="bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    <Link to="/virtueEthics-BallBalanced">Submit</Link>
+                    <Link to="/virtueEthics-Character">Submit</Link>
                     </button>
                 </div>
             </div>
@@ -100,4 +108,4 @@ const VirtueEthicsBall: FunctionComponent<VirtueEthicsProps> = () => {
 
 };
 
-export default VirtueEthicsBall;
+export default VirtueEthicsBallBalanced;

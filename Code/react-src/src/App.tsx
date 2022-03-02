@@ -17,7 +17,7 @@ import VirtueEthicsBall from "./components/virtueEthics/VirtueEthics-Ball";
 import VirtueEthicsCharacter from "./components/virtueEthics/virtueEthics-Character";
 import VirtueEthicsStakeholders from "./components/virtueEthics/virtueEthics-Stakeholders";
 import VirtueEthicsRankBal from "./components/virtueEthics/virtueEthics-RankBalance";
-
+import VirtueEthicsBallBalanced from "./components/virtueEthics/VirtueEthics-BallBalanced";
 import CareEthics from "./components/care/care-ethics";
 
 import MyProgressReport from "./components/my-progress/my-progress-report";
@@ -59,6 +59,7 @@ function App() {
             <Route path="/deontology-testing-categorical" component={DeontologyTestingCategorical} />
             <Route path="/deontology-moral-law" component={DeontologyMoralLaw} />
             <Route path="/virtueEthics-Ball" component={VirtueEthicsBall} />
+            <Route path="/virtueEthics-BallBalanced" component={VirtueEthicsBallBalanced} />
             <Route path="/virtueEthics-Character" component={VirtueEthicsCharacter} />
             <Route path="/virtueEthics-Stakeholders" component={VirtueEthicsStakeholders} />
             <Route path="/virtueEthics-RankBalance" component={VirtueEthicsRankBal} />

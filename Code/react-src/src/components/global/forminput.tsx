@@ -2,7 +2,7 @@ type FormInputProps = {
   label: string;
   type: string;
   placeholder: string;
-  value: any;
+  value?: any;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   maxLength?: number;
 };
