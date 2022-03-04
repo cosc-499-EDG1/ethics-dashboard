@@ -12,6 +12,7 @@ export interface StakeholderData {
   title: string;
   description: string;
   num: number;
+  dashboard_id: number;
 }
 
 const stakeholderStore: StakeholderModel = {

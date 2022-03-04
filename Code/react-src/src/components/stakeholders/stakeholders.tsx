@@ -13,6 +13,7 @@ interface StakeholderProps {}
 const Stakeholders: FunctionComponent<StakeholderProps> = () => {
     
     const stakeholder = useStoreActions((actions) => actions.stakeholder.addStakeholder);
+    const currentDashboard = useStoreState((state) => state.dashboard.dashboard_id) ?? 0;
     
     const [stakeholder1_title, setStakeholder1_title] = useState("");
     const [stakeholder2_title, setStakeholder2_title] = useState("");
@@ -29,20 +30,20 @@ const Stakeholders: FunctionComponent<StakeholderProps> = () => {
     const attemptUpload = async () => {
         if(stakeholder1_title !== "" || stakeholder1_desc !== null){
             setIsLoading(true);
-            const data = await stakeholder({ title: stakeholder1_title, description: stakeholder1_desc, num: 1});
+            const data = await stakeholder({ title: stakeholder1_title, description: stakeholder1_desc, num: 1, dashboard_id: currentDashboard});
             setIsLoading(false);
             setErrorMessage(data.message);
         }
 
         if(stakeholder2_title !== "" || stakeholder2_desc !== null){
             setIsLoading(true);
-            const data = await stakeholder({ title: stakeholder2_title, description: stakeholder2_desc, num: 2});
+            const data = await stakeholder({ title: stakeholder2_title, description: stakeholder2_desc, num: 2, dashboard_id: currentDashboard});
             setIsLoading(false);
             setErrorMessage(data.message);
         }
         if(stakeholder3_title !== "" || stakeholder3_desc !== null){
             setIsLoading(true);
-            const data = await stakeholder({ title: stakeholder3_title, description: stakeholder3_desc, num: 3});
+            const data = await stakeholder({ title: stakeholder3_title, description: stakeholder3_desc, num: 3, dashboard_id: currentDashboard});
             setIsLoading(false);
             setErrorMessage(data.message);
         }
@@ -130,7 +131,7 @@ const Stakeholders: FunctionComponent<StakeholderProps> = () => {
                 inputs={formInputs}
                 actions={formActions}
                 isLoading={isLoading}
-                wasSuccess={false}
+                wasSuccess={true}
                 onSubmit={attemptUpload}
                 message={errorMessage}
             />
