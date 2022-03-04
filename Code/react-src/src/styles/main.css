@@ -230,3 +230,9 @@ textarea {
 .nav-link-active {
   @apply py-4 px-2 text-primary border-b-4 border-primary font-semibold;
 }
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}

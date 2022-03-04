@@ -3,7 +3,7 @@ type FormInputProps = {
   type: string;
   placeholder: string;
   value?: any;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => void;
   maxLength?: number;
 };
 
@@ -23,15 +23,26 @@ export const FormInput = ({
       >
         {label}
       </label>
-      <input
-        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        id={`formInput-${label}`}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        maxLength={maxLength}
-      />
+      {type === "textarea" ? (
+        <textarea
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id={`formInput-${label}`}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          maxLength={maxLength}
+        />
+      ) : (
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id={`formInput-${label}`}
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          maxLength={maxLength}
+        />
+      )}
     </div>
   );
 };

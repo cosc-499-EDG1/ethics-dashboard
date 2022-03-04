@@ -18,7 +18,7 @@ class StakeholderController {
 
         const stakeholder = new Stakeholder({stakeholder_title: title, stakeholder_desc: description, stakeholder_num: num, dashboard_id: dashboard_id});
         stakeholder.save().then(async () => {
-            res.status(200).json({ message: 'Stakeholder created successfully.', success: true});
+            res.status(200).json({ message: 'Stakeholders created successfully.', success: true});
         })
         .catch(err => {
             res.status(400).json({
