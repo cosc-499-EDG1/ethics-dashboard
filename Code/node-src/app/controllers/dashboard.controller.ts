@@ -6,8 +6,8 @@ import Dashboard from '../models/dashboard.model';
 
 class DashboardController {
     create = async (req: Request, res: Response, next: NextFunction) => {
-        const { name, dashboard_type } = req.body;
-        if (!name || dashboard_type) {
+        const { name } = req.body;
+        if (!name) {
             res.status(400).send({
                 message: 'Invalid form data.',
             });
@@ -16,7 +16,7 @@ class DashboardController {
 
         const account = req.account;
 
-        const dashboard = new Dashboard({ name: name, type: dashboard_type });
+        const dashboard = new Dashboard({ name: name });
         dashboard
             .save()
             .then(() => {
@@ -53,12 +53,46 @@ class DashboardController {
     };
 
     update = async (req: Request, res: Response, next: NextFunction) => {
-        //TODO: IMPLEMENT
+        const id = req.params.id;
+        const account = req.account;
+
+        const dashboard = await Dashboard.findByPk(id);
+        if (!dashboard) {
+            return res.sendStatus(404);
+        }
+
+        // If requesting acocund is a student, then check that they own the dashboard.
+        if (account.isStudent() && dashboard.ownerId !== account.id) {
+            return res.sendStatus(403);
+        }
+
+        const { name } = req.body;
+        if (!name) {
+            return res.status(400).send({
+                message: 'Invalid form data.',
+            });
+        }
+        dashboard.set({ name: name });
+        await dashboard.save();
         return res.sendStatus(200);
     };
 
-    delete = (req: Request, res: Response, next: NextFunction) => {
-        //TODO: IMPLEMENT
+    delete = async (req: Request, res: Response, next: NextFunction) => {
+        const id = req.params.id;
+        const account = req.account;
+
+        const dashboard = await Dashboard.findByPk(id);
+        if (!dashboard) {
+            return res.sendStatus(404);
+        }
+
+        // If requesting acocund is a student, then check that they own the dashboard.
+        if (account.isStudent() && dashboard.ownerId !== account.id) {
+            return res.sendStatus(403);
+        }
+
+        dashboard.set({ deleted: true });
+        await dashboard.save();
         return res.sendStatus(200);
     };
 }

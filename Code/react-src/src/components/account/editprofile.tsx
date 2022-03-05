@@ -30,10 +30,20 @@ const EditProfileModal: FunctionComponent<EditProfileModalProps> = (props) => {
 
   const handlePasswordChange = (e: FormEvent<HTMLFormElement>) => {
     // Update user account password
+    if (!password || !newPassword || !confirmPassword) {
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setPasswordChanged(false);
+      setPasswordMessage("New password and confirm password do not match.");
+      return;
+    }
     setIsLoading(true);
     setPasswordMessage("");
     setPasswordChanged(false);
     setPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
     setTimeout(() => {
       setPasswordChanged(true);
       setPasswordMessage("Saved!");

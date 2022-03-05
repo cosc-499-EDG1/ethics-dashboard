@@ -92,6 +92,16 @@ class AccountController {
         });
     };
 
+    getDashboards = async (req: Request, res: Response, next: NextFunction) => {
+        const account = req.account;
+        const dashboards = await (await account.$get('dashboards')).filter(dashboard => !dashboard.deleted);
+        if (!dashboards) {
+            return res.sendStatus(404);
+        }
+
+        return res.send(dashboards);
+    };
+
     findAll = (req: Request, res: Response, next: NextFunction) => {
         //TODO: IMPLEMENT
         return res.sendStatus(200);

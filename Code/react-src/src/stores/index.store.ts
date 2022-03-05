@@ -1,5 +1,6 @@
 import { createStore, createTypedHooks, persist } from "easy-peasy";
 import accountStore, { AccountModel } from "./account.store";
+import dashboardStore, { DashboardModel } from "./dashboard.store";
 import stakeholderStore, { StakeholderModel } from "./stakeholder.store";
 
 
@@ -9,6 +10,7 @@ import stakeholderStore, { StakeholderModel } from "./stakeholder.store";
 export interface MainModel {
   accounts: AccountModel;
   stakeholder: StakeholderModel;
+  dashboard: DashboardModel;
 }
 
 /**
@@ -19,6 +21,7 @@ const MainStore = createStore({
     allow: ["account", "authToken"], // Persist account data in localStorage
   }),
   stakeholder: stakeholderStore,
+  dashboard: dashboardStore,
 });
 
 export const { useStoreActions, useStoreState, useStoreDispatch, useStore } =

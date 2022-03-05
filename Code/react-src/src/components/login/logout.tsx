@@ -6,15 +6,17 @@ interface LogoutProps {}
 
 const Logout: FunctionComponent<LogoutProps> = () => {
   const logout = useStoreActions((actions) => actions.accounts.logout);
+  const setCurrentDashboard = useStoreActions((actions) => actions.dashboard.setDashboardId);
 
   const [redirect, setRedirect] = useState("");
 
   useEffect(() => {
     logout(true);
+    setCurrentDashboard(0);
     setTimeout(() => {
       setRedirect("/login");
     }, 5000);
-  }, [logout]);
+  }, [logout, setCurrentDashboard]);
 
   if (redirect) {
     return <Redirect to={{ pathname: redirect, state: { from: "/login" } }} />;
