@@ -13,26 +13,19 @@ const DashboardHome: FunctionComponent<DashboardHomeProps> = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 grid-rows-2 gap-5 mx-5 flex-auto my-5">
+      <div className="grid grid-cols-2 grid-rows-2 gap-5 mx-5 flex-auto my-5">
         <Link
           to="/Issues"
-          className="h-auto w-screen/3 text-3xl dashboard-home-grid-item row-span-2"
+          className="h-auto w-screen/2 text-3xl dashboard-home-grid-item row-span-2"
         >
           <label className="font-bold m-3">Ethical Issue</label>
         </Link>
 
         <Link
           to="/Stakeholders"
-          className="h-auto w-screen/3 text-3xl dashboard-home-grid-item row-span-2"
+          className="h-auto w-screen/2 text-3xl dashboard-home-grid-item row-span-2"
         >
           <label className="font-bold m-3">Stakeholders</label>
-        </Link>
-        <div className="h-auto w-screen/3 dashboard-home-grid-item"></div>
-        <Link
-          to="/Dilemnas"
-          className="h-auto w-screen/3 text-3xl dashboard-home-grid-item cursor-not-allowed"
-        >
-          <label className="text-3xl font-bold m-3">Dilemnas</label>
         </Link>
       </div>
       <div className="grid grid-cols-4 gap-5 mx-5 my-10 h-48">

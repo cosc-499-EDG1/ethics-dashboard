@@ -74,7 +74,7 @@ const Login: FunctionComponent<LoginProps> = () => {
   ];
 
   const formActions = [
-    <div className="flex items-center justify-around">
+    <div className="items-center justify-around">
       <Button text={"Sign In"} formSubmit={true} />
       <Link
         to="/register"
