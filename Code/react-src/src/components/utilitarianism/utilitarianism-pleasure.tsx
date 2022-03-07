@@ -41,16 +41,11 @@ const UtilitarianismPleasure: FunctionComponent<UtilitarianismPleasureProps> = (
                     </p>
                 </div>
             </div>
-            <div className="pt-30">
-                <p>
-                    
-                </p>
-            </div>
-            <div className="md:flex">
-                <div className="dashboard-consequences">
-                    <label className="text-3xl font-bold">
+            <div className="dashboard-page md:flex">
+                <div className="dashboard-block w-2/3 mr-2">
+                    <label className="dashboard-block-title">
                         Option 1
-                        <p className="text-4xl font-bold text-blue-500">
+                        <p className="dashboard-block-title text-primary my-4">
                             Short-term Consequences
                         </p>
                         <StakeholderPleasureInput stakeholder={{id: 1, data: "Stakeholder 1 (Inputed from Stakeholders page)", value: 5, onChange: (e) => changedValue(e.target.value, e.target.id)}} />
@@ -58,7 +53,7 @@ const UtilitarianismPleasure: FunctionComponent<UtilitarianismPleasureProps> = (
                         <StakeholderPleasureInput stakeholder={{id: 3, data: "Stakeholder 3 (Inputed from Stakeholders page)", value: 5, onChange: (e) => changedValue(e.target.value, e.target.id)}} />
                     </label>
                 </div>
-                <div className="dashboard-aggregate">
+                <div className="dashboard-block-1 w-1/3 ml-2">
                     <OptionsPleasureOutput option={{id: 1, valueST: valueChanged, valueLT: 50}} />
                     <OptionsPleasureOutput option={{id: 2, valueST: 50, valueLT: 50}} />
                 </div>
@@ -69,7 +64,7 @@ const UtilitarianismPleasure: FunctionComponent<UtilitarianismPleasureProps> = (
                     <Link to="/utilitarianism-stakeholders">Go Back</Link>
                     </button>
                     <button className="bg-primary hover:brightness-125 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    <Link to="/">Submit</Link>
+                    <Link to="/dashboard">Submit</Link>
                     </button>
                 </div>
             </div>

@@ -20,58 +20,58 @@ const Issue: FunctionComponent<Issues> = () => {
       </div>
 
       <div className="px-4 pt-10 w-full justify-center border-none">
-        <div className="ethical-issues-block">
-          <label className="ethical-issues-block-title">
+        <div className="dashboard-block">
+          <label className="dashboard-block-title">
             Case Summary
-            <p className="ethical-issues-block-description">
+            <p className="dashboard-block-description">
               Briefly describe the key features of the case — the who, what, where, when and why.
             </p>
             <textarea
-              className="ethical-issues-block-text-input"
+              className="dashboard-block-text-input"
               placeholder="Describe the case summary..."
             ></textarea>
           </label>
         </div>
-        <div className="ethical-issues-block">
-          <label className="ethical-issues-block-title">
+        <div className="dashboard-block">
+          <label className="dashboard-block-title">
             Identify The Dilemmas
-            <p className="ethical-issues-block-description">
+            <p className="dashboard-block-description">
               What are the ethical dilemmas you are facing? Describe the dilemmas in ethical terms, eg. honesty, 
               deception, loyalty, betrayal, beneficence, malfeasance, autonomy, paternalism, confidentiality, 
               transparency, integrity, etc.
             </p>
             <textarea
-              className="ethical-issues-block-text-input"
+              className="dashboard-block-text-input"
               placeholder="Describe the dilemmas..."
             ></textarea>
           </label>
         </div>
-        <div className="ethical-issues-block">
+        <div className="dashboard-block">
           <label className="ethical-issues-block-title">
             Choose Your Role
-            <p className="ethical-issues-block-description">
+            <p className="dashboard-block-description">
               Put yourself in the position of a key decision maker in the case.
             </p>
             <textarea
-              className="ethical-issues-block-text-input"
+              className="dashboard-block-text-input"
               placeholder="Your role..."
             ></textarea>
           </label>
         </div>
-        <div className="ethical-issues-block">
-          <label className="ethical-issues-block-title">
+        <div className="dashboard-block">
+          <label className="dashboard-block-title">
             Identify Your Options
-            <p className="ethical-issues-block-description">
+            <p className="dashboard-block-description">
               Consider 2 or 3 options you will analyze.
             </p>
             <textarea
               rows={3}
-              className="ethical-issues-block-text-input"
+              className="dashboard-block-text-input"
               placeholder="Option 1..."
             ></textarea>
             <textarea
               rows={3}
-              className="ethical-issues-block-text-input"
+              className="dashboard-block-text-input"
               placeholder="Option 2..."
             ></textarea>
             <div className="text-center justify-center">

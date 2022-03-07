@@ -48,11 +48,7 @@ const UtilitarianismStakeholders: FunctionComponent<UtilitarianismStakeholdersPr
                         </p>
                     </div>
                 </div>
-                <div className="pt-30">
-                    <p>
-                        
-                    </p>
-                </div>
+                <div className="px-4 pt-10 w-full justify-center border-none">
                 <Droppable droppableId="droppable-1">
                     {(provided) => (
                     <div ref={provided.innerRef} {...provided.droppableProps}>
@@ -61,14 +57,17 @@ const UtilitarianismStakeholders: FunctionComponent<UtilitarianismStakeholdersPr
                             <Draggable key={id} draggableId={id} index={index}>
                             {(provided) => (
                                 <li>
-                                    <div className="dashboard-drag" ref={provided.innerRef} {...provided.draggableProps}>
-                                        <img className="w-10" src={`${process.env.PUBLIC_URL}dragging.png`} alt="dragging.png" {...provided.dragHandleProps}></img>
-                                        <label className="text-3xl font-bold">
+                                    <div className="dashboard-block" ref={provided.innerRef} {...provided.draggableProps}>
+                                        <div className="flex mb-4">
+                                            <img className="w-10" src={`${process.env.PUBLIC_URL}dragging.png`} alt="dragging.png" {...provided.dragHandleProps}></img>
+                                            <p className="dashboard-block-title ml-4">Rank: {index+1}</p>
+                                        </div>
+                                        <label className="dashboard-block-title">
                                             {option}
-                                            <p className="w-full border-none font-normal text-xl bg-gray-300 my-1 p-3">
+                                            <p className="dashboard-block-description">
                                                 {optionName}
                                             </p>
-                                            <textarea rows={5} className="w-full border-none" placeholder="Provide Reasoning...">
+                                            <textarea rows={5} className="dashboard-block-text-input" placeholder="Provide Reasoning...">
                                             </textarea>
                                         </label>
                                     </div>
@@ -81,6 +80,7 @@ const UtilitarianismStakeholders: FunctionComponent<UtilitarianismStakeholdersPr
                     </div>
                     )}
                 </Droppable>
+                </div>
             </DragDropContext>
             <div className="flex justify-center items-center m-6">
                 <div className="grid grid-cols-2 gap-4">

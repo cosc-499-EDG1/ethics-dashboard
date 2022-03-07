@@ -29,7 +29,7 @@ const DashboardHome: FunctionComponent<DashboardHomeProps> = () => {
         </Link>
       </div>
       <div className="grid grid-cols-4 gap-5 mx-5 my-10 h-48">
-        <Link to="/utilitarianism-options" className="dashboard-home-grid-item cursor-not-allowed">
+        <Link to="/utilitarianism-options" className="dashboard-home-grid-item">
           <label className="text-3xl font-bold m-3">Utilitarianism</label>
         </Link>
         <Link to="/deontology-options" className="dashboard-home-grid-item">

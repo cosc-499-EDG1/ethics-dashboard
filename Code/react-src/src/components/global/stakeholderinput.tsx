@@ -18,14 +18,14 @@ export const StakeholderInput = ({
   return (
     <div className="mt-1">
       <label
-        className="ethical-issues-block-title"
+        className="dashboard-block-title"
         htmlFor={`formInput-${label}`}
       >
         {label}
       </label>
       {type === "textarea" ? (
         <textarea
-          className="ethical-issues-block-text-input mt-4"
+          className="dashboard-block-text-input mt-4"
           id={`formInput-${label}`}
           placeholder={placeholder}
           value={value}
@@ -35,7 +35,7 @@ export const StakeholderInput = ({
         />
       ) : (
         <input
-          className="ethical-issues-block-text-input mt-4"
+          className="dashboard-block-text-input mt-4"
           id={`formInput-${label}`}
           type={type}
           placeholder={placeholder}

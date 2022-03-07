@@ -30,17 +30,23 @@
   @apply px-20 pt-10 w-full justify-center border-none;
 }
 
-.ethical-issues-block {
+.dashboard-page {
+  @apply px-4 pt-10 w-full justify-center;
+}
+.dashboard-block {
+  @apply bg-secondary rounded-md p-4 mb-4 shadow-lg;
+}
+.dashboard-block-1 {
   @apply bg-primary rounded-md p-4 mb-4 shadow-lg;
 }
-.ethical-issues-block-title {
+.dashboard-block-title {
   @apply text-3xl font-bold;
 }
-.ethical-issues-block-description {
+.dashboard-block-description {
   @apply text-xl font-bold text-coolGray-600 mt-4 mb-2;
 }
-.ethical-issues-block-text-input {
-  @apply w-full border-none rounded-md;
+.dashboard-block-text-input {
+  @apply w-full rounded-md border-coolGray-300;
 }
 
 

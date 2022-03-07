@@ -11,24 +11,24 @@ interface OptionsPleasureOutputProps {
 const OptionsPleasureOutput: FunctionComponent<OptionsPleasureOutputProps> =
   ({option}) => {
     return (
-        <div className="bg-gray-300 p-6 my-6">
-        <label className="text-3xl font-bold">
+    <div className="dashboard-block">
+        <label className="dashboard-block-title">
             Option {option.id}
-            <p className="mt-5 text-3xl font-bold text-blue-700">
+            <p className="dashboard-block-description">
                 Aggregate of short-term outcomes
             </p>
             <div className="h-24 my-2 flex justify-center items-center bg-white">
-                <p className="inline mx-3">Pleasure</p>
+                <p className="inline mx-3 text-lg">Pleasure</p>
                 <input className="average-slider" type="range" min="0" max="100" value={option.valueST}></input>
-                <p className="inline mx-3">Pain</p>
+                <p className="inline mx-3 text-lg">Pain</p>
             </div>
-            <p className="mt-5 text-3xl font-bold text-red-700">
+            <p className="dashboard-block-description">
                 Aggregate of long-term outcomes
             </p>
             <div className="h-24 my-2 flex justify-center items-center bg-white">
-                <p className="inline mx-3">Pleasure</p>
+                <p className="inline mx-3 text-lg">Pleasure</p>
                 <input className="average-slider" type="range" min="0" max="100" value={option.valueLT}></input>
-                <p className="inline mx-3">Pain</p>
+                <p className="inline mx-3 text-lg">Pain</p>
             </div>
         </label>
     </div>

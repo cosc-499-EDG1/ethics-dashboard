@@ -69,7 +69,7 @@ const Stakeholders: FunctionComponent<StakeholderProps> = () => {
   };
 
   const formInputs = [
-    <div className="ethical-issues-block">
+    <div className="dashboard-block">
     <StakeholderInput
       key="stakeholder1_title"
       label="Stakeholder 1 Title"
@@ -87,7 +87,7 @@ const Stakeholders: FunctionComponent<StakeholderProps> = () => {
       onChange={(e) => setStakeholder1_desc(e.target.value)}
     />
     </div>,
-    <div className="ethical-issues-block">
+    <div className="dashboard-block">
     <StakeholderInput
       key="stakeholder2_title"
       label="Stakeholder 2 Title"
@@ -105,7 +105,7 @@ const Stakeholders: FunctionComponent<StakeholderProps> = () => {
       onChange={(e) => setStakeholder2_desc(e.target.value)}
     />
     </div>,
-    <div className="ethical-issues-block">
+    <div className="dashboard-block">
     <StakeholderInput
       key="stakeholder3_title"
       label="Stakeholder 3 Title"

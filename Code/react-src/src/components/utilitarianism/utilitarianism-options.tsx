@@ -17,34 +17,39 @@ const UtilitarianismOptions: FunctionComponent<UtilitarianismOptionsProps> = () 
                     </p>
                 </div>
             </div>
-            <div className="pt-30">
-                <p>
-                    
-                </p>
-            </div>
-            <div className="dashboard-entry">
-                <label className="text-3xl font-bold">
-                    Option 1
-                    <p className="w-full border-none font-normal text-xl bg-gray-300 my-1 p-3">
-                        Option 1 (Inputed from Ethical Issues page)
-                    </p>
-                    <textarea rows={5} className="w-full border-none" placeholder="Short-term consequences...">
-                    </textarea>
-                    <textarea rows={5} className="w-full border-none" placeholder="Long-term consequences...">
-                    </textarea>
-                </label>
-            </div>
-            <div className="dashboard-entry">
-                <label className="text-3xl font-bold">
-                    Option 2
-                    <p className="w-full border-none font-normal text-xl bg-gray-300 my-1 p-3">
-                        Option 2 (Inputed from Ethical Issues page)
-                    </p>
-                    <textarea rows={5} className="w-full border-none" placeholder="Short-term consequences...">
-                    </textarea>
-                    <textarea rows={5} className="w-full border-none" placeholder="Long-term consequences...">
-                    </textarea>
-                </label>
+            <div className="dashboard-page">
+                <div className="dashboard-block">
+                    <label className="dashboard-block-title">
+                        Option 1
+                        <p className="dashboard-block-description">
+                            Option 1 (Inputed from Ethical Issues page)
+                        </p>
+                        <textarea
+                        className="dashboard-block-text-input"
+                        placeholder="Short-term consequences..."
+                        ></textarea>
+                        <textarea
+                        className="dashboard-block-text-input"
+                        placeholder="Long-term consequences..."
+                        ></textarea>
+                    </label>
+                </div>
+                <div className="dashboard-block">
+                    <label className="dashboard-block-title">
+                        Option 2
+                        <p className="dashboard-block-description">
+                            Option 2 (Inputed from Ethical Issues page)
+                        </p>
+                        <textarea
+                        className="dashboard-block-text-input"
+                        placeholder="Short-term consequences..."
+                        ></textarea>
+                        <textarea
+                        className="dashboard-block-text-input"
+                        placeholder="Long-term consequences..."
+                        ></textarea>
+                    </label>
+                </div>
             </div>
             <div className="flex justify-center items-center m-6">
                 <button className="bg-primary hover:brightness-125 text-white font-bold w-1/12 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
