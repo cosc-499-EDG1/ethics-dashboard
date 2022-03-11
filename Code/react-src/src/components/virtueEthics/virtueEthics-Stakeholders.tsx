@@ -20,11 +20,11 @@ const VirtueEthicsStakeholders: FunctionComponent<VirtueEthicsProps> = () => {
         </div>
       </div>
 
-      <div className="md:flex">
-        <div className="dashboard-character">
-          <label className="text-4xl font-bold">
+      <div className="dashboard-page md:flex">
+        <div className="dashboard-block w-1/2 mr-2">
+          <label className="dashboard-block-title">
             Stakeholders
-            <p className="text-2xl font-bold text-blue-500">
+            <p className="dashboard-block-description">
               Move slider to align with option prompt
             </p>
             <VirtueEthicsStakeholderInput
@@ -57,14 +57,14 @@ const VirtueEthicsStakeholders: FunctionComponent<VirtueEthicsProps> = () => {
           </label>
         </div>
 
-        <div className="dashboard-virtueRank">
-          <header className="text-4xl font-bold">
+        <div className="dashboard-block-1 w-1/2 ml-2">
+          <header className="dashboard-block-title mb-4">
             Options ranked by most virtuous
           </header>
-          <div className="bg-gray-300 p-6 my-6">
-            <label className="text-3xl font-bold">
+          <div className="dashboard-block">
+            <label className="dashboard-block-title">
               Stakeholder 3
-              <p className="text-2xl font-bold text-blue-700">Integrity</p>
+              <p className="dashboard-block-description">Integrity</p>
               <div className="h-24 my-2 flex justify-center items-center bg-white">
                 <p className="inline mx-3">Virtue</p>
                 <input type="range" min="1" max="10" value="2"></input>
@@ -72,10 +72,10 @@ const VirtueEthicsStakeholders: FunctionComponent<VirtueEthicsProps> = () => {
               </div>
             </label>
           </div>
-          <div className="bg-gray-300 p-6 my-6">
-            <label className="text-3xl font-bold">
+          <div className="dashboard-block">
+            <label className="dashboard-block-title">
               Stakeholder 2
-              <p className="text-2xl font-bold text-blue-700">Prestige</p>
+              <p className="dashboard-block-description">Prestige</p>
               <div className="h-24 my-2 flex justify-center items-center bg-white">
                 <p className="inline mx-3">Virtue</p>
                 <input type="range" min="1" max="10" value="3"></input>
@@ -83,10 +83,10 @@ const VirtueEthicsStakeholders: FunctionComponent<VirtueEthicsProps> = () => {
               </div>
             </label>
           </div>
-          <div className="bg-gray-300 p-6 my-6">
-            <label className="text-3xl font-bold">
+          <div className="dashboard-block">
+            <label className="dashboard-block-title">
               Stakeholder 1
-              <p className="text-2xl font-bold text-blue-700">Greed</p>
+              <p className="dashboard-block-description">Greed</p>
               <div className="h-24 my-2 flex justify-center items-center bg-white">
                 <p className="inline mx-3">Virtue</p>
                 <input type="range" min="1" max="10" value="9"></input>

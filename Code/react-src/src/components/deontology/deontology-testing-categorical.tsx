@@ -36,7 +36,7 @@ const DeontologyTestingCategorical: FunctionComponent<
             you choose Option 2.
           </label>
           <div className="text-center justify-center mt-2">
-            <button className="bg-main hover:brightness-125 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            <button className="bg-main hover:brightness-110 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               Add A Moral Law
             </button>
           </div>

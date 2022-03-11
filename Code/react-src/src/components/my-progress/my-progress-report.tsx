@@ -31,12 +31,12 @@ const MyProgressReport: FunctionComponent<MyProgressReportProps> = () => {
 
   return (
     <div className="site-dashboard">
-      <div className="pt-20 px-20">
-        <div className="font-bold justify-center text-center text-7xl">
+      <div className="dashboard-title">
+        <div className="dashboard-title-text">
           <h1>My Progress</h1>
         </div>
       </div>
-      <div className="mt-12 flex flex-wrap justify-around gap-1">
+      <div className="flex flex-wrap justify-around gap-1">
         {categories.map(([category, percent]: any) => (
           <ProgressCategory
             name={category}
@@ -54,7 +54,7 @@ const MyProgressReport: FunctionComponent<MyProgressReportProps> = () => {
             </div>
           ))}
 
-          <div className="mt-4 mb-8 w-144 h-48 bg-gray-300">
+          <div className="dashboard-block w-144 h-52">
             <div className="p-4 flex justify-between">
               <p className="text-6xl font-bold text-black">TOTAL:</p>
               <p className="text-6xl font-bold text-blue-500">
@@ -89,12 +89,10 @@ const ProgressCategory: FunctionComponent<CategoryProgressProps> = ({
   const [value, setValue] = useState<string | number>("");
 
   return (
-    <div className="h-96 w-[32rem] bg-gray-300 rounded-lg shadow-lg mt-5">
-      <div className="p-4">
-        <label className="text-4xl flex justify-center font-bold text-black">
-          {name}
-        </label>
-      </div>
+    <div className="dashboard-block w-3/12">
+      <label className="mb-4 text-3xl flex justify-center font-bold text-black text-center">
+        {name}
+      </label>
       <div className="pb-4 flex justify-center">
         <div className="w-44 p-3 flex justify-center border-4 border-black">
           <input
@@ -118,13 +116,11 @@ const ProgressCategory: FunctionComponent<CategoryProgressProps> = ({
           Comments &amp; Summary
         </label>
       </div>
-      <div className="mt-5 px-5">
-        <textarea
-          rows={4}
-          className="w-full border-none text-lg"
-          placeholder="Comments &amp; Summary..."
-        ></textarea>
-      </div>
+      <textarea
+        rows={4}
+        className="dashboard-block-text-input mt-2"
+        placeholder="Comments &amp; Summary..."
+      ></textarea>
     </div>
   );
 };

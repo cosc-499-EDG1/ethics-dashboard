@@ -14,9 +14,9 @@ const VirtueEthicsStakeholderInput: FunctionComponent<VirtueEthicsStakeholderInp
   ({stakeholder}) => {
     return (
       <form>
-        <div className="w-6/6 border-none font-normal bg-gray-300 my-1 p-3">
-          <p className="text-xl">Stakeholder Interest #{stakeholder.id}</p>
-          <p className="text-sm">
+        <div className="dashboard-block-1">
+          <p className="dashboard-block-title">Stakeholder Interest #{stakeholder.id}</p>
+          <p className="dashboard-block-description">
             {stakeholder.prompt}
           </p>
         

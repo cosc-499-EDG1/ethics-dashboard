@@ -24,15 +24,15 @@ const VirtueEthicsRankBal: FunctionComponent<VirtueEthicsProps> = () => {
         </div>
       </div>
 
-      <div className="md:flex">
-        <div className="dashboard-virtueRank">
-          <header className="text-4xl font-bold">
+      <div className="dashboard-page md:flex">
+        <div className="dashboard-block w-1/3 mr-2">
+          <header className="dashboard-block-title mb-4">
             Options ranked by most virtuous
           </header>
-          <div className="bg-gray-300 p-6 my-6">
-            <label className="text-3xl font-bold">
+          <div className="dashboard-block-1">
+            <label className="dashboard-block-title">
               Option 3
-              <p className="text-4xl font-bold text-blue-700">Courage</p>
+              <p className="dashboard-block-description">Courage</p>
               <div className="h-24 my-2 flex justify-center items-center bg-white">
                 <p className="inline mx-3">Virtue</p>
                 <input type="range" min="1" max="10" value="3"></input>
@@ -40,10 +40,10 @@ const VirtueEthicsRankBal: FunctionComponent<VirtueEthicsProps> = () => {
               </div>
             </label>
           </div>
-          <div className="bg-gray-300 p-6 my-6">
-            <label className="text-3xl font-bold">
+          <div className="dashboard-block-1">
+            <label className="dashboard-block-title">
               Option 2
-              <p className="text-4xl font-bold text-blue-700">Over-Sharing</p>
+              <p className="dashboard-block-description">Over-Sharing</p>
               <div className="h-24 my-2 flex justify-center items-center bg-white">
                 <p className="inline mx-3">Virtue</p>
                 <input type="range" min="1" max="10" value="7"></input>
@@ -51,10 +51,10 @@ const VirtueEthicsRankBal: FunctionComponent<VirtueEthicsProps> = () => {
               </div>
             </label>
           </div>
-          <div className="bg-gray-300 p-6 my-6">
-            <label className="text-3xl font-bold">
+          <div className="dashboard-block-1">
+            <label className="dashboard-block-title">
               Option 1
-              <p className="text-4xl font-bold text-blue-700">Blind Devotion</p>
+              <p className="dashboard-block-description">Blind Devotion</p>
               <div className="h-24 my-2 flex justify-center items-center bg-white">
                 <p className="inline mx-3">Virtue</p>
                 <input type="range" min="1" max="10" value="8"></input>
@@ -64,14 +64,14 @@ const VirtueEthicsRankBal: FunctionComponent<VirtueEthicsProps> = () => {
           </div>
         </div>
 
-        <div className="dashboard-virtueRank">
-          <header className="text-4xl font-bold">
+        <div className="dashboard-block w-1/3 mr-2 ml-2">
+          <header className="dashboard-block-title mb-4">
             Interests ranked by most virtuous
           </header>
-          <div className="bg-gray-300 p-6 my-6">
-            <label className="text-3xl font-bold">
+          <div className="dashboard-block-1">
+            <label className="dashboard-block-title">
               Stakeholder 3
-              <p className="text-4xl font-bold text-blue-700">Integrity</p>
+              <p className="dashboard-block-description">Integrity</p>
               <div className="h-24 my-2 flex justify-center items-center bg-white">
                 <p className="inline mx-3">Virtue</p>
                 <input type="range" min="1" max="10" value="2"></input>
@@ -79,10 +79,10 @@ const VirtueEthicsRankBal: FunctionComponent<VirtueEthicsProps> = () => {
               </div>
             </label>
           </div>
-          <div className="bg-gray-300 p-6 my-6">
-            <label className="text-3xl font-bold">
+          <div className="dashboard-block-1">
+            <label className="dashboard-block-title">
               Stakeholder 2
-              <p className="text-4xl font-bold text-blue-700">Prestige</p>
+              <p className="dashboard-block-description">Prestige</p>
               <div className="h-24 my-2 flex justify-center items-center bg-white">
                 <p className="inline mx-3">Virtue</p>
                 <input type="range" min="1" max="10" value="3"></input>
@@ -90,10 +90,10 @@ const VirtueEthicsRankBal: FunctionComponent<VirtueEthicsProps> = () => {
               </div>
             </label>
           </div>
-          <div className="bg-gray-300 p-6 my-6">
-            <label className="text-3xl font-bold">
+          <div className="dashboard-block-1">
+            <label className="dashboard-block-title">
               Stakeholder 1
-              <p className="text-4xl font-bold text-blue-700">Greed</p>
+              <p className="dashboard-block-description">Greed</p>
               <div className="h-24 my-2 flex justify-center items-center bg-white">
                 <p className="inline mx-3">Virtue</p>
                 <input type="range" min="1" max="10" value="8"></input>
@@ -103,20 +103,18 @@ const VirtueEthicsRankBal: FunctionComponent<VirtueEthicsProps> = () => {
           </div>
         </div>
 
-        <div className="dashboard-virtueRank">
-          <div className="bg-gray-300 p-6 my-6">
-            <label className="text-3xl font-bold">
+        <div className="dashboard-block-1 w-1/3 ml-2">
+          <div className="dashboard-block">
+            <label className="dashboard-block-title">
               ETHICAL DECISION/ COURSE OF ACTION <br></br>
             </label>
-            <label className="text-xl font-bold">Enter in textbox below</label>
-            <div className="mt-5 px-5">
-              <textarea
-                rows={10}
-                className="w-full border-none text-lg"
-                placeholder="Sum up your analysis. Eg. Wealth and prestige were desired by the most stakeholders, but they were not the most virtuous goals. Balancing the options and interests of stakeholders shows that the right thing will be a combination of courage, integrity and self-confidence."
-              ></textarea>
-            </div>
-            <label className="text-2xl font-bold">
+            <label className="dashboard-block-description">Enter in textbox below</label>
+            <textarea
+              rows={10}
+              className="dashboard-block-text-input mb-4"
+              placeholder="Sum up your analysis. Eg. Wealth and prestige were desired by the most stakeholders, but they were not the most virtuous goals. Balancing the options and interests of stakeholders shows that the right thing will be a combination of courage, integrity and self-confidence."
+            ></textarea>
+            <label className="dashboard-block-title">
               The virtuous option is Option 3.
             </label>
           </div>
