@@ -38,11 +38,11 @@ const CareEthics: FunctionComponent<CareEthicsProps> = () => {
   };
   return (
     <div className="site-dashboard">
-      <div className="pt-20 px-20 flex justify-between">
-        <div className="font-bold text-7xl w-1/3">
+      <div className="dashboard-title">
+        <div className="dashboard-title-text">
           <h1>Care Ethics</h1>
         </div>
-        <div className="text-2xl font-bold bg-white rounded-lg w-256 py-4 px-2">
+        <div className="dashboard-title-description">
           <p>
             Care ethics we come to understand the right thing to do by
             considering how we can care for others. There are three main
@@ -52,54 +52,56 @@ const CareEthics: FunctionComponent<CareEthicsProps> = () => {
           </p>
         </div>
       </div>
-      <div className="md:flex">
-        <div className="ml-20 mr-10 mt-10 min-h-128 max-h-144 justify-center w-8/12 bg-gray-300">
-          <div className="p-4 justify-between">
-            <label className="text-3xl font-bold text-black">
-              Option 1 -&nbsp;
-            </label>
-            <label className="text-3xl font-bold text-gray-500">
-              I can put loyalty to the company...
-            </label>
-          </div>
-          <div className="mb-4 max-h-128 overflow-y-auto">
-            <StakeholderCareEthicsInput
-              stakeholder={{
-                id: 1,
-                data: "Stakeholder 1",
-                desc: "The engineer asked to design the VW defeat...",
-                onChange: (e) => changedValue(e.target.value, e.target.id),
-              }}
-            />
-            <StakeholderCareEthicsInput
-              stakeholder={{
-                id: 2,
-                data: "Stakeholder 2",
-                desc: "The decision makers at VW who asked...",
-                onChange: (e) => changedValue(e.target.value, e.target.id),
-              }}
-            />
-          </div>
+      <div className="dashboard-page md:flex">
+        <div className="dashboard-block w-1/2 mr-2">
+          <p className="dashboard-block-title">
+            Option 1 -&nbsp;
+          </p>
+          <p className="dashboard-block-description">
+            I can put loyalty to the company...
+          </p>
+          <StakeholderCareEthicsInput
+            stakeholder={{
+              id: 1,
+              data: "Stakeholder 1",
+              desc: "The engineer asked to design the VW defeat...",
+              onChange: (e) => changedValue(e.target.value, e.target.id),
+            }}
+          />
+          <StakeholderCareEthicsInput
+            stakeholder={{
+              id: 2,
+              data: "Stakeholder 2",
+              desc: "The decision makers at VW who asked...",
+              onChange: (e) => changedValue(e.target.value, e.target.id),
+            }}
+          />
+          <StakeholderCareEthicsInput
+            stakeholder={{
+              id: 3,
+              data: "Stakeholder 3",
+              desc: "Blah, blah, blah...",
+              onChange: (e) => changedValue(e.target.value, e.target.id),
+            }}
+          />
         </div>
-        <div className="ml-10 mr-20 mt-10 pb-4 justify-center w-4/12 bg-gray-300">
-          <div className="p-4 max-h-128 overflow-y-auto justify-center">
-            <OptionCareEthicsInput
-              option={{
-                id: 1,
-                data: "Option 1",
-                color: "text-black",
-                value: valueChanged,
-              }}
-            />
-            <OptionCareEthicsInput
-              option={{
-                id: 2,
-                data: "Option 2",
-                color: "text-gray-400",
-                value: 50,
-              }}
-            />
-          </div>
+        <div className="dashboard-block-1 w-1/2 ml-2">
+          <OptionCareEthicsInput
+            option={{
+              id: 1,
+              data: "Option 1",
+              color: "text-black",
+              value: valueChanged,
+            }}
+          />
+          <OptionCareEthicsInput
+            option={{
+              id: 2,
+              data: "Option 2",
+              color: "text-gray-400",
+              value: 50,
+            }}
+          />
         </div>
       </div>
       <div className="flex justify-center items-center m-6">

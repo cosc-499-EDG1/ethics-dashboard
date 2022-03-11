@@ -12,20 +12,18 @@ interface StakeholderPleasureInputProps {
 const StakeholderPleasureInput: FunctionComponent<StakeholderPleasureInputProps> =
   ({stakeholder}) => {
     return (
-      <form>
-        <div className="w-full border-none font-normal bg-gray-300 my-1 p-3">
-          <p className="text-xl">Stakeholder {stakeholder.id}</p>
-          <p className="text-sm">
-            {stakeholder.data}
-          </p>
-        </div>
+      <div className="dashboard-block-1">
+        <p className="dashboard-block-title">Stakeholder {stakeholder.id}</p>
+        <p className="dashboard-block-description">
+          {stakeholder.data}
+        </p>
         <div className="flex flex-wrap">
-          <div className="w-3/6 h-24 my-2 flex justify-center items-center bg-white">
-            <p className="inline mx-3">Pleasure</p>
-            <input className="w-96" type="range" min="0" max="10" defaultValue={stakeholder.value} onChange={stakeholder.onChange} id={stakeholder.id.toString()}></input>
-            <p className="inline mx-3">Pain</p>
+          <div className="w-1/2 h-24 my-2 flex justify-center items-center bg-white">
+            <p className="inline mx-3 text-lg">Pleasure</p>
+            <input className="w-1/2" type="range" min="0" max="10" defaultValue={stakeholder.value} onChange={stakeholder.onChange} id={stakeholder.id.toString()}></input>
+            <p className="inline mx-3 text-lg">Pain</p>
           </div>
-          <div className="w-3/6 h-24 my-2 grid place-items-center bg-yellow-300">
+          <div className="w-1/2 h-24 my-2 grid place-items-center bg-secondary">
             <input
               type="text"
               className="w-4/6 h-6 border-2 border-black bg-white"
@@ -54,7 +52,7 @@ const StakeholderPleasureInput: FunctionComponent<StakeholderPleasureInputProps>
             </div>
           </div>
         </div>
-      </form>
+      </div>
     );
   };
 

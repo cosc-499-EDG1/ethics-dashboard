@@ -8,41 +8,83 @@ const Issue: FunctionComponent<Issues> = () => {
     <div className="site-dashboard">
       <div className="dashboard-title">
         <div className="dashboard-title-text">
-          <h1>Ethical Issues</h1>
+          <h1>Ethical Issue</h1>
         </div>
         <div className="dashboard-title-description">
           <p>
-            Describe the ethical issue or dilemma you would like to analyze.
+            Describe the dilemma you would like to analyze.
             Remember, ethical values are things that are important because they
             are right or wrong – lying, courage, loyalty, theft, etc.
           </p>
         </div>
       </div>
 
-      <div className="user-entry">
-        <label className="text-3xl font-bold">
-          Ethical Issue
-          <textarea
-            className="w-full border-none my-2"
-            placeholder="Describe ethical issue..."
-          ></textarea>
-          <textarea
-            rows={5}
-            className="w-full border-none"
-            placeholder="Option 1..."
-          ></textarea>
-          <textarea
-            rows={5}
-            className="w-full border-none"
-            placeholder="Option 2..."
-          ></textarea>
-        </label>
-
-        <label className="text-3xl font-bold"></label>
+      <div className="px-4 pt-10 w-full justify-center border-none">
+        <div className="dashboard-block">
+          <label className="dashboard-block-title">
+            Case Summary
+            <p className="dashboard-block-description">
+              Briefly describe the key features of the case — the who, what, where, when and why.
+            </p>
+            <textarea
+              className="dashboard-block-text-input"
+              placeholder="Describe the case summary..."
+            ></textarea>
+          </label>
+        </div>
+        <div className="dashboard-block">
+          <label className="dashboard-block-title">
+            Identify The Dilemmas
+            <p className="dashboard-block-description">
+              What are the ethical dilemmas you are facing? Describe the dilemmas in ethical terms, eg. honesty, 
+              deception, loyalty, betrayal, beneficence, malfeasance, autonomy, paternalism, confidentiality, 
+              transparency, integrity, etc.
+            </p>
+            <textarea
+              className="dashboard-block-text-input"
+              placeholder="Describe the dilemmas..."
+            ></textarea>
+          </label>
+        </div>
+        <div className="dashboard-block">
+          <label className="ethical-issues-block-title">
+            Choose Your Role
+            <p className="dashboard-block-description">
+              Put yourself in the position of a key decision maker in the case.
+            </p>
+            <textarea
+              className="dashboard-block-text-input"
+              placeholder="Your role..."
+            ></textarea>
+          </label>
+        </div>
+        <div className="dashboard-block">
+          <label className="dashboard-block-title">
+            Identify Your Options
+            <p className="dashboard-block-description">
+              Consider 2 or 3 options you will analyze.
+            </p>
+            <textarea
+              rows={3}
+              className="dashboard-block-text-input"
+              placeholder="Option 1..."
+            ></textarea>
+            <textarea
+              rows={3}
+              className="dashboard-block-text-input"
+              placeholder="Option 2..."
+            ></textarea>
+            <div className="text-center justify-center">
+              <button className="bg-main hover:brightness-110 text-white text-lg font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline">
+                Add Option
+              </button>
+            </div>
+          </label>
+        </div>
       </div>
       <div className="flex justify-center items-center m-6">
         <Link to="/dashboard">
-          <button className="bg-primary hover:brightness-125 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          <button className="bg-primary hover:brightness-125 text-white text-lg font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Submit
           </button>
         </Link>

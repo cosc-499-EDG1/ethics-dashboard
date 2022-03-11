@@ -1,8 +1,8 @@
 import { useStoreActions, useStoreState } from "../../stores/index.store";
 import { FunctionComponent, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { Form } from "../global/form";
-import { FormInput } from "../global/forminput";
+import { StakeholderForm } from "../global/stakeholderform";
+import { StakeholderInput } from "../global/stakeholderinput";
 import { Button } from "../global/button";
 
 interface StakeholderProps {}
@@ -69,7 +69,8 @@ const Stakeholders: FunctionComponent<StakeholderProps> = () => {
   };
 
   const formInputs = [
-    <FormInput
+    <div className="dashboard-block">
+    <StakeholderInput
       key="stakeholder1_title"
       label="Stakeholder 1 Title"
       type="text"
@@ -77,15 +78,17 @@ const Stakeholders: FunctionComponent<StakeholderProps> = () => {
       value={stakeholder1_title}
       onChange={(e) => setStakeholder1_title(e.target.value)}
     />,
-    <FormInput
+    <StakeholderInput
       key="stakeholder1_desc"
       label="Stakeholder 1 Description"
       type="textarea"
       placeholder="Stakeholder 1 Description"
       value={stakeholder1_desc}
       onChange={(e) => setStakeholder1_desc(e.target.value)}
-    />,
-    <FormInput
+    />
+    </div>,
+    <div className="dashboard-block">
+    <StakeholderInput
       key="stakeholder2_title"
       label="Stakeholder 2 Title"
       type="text"
@@ -93,15 +96,17 @@ const Stakeholders: FunctionComponent<StakeholderProps> = () => {
       value={stakeholder2_title}
       onChange={(e) => setStakeholder2_title(e.target.value)}
     />,
-    <FormInput
+    <StakeholderInput
       key="stakeholder2_desc"
       label="Stakeholder 2 Description"
       type="textarea"
       placeholder="Stakeholder 2 Description"
       value={stakeholder2_desc}
       onChange={(e) => setStakeholder2_desc(e.target.value)}
-    />,
-    <FormInput
+    />
+    </div>,
+    <div className="dashboard-block">
+    <StakeholderInput
       key="stakeholder3_title"
       label="Stakeholder 3 Title"
       type="text"
@@ -109,27 +114,25 @@ const Stakeholders: FunctionComponent<StakeholderProps> = () => {
       value={stakeholder3_title}
       onChange={(e) => setStakeholder3_title(e.target.value)}
     />,
-    <FormInput
+    <StakeholderInput
       key="stakeholder3_desc"
       label="Stakeholder 3 Description"
       type="textarea"
       placeholder="Stakeholder 3 Description"
       value={stakeholder3_desc}
       onChange={(e) => setStakeholder3_desc(e.target.value)}
-    />,
+    />
+    </div>,
   ];
   const formActions = [
-    <div className="flex">
-      <Button text={"Go Back"} formSubmit={false} classes="bg-secondary mr-5" onClick={() => setRedirect("/dashboard")} />
-      <Button text={"Submit"} formSubmit={true} />
-    </div>,
+      <Button text={"Submit"} formSubmit={true} />,
   ];
 
   return (
     <div className="site-dashboard">
       <div className="dashboard-title">
         <div className="dashboard-title-text">
-          <h1>Stakeholder Description</h1>
+          <h1>Stakeholder Analysis</h1>
         </div>
         <div className="dashboard-title-description">
           <p>
@@ -141,8 +144,8 @@ const Stakeholders: FunctionComponent<StakeholderProps> = () => {
           </p>
         </div>
       </div>
-      <div className="mt-5 w-256 left-0 right-0 m-auto bg-white rounded-lg shadow-lg p-5">
-        <Form
+      <div className="px-4 pt-10 w-full justify-center border-none">
+        <StakeholderForm
           inputs={formInputs}
           actions={formActions}
           isLoading={isLoading}

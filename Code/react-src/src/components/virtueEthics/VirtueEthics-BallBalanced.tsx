@@ -26,60 +26,62 @@ const VirtueEthicsBallBalanced: FunctionComponent<VirtueEthicsProps> = () => {
         </div>
       </div>
 
-      <div className="dashboard-character h-29">
-        <label className="text-4xl font-bold">
-          CONGRATULATIONS!
-          <p className="text-2xl font-bold text-blue-500 py-2">
-            Your soul is now in a stable equilibrium which is essential to
-            understanding virtue. However, this achievement is fleeting. Life
-            will constantly challenge your ability to balance the many
-            influences that will make it difficult to see the virtuous path.
-          </p>
-        </label>
-      </div>
-
-      <div className="mx-20 my-5 px-5 pt-5 py-4 justify-center border-black border-2 flex items-center justify-center">
-        <div className="bg-blue-400 w-28 h-28 rounded-full relative left-80 bottom-36">
-          <div className="text-sm text-center py-10">Conventions</div>
+      <div className="dashboard-page">
+        <div className="dashboard-block">
+          <label className="dashboard-block-title">
+            CONGRATULATIONS!
+            <p className="dashboard-block-description">
+              Your soul is now in a stable equilibrium which is essential to
+              understanding virtue. However, this achievement is fleeting. Life
+              will constantly challenge your ability to balance the many
+              influences that will make it difficult to see the virtuous path.
+            </p>
+          </label>
         </div>
 
-        <div className="bg-green-900 w-28 h-28 rounded-full relative left-36 bottom-30">
-          <div className="text-sm text-center py-10">Expectations</div>
+        <div className="my-5 px-5 pt-5 py-4 justify-center border-black border-2 flex items-center justify-center">
+          <div className="bg-blue-400 w-28 h-28 rounded-full relative left-80 bottom-36">
+            <div className="text-sm text-center py-10">Conventions</div>
+          </div>
+
+          <div className="bg-green-900 w-28 h-28 rounded-full relative left-36 bottom-30">
+            <div className="text-sm text-center py-10">Expectations</div>
+          </div>
+
+          <div className="bg-green-400 w-28 h-28 rounded-full relative left-24 top-36">
+            <div className="text-sm text-center py-10">Attachments</div>
+          </div>
+
+          <div className="bg-gray-400 w-96 h-96 rounded-full text-center font-bold py-4">
+            Your soul
+          </div>
+
+          <div className="bg-orange-400 w-28 h-28 rounded-full relative right-24 bottom-36">
+            <div className="text-sm text-center py-10">Traditions</div>
+          </div>
+
+          <div className="bg-blue-800 w-28 h-28 rounded-full relative right-40">
+            <div className="text-sm text-center py-10">Impulses</div>
+          </div>
+
+          <div className="bg-red-400 w-28 h-28 rounded-full relative right-80 top-36">
+            <div className="text-sm text-center py-10">Desires</div>
+          </div>
         </div>
 
-        <div className="bg-green-400 w-28 h-28 rounded-full relative left-24 top-36">
-          <div className="text-sm text-center py-10">Attachments</div>
-        </div>
-
-        <div className="bg-gray-400 w-96 h-96 rounded-full text-center font-bold py-4">
-          Your soul
-        </div>
-
-        <div className="bg-orange-400 w-28 h-28 rounded-full relative right-24 bottom-36">
-          <div className="text-sm text-center py-10">Traditions</div>
-        </div>
-
-        <div className="bg-blue-800 w-28 h-28 rounded-full relative right-40">
-          <div className="text-sm text-center py-10">Impulses</div>
-        </div>
-
-        <div className="bg-red-400 w-28 h-28 rounded-full relative right-80 top-36">
-          <div className="text-sm text-center py-10">Desires</div>
-        </div>
-      </div>
-
-      <div className="flex justify-center items-center m-6">
-        <div className="grid grid-cols-2 gap-4">
-          <Link to="/virtueEthics-Ball">
-            <button className="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-              Go Back
-            </button>
-          </Link>
-          <Link to="/virtueEthics-Character">
-            <button className="bg-primary hover:brightness-125 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-              Submit
-            </button>
-          </Link>
+        <div className="flex justify-center items-center m-6">
+          <div className="grid grid-cols-2 gap-4">
+            <Link to="/virtueEthics-Ball">
+              <button className="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Go Back
+              </button>
+            </Link>
+            <Link to="/virtueEthics-Character">
+              <button className="bg-primary hover:brightness-125 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Submit
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

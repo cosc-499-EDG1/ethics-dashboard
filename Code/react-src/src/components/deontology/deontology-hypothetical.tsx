@@ -26,76 +26,72 @@ const DeontologyHypothetical: FunctionComponent<
       <div className="pt-30">
         <p></p>
       </div>
-      <div className="md:flex">
-        <div className="dashboard-hypotheticalblock">
-          <div className="dashboard-options">
-            <label className="text-3xl font-bold">
+      <div className="dashboard-page md:flex">
+        <div className="dashboard-block w-2/3 mr-2">
+          <div className="dashboard-block-1">
+            <label className="dashboard-block-title">
               You selected the following reasons to support OPTION 1:
             </label>
+            <div className="dashboard-block-title mt-4">
+              <input type="checkbox" value="your-interests" disabled></input>
+              <label className="mx-4 text-2xl font-bold">
+                Serves your interests
+              </label>
+              <br></br>
+              <input type="checkbox" value="someones-interests" disabled></input>
+              <label className="mx-4 text-2xl font-bold">
+                Serves the interests of someone else you want to impress
+              </label>
+              <br></br>
+              <input type="checkbox" value="look-good" disabled></input>
+              <label className="mx-4 text-2xl font-bold">It will look good</label>
+              <br></br>
+              <input type="checkbox" value="long-run" disabled></input>
+              <label className="mx-4 text-2xl font-bold">
+                It will pay off in the long run
+              </label>
+              <br></br>
+              <input type="checkbox" value="everybody-wins" disabled></input>
+              <label className="mx-4 text-2xl font-bold">Everybody wins</label>
+              <br></br>
+              <input type="checkbox" value="revenge" disabled></input>
+              <label className="mx-4 text-2xl font-bold">Revenge</label>
+              <br></br>
+              <input type="checkbox" value="other" disabled></input>
+              <label className="mx-4 text-2xl font-bold">Other</label>
+              <input type="text" disabled></input>
+              <br></br>
+              <input type="checkbox" value="right-thing" disabled></input>
+              <label className="mx-4 text-2xl font-bold">
+                It's the right thing to do
+              </label>
+              <br></br>
+            </div>
           </div>
-          <div className="dashboard-motivation">
-            <input type="checkbox" value="your-interests" disabled></input>
-            <label className="mx-4 text-2xl font-bold">
-              Serves your interests
-            </label>
-            <br></br>
-            <input type="checkbox" value="someones-interests" disabled></input>
-            <label className="mx-4 text-2xl font-bold">
-              Serves the interests of someone else you want to impress
-            </label>
-            <br></br>
-            <input type="checkbox" value="look-good" disabled></input>
-            <label className="mx-4 text-2xl font-bold">It will look good</label>
-            <br></br>
-            <input type="checkbox" value="long-run" disabled></input>
-            <label className="mx-4 text-2xl font-bold">
-              It will pay off in the long run
-            </label>
-            <br></br>
-            <input type="checkbox" value="everybody-wins" disabled></input>
-            <label className="mx-4 text-2xl font-bold">Everybody wins</label>
-            <br></br>
-            <input type="checkbox" value="revenge" disabled></input>
-            <label className="mx-4 text-2xl font-bold">Revenge</label>
-            <br></br>
-            <input type="checkbox" value="other" disabled></input>
-            <label className="mx-4 text-2xl font-bold">Other</label>
-            <input type="text" disabled></input>
-            <br></br>
-            <input type="checkbox" value="right-thing" disabled></input>
-            <label className="mx-4 text-2xl font-bold">
-              It's the right thing to do
-            </label>
-            <br></br>
-          </div>
-          <div className="dashboard-hypothetical">
-            <label className="text-3xl font-bold">
-              These motivations are consistent with hypothetical reasoning and
-              therefore cannot be a universal law of moral action.
+          <div className="dashboard-block-1">
+            <label className="dashboard-block-title">
+              These motivations are consistent with HYPOTHETICAL reasoning and
+              therefore CANNOT be a universal law of moral action.
             </label>
           </div>
         </div>
-        <div className="dashboard-aggregate">
-          <div className="bg-gray-300 p-6 my-6 rounded shadow-lg">
-            <label className="text-3xl font-bold">
+        <div className="dashboard-block-1 w-1/3 ml-2">
+          <div className="dashboard-block">
+            <label className="dashboard-block-title">
               Option 1
-              <div className="h-24 my-2 flex justify-center items-center bg-white">
-                <p className="inline mx-3 text-lg text-black">
-                  This reasoning is consistent with hypothetical reasoning and
-                  therefore cannot support a moral action.
-                </p>
-              </div>
+              <p className="dashboard-block-description">
+                This reasoning is consistent with HYPOTHETICAL
+                reasoning and therefore CANNOT support a moral action.
+              </p>
             </label>
           </div>
-          <div className="bg-gray-300 p-6 my-6 rounded shadow-lg">
-            <label className="text-3xl font-bold">
+          <div className="dashboard-block">
+            <label className="dashboard-block-title">
               Option 2
-              <div className="h-24 my-2 flex justify-center items-center bg-white">
-                <p className="inline mx-3 text-lg text-gray-300">
-                  This reasoning is consistent with [hypothetical/categorical]
-                  reasoning and therefore [cannot/may] support a moral action.
-                </p>
-              </div>
+              <p className="dashboard-block-description">
+                This reasoning is consistent with [HYPOTHETICAL/CATEGORICAL]
+                reasoning and therefore [CANNOT/MAY] support a moral action.
+              </p>
             </label>
           </div>
         </div>
