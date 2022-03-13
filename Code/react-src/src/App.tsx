@@ -6,6 +6,7 @@ import Stakeholders from "./components/stakeholders/stakeholders";
 import UtilitarianismOptions from "./components/utilitarianism/utilitarianism-options";
 import UtilitarianismStakeholders from "./components/utilitarianism/utilitarianism-stakeholders";
 import UtilitarianismPleasure from "./components/utilitarianism/utilitarianism-pleasure";
+import UtilitarianismSummary from "./components/utilitarianism/utilitarianism-summary";
 
 import DeontologyOptions from "./components/deontology/deontology-options";
 import DeontologyHypothetical from "./components/deontology/deontology-hypothetical";
@@ -53,6 +54,7 @@ function App() {
             <Route path="/utilitarianism-options" component={UtilitarianismOptions} />
             <Route path="/utilitarianism-stakeholders" component={UtilitarianismStakeholders} />
             <Route path="/utilitarianism-pleasure" component={UtilitarianismPleasure} />
+            <Route path="/utilitarianism-summary" component={UtilitarianismSummary} />
             <Route path="/deontology-options" component={DeontologyOptions} />
             <Route path="/deontology-hypothetical" component={DeontologyHypothetical} />
             <Route path="/deontology-categorical" component={DeontologyCategorical} />

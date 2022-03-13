@@ -19,7 +19,7 @@ const Issue: FunctionComponent<Issues> = () => {
         </div>
       </div>
 
-      <div className="px-4 pt-10 w-full justify-center border-none">
+      <div className="dashboard-page">
         <div className="dashboard-block">
           <label className="dashboard-block-title">
             Case Summary
