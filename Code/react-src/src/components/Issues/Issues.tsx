@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from "react";
 import { Link } from "react-router-dom";
-import IssuesOption from "./issues-option";
+import IssuesOption from "../global/issues-option";
 
 interface Issues {}
 
