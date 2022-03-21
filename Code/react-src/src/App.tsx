@@ -31,7 +31,7 @@ import './styles/main.css';
 import Home from "./components/home/home";
 import Login from "./components/login/login";
 import Register from "./components/register/register";
-import Issues from "./components/issues/issues";
+import Issues from "./components/Issues/Issues";
 import Logout from "./components/login/logout";
 import MyAccount from "./components/account/myaccount";
 import DashboardHome from "./components/dashboard-home/dashboard-home";
