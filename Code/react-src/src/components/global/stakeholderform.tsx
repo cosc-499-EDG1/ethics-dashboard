@@ -58,13 +58,13 @@ export const StakeholderForm = ({
         return <React.Fragment key={i}>{input}</React.Fragment>;
       })}
       <div className="text-center justify-center">
-        <button className="bg-primary hover:brightness-110 text-white text-lg font-bold py-2 mx-2 w-40 rounded-md focus:outline-none focus:shadow-outline"
+        <button className="bg-primary hover:brightness-110 text-white text-lg font-bold py-2 mx-2 w-52 rounded-md focus:outline-none focus:shadow-outline"
         onClick={() => changeNumStakeholders(true)}>
-          Add Option
+          Add Stakeholder
         </button>
-        <button className="bg-primary hover:brightness-110 text-white text-lg font-bold py-2 mx-2 w-40 rounded-md focus:outline-none focus:shadow-outline"
+        <button className="bg-primary hover:brightness-110 text-white text-lg font-bold py-2 mx-2 w-52 rounded-md focus:outline-none focus:shadow-outline"
         onClick={() => changeNumStakeholders(false)}>
-          Remove Option
+          Remove Stakeholder
         </button>
       </div>
       <div className="pt-4 flex items-center justify-center">
