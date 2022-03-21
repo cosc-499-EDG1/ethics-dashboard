@@ -144,7 +144,7 @@ const Stakeholders: FunctionComponent<StakeholderProps> = () => {
           </p>
         </div>
       </div>
-      <div className="px-4 pt-10 w-full justify-center border-none">
+      <div className="dashboard-page">
         <StakeholderForm
           inputs={formInputs}
           actions={formActions}

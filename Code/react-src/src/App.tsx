@@ -31,7 +31,7 @@ import './styles/main.css';
 import Home from "./components/home/home";
 import Login from "./components/login/login";
 import Register from "./components/register/register";
-import Issues from "./components/Issues/Issues";
+import Issues from "./components/issues/issues";
 import Logout from "./components/login/logout";
 import MyAccount from "./components/account/myaccount";
 import DashboardHome from "./components/dashboard-home/dashboard-home";
@@ -47,7 +47,7 @@ function App() {
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
-            <Route path="/Issues" component={Issues} />
+            <Route path="/issues" component={Issues} />
             <Route path="/dashboard" component={DashboardHome}/>
            
             <Route path="/stakeholders" component={Stakeholders} />
