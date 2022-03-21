@@ -1,14 +1,14 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { Link, Redirect } from "react-router-dom";
-import { useStoreActions, useStoreState } from "../../stores/index.store";
+import { useMutation, useQueryClient } from "react-query";
+import { useStoreState } from "../../stores/index.store";
 import { Button } from "../global/button";
 import { Form } from "../global/form";
+import AccountService from "../../services/account.service";
 import { FormInput } from "../global/forminput";
 
 interface RegisterProps {}
 
 const Register: FunctionComponent<RegisterProps> = () => {
-  const register = useStoreActions((actions) => actions.accounts.register);
   const isLoggedIn = useStoreState((state) => state.accounts.isLoggedIn);
 
   const [username, setUsername] = useState("");
@@ -18,10 +18,13 @@ const Register: FunctionComponent<RegisterProps> = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [classCode, setClassCode] = useState("");
-
   const [errorMessage, setErrorMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [wasSuccess, setWasSuccess] = useState(false);
+
+  const register = useMutation(AccountService.register, {
+    onSuccess: (data) => {
+      setErrorMessage(data.data.message ?? "");
+    }
+  });
 
   useEffect(() => {
     setErrorMessage("");
@@ -44,8 +47,7 @@ const Register: FunctionComponent<RegisterProps> = () => {
       return;
     }
 
-    setIsLoading(true);
-    const data = await register({
+    register.mutate({
       username: username,
       password: password,
       email: email,
@@ -53,9 +55,6 @@ const Register: FunctionComponent<RegisterProps> = () => {
       last_name: lastName,
       class_code: classCode,
     });
-    setIsLoading(false);
-    setErrorMessage(data.message);
-    setWasSuccess(data.success);
   };
 
   if (isLoggedIn) {
@@ -149,8 +148,8 @@ const Register: FunctionComponent<RegisterProps> = () => {
             actions={formActions}
             onSubmit={attemptRegister}
             message={errorMessage}
-            wasSuccess={wasSuccess}
-            isLoading={isLoading}
+            wasSuccess={!!register.data?.data.success}
+            isLoading={register.isLoading}
           />
         </div>
       </div>
