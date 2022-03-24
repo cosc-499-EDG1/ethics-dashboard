@@ -48,7 +48,7 @@ const UtilitarianismStakeholders: FunctionComponent<UtilitarianismStakeholdersPr
                         </p>
                     </div>
                 </div>
-                <div className="px-4 pt-10 w-full justify-center border-none">
+                <div className="dashboard-page">
                 <Droppable droppableId="droppable-1">
                     {(provided) => (
                     <div ref={provided.innerRef} {...provided.droppableProps}>

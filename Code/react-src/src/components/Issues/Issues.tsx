@@ -1,9 +1,27 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { Link } from "react-router-dom";
+import IssuesOption from "../global/issues-option";
 
 interface Issues {}
 
 const Issue: FunctionComponent<Issues> = () => {
+  const [numOptions, setNumOptions] = useState(2);
+  var options = new Array(numOptions).fill(0);
+  for (let i = 0; i < options.length; i++) {
+    options[i] = i+1;
+  }
+  const changeNumOptions = async (increase: boolean) => {
+    if (increase === true) {
+      if (options.length < 3) {
+        setNumOptions(options.length+1);
+      }
+    } else {
+      if (options.length > 2) {
+        setNumOptions(options.length-1);
+      }
+    }
+  };
+
   return (
     <div className="site-dashboard">
       <div className="dashboard-title">
@@ -64,19 +82,17 @@ const Issue: FunctionComponent<Issues> = () => {
             <p className="dashboard-block-description">
               Consider 2 or 3 options you will analyze.
             </p>
-            <textarea
-              rows={3}
-              className="dashboard-block-text-input"
-              placeholder="Option 1..."
-            ></textarea>
-            <textarea
-              rows={3}
-              className="dashboard-block-text-input"
-              placeholder="Option 2..."
-            ></textarea>
+            {options.map(optionNum => (
+              <IssuesOption option={{id: optionNum, data: ""}} />
+            ))}
             <div className="text-center justify-center">
-              <button className="bg-main hover:brightness-110 text-white text-lg font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline">
+              <button className="bg-main hover:brightness-110 text-white text-lg font-bold py-2 mx-2 w-40 rounded-md focus:outline-none focus:shadow-outline"
+              onClick={(e) => changeNumOptions(true)}>
                 Add Option
+              </button>
+              <button className="bg-main hover:brightness-110 text-white text-lg font-bold py-2 mx-2 w-40 rounded-md focus:outline-none focus:shadow-outline"
+              onClick={(e) => changeNumOptions(false)}>
+                Remove Option
               </button>
             </div>
           </label>
