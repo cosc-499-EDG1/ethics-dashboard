@@ -26,7 +26,6 @@ export interface AccountModel {
   logout: Action<AccountModel, boolean>;
   isLoggedIn: Computed<AccountModel, boolean>;
   login: Thunk<AccountModel, LoginData>;
-  register: Thunk<AccountModel, RegisterData>;
 }
 
 const accountStore: AccountModel = {
@@ -61,15 +60,6 @@ const accountStore: AccountModel = {
         actions.setAccount(response.data.account);
         actions.setAuthToken(response.data.token);
       }
-      return response.data;
-    } catch (err) {
-      return { message: "Error contacting API" };
-    }
-  }),
-
-  register: thunk(async (actions, payload: RegisterData) => {
-    try {
-      const response = await AccountService.register(payload);
       return response.data;
     } catch (err) {
       return { message: "Error contacting API" };

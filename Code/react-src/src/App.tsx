@@ -35,11 +35,14 @@ import Issues from "./components/Issues/Issues";
 import Logout from "./components/login/logout";
 import MyAccount from "./components/account/myaccount";
 import DashboardHome from "./components/dashboard-home/dashboard-home";
+import { QueryClient, QueryClientProvider } from "react-query";
 
+const queryClient = new QueryClient()
 
 function App() {
   return (
     <Router>
+      <QueryClientProvider client={queryClient}>
       <StoreProvider store={MainStore}>
         <div className="App">
           <Navbar />
@@ -76,6 +79,7 @@ function App() {
           </Switch>
         </div>
       </StoreProvider>
+      </QueryClientProvider>
     </Router>
   );
 }

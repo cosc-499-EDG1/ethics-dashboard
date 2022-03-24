@@ -1,4 +1,5 @@
 import { FunctionComponent, useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { Redirect } from "react-router";
 import AccountService, {
   ClassDataResponse,
@@ -12,16 +13,10 @@ interface MyAccountProps {}
 const MyAccount: FunctionComponent<MyAccountProps> = () => {
   const account = useStoreState((state) => state.accounts.account);
 
-  const [classList, setClasses] = useState<ClassDataResponse | null>(null);
   const [showEditProfile, setShowEditProfile] = useState(false);
 
-  useEffect(() => {
-    const getClasses = async () => {
-      const classes = await AccountService.getClasses();
-      setClasses(classes);
-    };
-    getClasses();
-  }, []);
+  const getClasses = useQuery("classList", AccountService.getClasses);
+  const classList = getClasses.data;
 
   if (!account) {
     return (

@@ -1,4 +1,5 @@
 import { FormEvent, FunctionComponent, useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Redirect, useHistory } from "react-router-dom";
 import Dashboard from "../../../../node-src/build/models/dashboard.model";
 import AccountService from "../../services/account.service";
@@ -11,21 +12,13 @@ import { FormInput } from "../global/forminput";
 interface DashboardHomeProps {}
 
 const DashboardHome: FunctionComponent<DashboardHomeProps> = () => {
-  const history = useHistory();
-
   const setCurrentDashboard = useStoreActions(
     (actions) => actions.dashboard.setDashboardId
   );
 
-  const [dashboards, setDashboards] = useState<Dashboard[] | null>(null);
+  const getDashboards = useQuery("dashboards", AccountService.getDashboards);
 
-  useEffect(() => {
-    const getDashboards = async () => {
-      const dashboards = await AccountService.getDashboards();
-      setDashboards(dashboards.data);
-    };
-    getDashboards();
-  }, []);
+  const dashboards = getDashboards.data?.data;
 
   const [redirect, setRedirect] = useState("");
   const [showEdit, setShowEdit] = useState(false);
@@ -92,10 +85,7 @@ const DashboardHome: FunctionComponent<DashboardHomeProps> = () => {
 
       {showCreate && (
         <CreateDashboardModal
-          closeModal={(refresh: boolean) => {
-            if (refresh) {
-              history.go(0);
-            }
+          closeModal={() => {
             setShowCreate(false);
           }}
         />
@@ -105,10 +95,7 @@ const DashboardHome: FunctionComponent<DashboardHomeProps> = () => {
         <EditDashboardModal
           id={currentEditDashboard}
           dashboardName={editDashboardName}
-          closeModal={(refresh: boolean) => {
-            if (refresh) {
-              history.go(0);
-            }
+          closeModal={() => {
             setShowEdit(false);
           }}
         />
@@ -117,10 +104,7 @@ const DashboardHome: FunctionComponent<DashboardHomeProps> = () => {
       {showDelete && (
         <DeleteDashboardModal
           id={currentEditDashboard}
-          closeModal={(refresh: boolean) => {
-            if (refresh) {
-              history.go(0);
-            }
+          closeModal={() => {
             setShowDelete(false);
           }}
         />
@@ -204,13 +188,20 @@ const EditDashboardModal: FunctionComponent<EditDashboardModalProps> = (
   props
 ) => {
   const [dashboardName, setDashboardName] = useState(props.dashboardName);
+  const queryClient = useQueryClient();
+
+  const updateDashboard = useMutation(DashboardService.updateDashboard, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("dashboards");
+    },
+  });
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    await DashboardService.updateDashboard({
+    updateDashboard.mutate({
       id: props.id,
       name: dashboardName,
     });
-    props.closeModal(true);
+    props.closeModal();
   };
 
   const handleClose = () => {
@@ -254,10 +245,18 @@ interface DeleteDashboardModalProps {
 const DeleteDashboardModal: FunctionComponent<DeleteDashboardModalProps> = (
   props
 ) => {
+  const queryClient = useQueryClient();
+
+  const deleteDashboard = useMutation(DashboardService.deleteDashboard, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("dashboards");
+    },
+  });
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     // Delete dashboard from user account (set deleted = true)
-    await DashboardService.deleteDashboard({ id: props.id });
-    props.closeModal(true);
+    deleteDashboard.mutate({ id: props.id });
+    props.closeModal();
   };
 
   const handleClose = () => {
@@ -293,11 +292,19 @@ const CreateDashboardModal: FunctionComponent<CreateDashboardModalProps> = (
 ) => {
   const [dashboardName, setDashboardName] = useState("");
 
+  const queryClient = useQueryClient();
+
+  const createDashboard = useMutation(DashboardService.createDashboard, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("dashboards");
+    },
+  });
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    const response = await DashboardService.createDashboard({
+    createDashboard.mutate({
       name: dashboardName,
     });
-    props.closeModal(true);
+    props.closeModal();
   };
 
   const handleClose = () => {
