@@ -8,9 +8,6 @@ import { Button } from "../global/button";
 interface StakeholderProps {}
 
 const Stakeholders: FunctionComponent<StakeholderProps> = () => {
-  const stakeholder = useStoreActions(
-    (actions) => actions.stakeholder.addStakeholder
-  );
   const currentDashboard =
     useStoreState((state) => state.dashboard.dashboard_id) ?? 0;
 
@@ -91,102 +88,46 @@ const Stakeholders: FunctionComponent<StakeholderProps> = () => {
   const attemptUpload = async () => {
     if (numStakeholders > 0 && (stakeholder1_title !== "" || stakeholder1_desc !== "")) {
       setIsLoading(true);
-      const data = await stakeholder({
-        title: stakeholder1_title,
-        description: stakeholder1_desc,
-        num: 1,
-        dashboard_id: currentDashboard,
-      });
+      // const data = await stakeholder({
+      //   title: stakeholder1_title,
+      //   description: stakeholder1_desc,
+      //   num: 1,
+      //   dashboard_id: currentDashboard,
+      // });
       setIsLoading(false);
-      setErrorMessage(data.message);
+      // setErrorMessage(data.message);
     }
     if (numStakeholders > 1 && (stakeholder2_title !== "" || stakeholder2_desc !== "")) {
       setIsLoading(true);
-      const data = await stakeholder({
-        title: stakeholder2_title,
-        description: stakeholder2_desc,
-        num: 2,
-        dashboard_id: currentDashboard,
-      });
       setIsLoading(false);
-      setErrorMessage(data.message);
     }
     if (numStakeholders > 2 && (stakeholder3_title !== "" || stakeholder3_desc !== "")) {
       setIsLoading(true);
-      const data = await stakeholder({
-        title: stakeholder3_title,
-        description: stakeholder3_desc,
-        num: 3,
-        dashboard_id: currentDashboard,
-      });
       setIsLoading(false);
-      setErrorMessage(data.message);
     }
     if (numStakeholders > 3 && (stakeholder4_title !== "" || stakeholder4_desc !== "")) {
       setIsLoading(true);
-      const data = await stakeholder({
-        title: stakeholder4_title,
-        description: stakeholder4_desc,
-        num: 4,
-        dashboard_id: currentDashboard,
-      });
       setIsLoading(false);
-      setErrorMessage(data.message);
     }
     if (numStakeholders > 4 && (stakeholder5_title !== "" || stakeholder5_desc !== "")) {
       setIsLoading(true);
-      const data = await stakeholder({
-        title: stakeholder5_title,
-        description: stakeholder5_desc,
-        num: 5,
-        dashboard_id: currentDashboard,
-      });
       setIsLoading(false);
-      setErrorMessage(data.message);
     }
     if (numStakeholders > 5 && (stakeholder6_title !== "" || stakeholder6_desc !== "")) {
       setIsLoading(true);
-      const data = await stakeholder({
-        title: stakeholder6_title,
-        description: stakeholder6_desc,
-        num: 6,
-        dashboard_id: currentDashboard,
-      });
       setIsLoading(false);
-      setErrorMessage(data.message);
     }
     if (numStakeholders > 6 && (stakeholder7_title !== "" || stakeholder7_desc !== "")) {
       setIsLoading(true);
-      const data = await stakeholder({
-        title: stakeholder7_title,
-        description: stakeholder7_desc,
-        num: 7,
-        dashboard_id: currentDashboard,
-      });
       setIsLoading(false);
-      setErrorMessage(data.message);
     }
     if (numStakeholders > 7 && (stakeholder8_title !== "" || stakeholder8_desc !== "")) {
       setIsLoading(true);
-      const data = await stakeholder({
-        title: stakeholder8_title,
-        description: stakeholder8_desc,
-        num: 8,
-        dashboard_id: currentDashboard,
-      });
       setIsLoading(false);
-      setErrorMessage(data.message);
     }
     if (numStakeholders > 8 && (stakeholder9_title !== "" || stakeholder9_desc !== "")) {
       setIsLoading(true);
-      const data = await stakeholder({
-        title: stakeholder9_title,
-        description: stakeholder9_desc,
-        num: 9,
-        dashboard_id: currentDashboard,
-      });
       setIsLoading(false);
-      setErrorMessage(data.message);
     }
     return;
   };
@@ -201,7 +142,7 @@ const Stakeholders: FunctionComponent<StakeholderProps> = () => {
       type: "text",
       placeholder: `Stakeholder ${interval} Title`,
       value: stakeholderTitle[interval-1],
-      onChange: (e) => setStakeholderTitle[interval-1](e.target.value)}}/>;
+      onChange: (e: { target: { value: any; }; }) => setStakeholderTitle[interval-1](e.target.value)}}/>;
     } else {
       formInputs[j] =
       <StakeholderInput stakeholder={{
@@ -210,7 +151,7 @@ const Stakeholders: FunctionComponent<StakeholderProps> = () => {
         type: "textarea",
         placeholder: `Stakeholder ${interval-0.5} Description`,
         value: stakeholderDesc[interval-1.5],
-        onChange: (e) => setStakeholderDesc[interval-1.5](e.target.value)}}/>;
+        onChange: (e: { target: { value: any; }; }) => setStakeholderDesc[interval-1.5](e.target.value)}}/>;
     }
   }
   // const formInputs = [

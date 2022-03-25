@@ -16,23 +16,27 @@ setImmediate(async () => {
                    INSERT IGNORE INTO Accounts (username, email, first_name, last_name, type, password)
                    VALUES ('${username}', '${email}', '${first_name}', '${last_name}', '${type}', '${passwordHash}');
                  `;
-            db.getQueryInterface();
             return db.query(sql, { type: QueryTypes.INSERT });
         };
-        await createUser('admin', 'admin@admin.com', 'Admin', 'Admin', 'admin', 'manager');
-        await createUser('user', 'user@user.com', 'User', 'User', 'user', 'student');
-        var sql = `
+        db.getQueryInterface();
+        const adminResult = await createUser('admin', 'admin@admin.com', 'Admin', 'Admin', 'admin', 'manager');
+        const userResult = await createUser('user', 'user@user.com', 'User', 'User', 'user', 'student');
+        const classGroupInsert = `
                    INSERT IGNORE INTO ClassGroups (code, name)
                    VALUES ('AAAAA', 'test class group');
              `;
-        db.getQueryInterface();
-        await db.query(sql, { type: QueryTypes.INSERT });
+        const classResult = await db.query(classGroupInsert, { type: QueryTypes.INSERT });
 
-        // sql = `SELECT id FROM Account WHERE username = admin`;
-        // db.getQueryInterface();
-        // var adminId = db.query(sql, {type:QueryTypes.SELECT});
-        // sql = `INSERT INTO Dashboards (name, ownerId, createdAt, updatedAt) VALUES ('adminDashboard',1, ` + moment().format("YYYY-MM-DD hh:mm:ss") + `, ` + moment().format("YYYY-MM-DD hh:mm:ss") + `)`;
-        // db.getQueryInterface();
-        // db.query(sql, {type: QueryTypes.INSERT});
+        const studentRelationInsert = `
+            INSERT IGNORE INTO Students (studentId, classId)
+            VALUES (${userResult[0]}, ${classResult[0]});
+            `;
+        await db.query(studentRelationInsert, { type: QueryTypes.INSERT });
+
+        const instructorRelationInsert = `
+            INSERT IGNORE INTO Instructors (instructorId, classId)
+            VALUES (${adminResult[0]}, ${classResult[0]});
+            `;
+        await db.query(instructorRelationInsert, { type: QueryTypes.INSERT });
     }
 });

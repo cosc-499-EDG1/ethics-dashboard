@@ -49,6 +49,8 @@ class DashboardController {
             return res.sendStatus(403);
         }
 
+        const options = await dashboard.$get('options');
+        dashboard.options = options;
         return res.send(dashboard);
     };
 
@@ -66,13 +68,33 @@ class DashboardController {
             return res.sendStatus(403);
         }
 
-        const { name } = req.body;
-        if (!name) {
-            return res.status(400).send({
-                message: 'Invalid form data.',
-            });
+        const updateType = req.body.updateType;
+
+        switch (updateType) {
+            case 'name':
+                const { name } = req.body;
+                if (!name) {
+                    return res.status(400).send({
+                        message: 'Invalid form data.',
+                    });
+                }
+                dashboard.set({ name: name });
+                break;
+            case 'data':
+                const { summary, dilemmas, role, options } = req.body;
+                if (!summary || !dilemmas || !role || !options) {
+                    return res.status(400).send({
+                        message: 'Invalid form data.',
+                    });
+                }
+                dashboard.set({ summary: summary, dilemmas: dilemmas, role: role });
+                break;
+            default:
+                return res.status(400).send({
+                    message: 'Invalid update type.',
+                });
         }
-        dashboard.set({ name: name });
+
         await dashboard.save();
         return res.sendStatus(200);
     };

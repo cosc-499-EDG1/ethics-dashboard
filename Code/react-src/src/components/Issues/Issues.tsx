@@ -1,6 +1,11 @@
 import { FunctionComponent, useState } from "react";
 import { Link } from "react-router-dom";
 import IssuesOption from "../global/issues-option";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import DashboardService from "../../services/dashboard.service";
+import { useStoreState } from "../../stores/index.store";
+import Dashboard from "../../../../node-src/build/models/dashboard.model";
+import { useStoreRehydrated } from "easy-peasy";
 
 interface Issues {}
 
@@ -8,19 +13,38 @@ const Issue: FunctionComponent<Issues> = () => {
   const [numOptions, setNumOptions] = useState(2);
   var options = new Array(numOptions).fill(0);
   for (let i = 0; i < options.length; i++) {
-    options[i] = i+1;
+    options[i] = i + 1;
   }
   const changeNumOptions = async (increase: boolean) => {
     if (increase === true) {
       if (options.length < 3) {
-        setNumOptions(options.length+1);
+        setNumOptions(options.length + 1);
       }
     } else {
       if (options.length > 2) {
-        setNumOptions(options.length-1);
+        setNumOptions(options.length - 1);
       }
     }
   };
+
+  const currentDashboard = useStoreState((state) => state.dashboard.dashboard_id) ?? 0;
+  const getDashboard = useQuery("dashboard", async () => {
+    return await DashboardService.getDashboard({ id: currentDashboard });
+  });
+
+  const dashboard = getDashboard.data?.data as Dashboard;
+  const existingSummary = dashboard?.summary ?? "";
+  const existingDilemmas = dashboard?.dilemmas ?? "";
+  const existingRoles = dashboard?.role ?? "";
+  const existingOptions = dashboard?.options ?? [];
+
+  const queryClient = useQueryClient();
+
+  const updateDashboard = useMutation(DashboardService.updateDashboard, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("dashboard");
+    },
+  });
 
   return (
     <div className="site-dashboard">
@@ -30,9 +54,9 @@ const Issue: FunctionComponent<Issues> = () => {
         </div>
         <div className="dashboard-title-description">
           <p>
-            Describe the dilemma you would like to analyze.
-            Remember, ethical values are things that are important because they
-            are right or wrong – lying, courage, loyalty, theft, etc.
+            Describe the dilemma you would like to analyze. Remember, ethical
+            values are things that are important because they are right or wrong
+            - lying, courage, loyalty, theft, etc.
           </p>
         </div>
       </div>
@@ -42,11 +66,13 @@ const Issue: FunctionComponent<Issues> = () => {
           <label className="dashboard-block-title">
             Case Summary
             <p className="dashboard-block-description">
-              Briefly describe the key features of the case — the who, what, where, when and why.
+              Briefly describe the key features of the case — the who, what,
+              where, when and why.
             </p>
             <textarea
               className="dashboard-block-text-input"
               placeholder="Describe the case summary..."
+              defaultValue={existingSummary}
             ></textarea>
           </label>
         </div>
@@ -54,18 +80,20 @@ const Issue: FunctionComponent<Issues> = () => {
           <label className="dashboard-block-title">
             Identify The Dilemmas
             <p className="dashboard-block-description">
-              What are the ethical dilemmas you are facing? Describe the dilemmas in ethical terms, eg. honesty, 
-              deception, loyalty, betrayal, beneficence, malfeasance, autonomy, paternalism, confidentiality, 
-              transparency, integrity, etc.
+              What are the ethical dilemmas you are facing? Describe the
+              dilemmas in ethical terms, eg. honesty, deception, loyalty,
+              betrayal, beneficence, malfeasance, autonomy, paternalism,
+              confidentiality, transparency, integrity, etc.
             </p>
             <textarea
               className="dashboard-block-text-input"
               placeholder="Describe the dilemmas..."
+              defaultValue={existingDilemmas}
             ></textarea>
           </label>
         </div>
         <div className="dashboard-block">
-          <label className="ethical-issues-block-title">
+          <label className="dashboard-block-title">
             Choose Your Role
             <p className="dashboard-block-description">
               Put yourself in the position of a key decision maker in the case.
@@ -73,25 +101,31 @@ const Issue: FunctionComponent<Issues> = () => {
             <textarea
               className="dashboard-block-text-input"
               placeholder="Your role..."
+              defaultValue={existingRoles}
             ></textarea>
           </label>
         </div>
+        {existingOptions}
         <div className="dashboard-block">
           <label className="dashboard-block-title">
             Identify Your Options
             <p className="dashboard-block-description">
               Consider 2 or 3 options you will analyze.
             </p>
-            {options.map(optionNum => (
-              <IssuesOption option={{id: optionNum, data: ""}} />
+            {options.map((optionNum) => (
+              <IssuesOption key={optionNum} option={{ id: optionNum, data: "" }} />
             ))}
             <div className="text-center justify-center">
-              <button className="bg-main hover:brightness-110 text-white text-lg font-bold py-2 mx-2 w-40 rounded-md focus:outline-none focus:shadow-outline"
-              onClick={(e) => changeNumOptions(true)}>
+              <button
+                className={`${options.length < 3 ? 'bg-primary' : 'bg-main'} hover:brightness-110 text-white text-lg font-bold py-2 mx-2 w-40 rounded-md focus:outline-none focus:shadow-outline`}
+                onClick={(e) => changeNumOptions(true)}
+              >
                 Add Option
               </button>
-              <button className="bg-main hover:brightness-110 text-white text-lg font-bold py-2 mx-2 w-40 rounded-md focus:outline-none focus:shadow-outline"
-              onClick={(e) => changeNumOptions(false)}>
+              <button
+                className={`${options.length > 2 ? 'bg-primary' : 'bg-main'} hover:brightness-110 text-white text-lg font-bold py-2 mx-2 w-40 rounded-md focus:outline-none focus:shadow-outline`}
+                onClick={(e) => changeNumOptions(false)}
+              >
                 Remove Option
               </button>
             </div>
