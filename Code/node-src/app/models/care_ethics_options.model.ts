@@ -1,6 +1,5 @@
 import { Table, Column, Model, PrimaryKey, AutoIncrement, HasOne, ForeignKey, DefaultScope, BelongsTo, DataType } from 'sequelize-typescript';
-import internal from 'stream';
-import Option from './option.model';
+import CaseOption from './option.model';
 import Stakeholder from './stakeholder.model';
 
 @Table
@@ -19,7 +18,7 @@ export default class Care_Ethics_Options extends Model {
     @Column
     stakeholder_responsiveness: number;
 
-    @ForeignKey(() => Option)
+    @ForeignKey(() => CaseOption)
     option_id: number;
 
     @ForeignKey(() => Stakeholder)

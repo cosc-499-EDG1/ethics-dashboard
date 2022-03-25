@@ -1,7 +1,7 @@
 import { Table, Column, Model, PrimaryKey, AutoIncrement, HasOne, ForeignKey, DefaultScope, BelongsTo, DataType, HasMany } from 'sequelize-typescript';
 import Account from './account/account.model';
 import Deontology_Categorical from './deontology_categorical.model';
-import Option from './option.model';
+import CaseOption from './option.model';
 import Stakeholder from './stakeholder.model';
 import Utilitarianism from './utilitarianism.model';
 import Util_Opt_Analysis from './util_opt_analysis.model';
@@ -43,8 +43,8 @@ export default class Dashboard extends Model {
     @Column(DataType.TEXT)
     role: string;
     
-    @HasMany(() => Option)
-    options: Option[];
+    @HasMany(() => CaseOption)
+    options: CaseOption[];
 
     @HasMany(() => Stakeholder)
     stakeholders: Stakeholder[];

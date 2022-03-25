@@ -6,10 +6,13 @@ import { useStoreState } from "../../stores/index.store";
 import Dashboard from "../../../../node-src/build/models/dashboard.model";
 import { Button } from "../global/button";
 import CaseOption from "../../../../node-src/build/models/option.model";
+import { Redirect } from "react-router";
 
 interface Issues {}
 
 const Issue: FunctionComponent<Issues> = () => {
+  const [redirect, setRedirect] = useState("");
+
   const [summary, setSummary] = useState("");
   const [dilemmas, setDilemmas] = useState("");
   const [role, setRole] = useState("");
@@ -54,11 +57,13 @@ const Issue: FunctionComponent<Issues> = () => {
       options: options,
     };
 
-    updateDashboard.mutate({
+    await updateDashboard.mutateAsync({
       id: currentDashboard,
       updateType: "data",
       ...data,
     });
+
+    setRedirect('/dashboard');
   };
 
   const setOptionValue = (index: number, value: string) => {
@@ -66,6 +71,10 @@ const Issue: FunctionComponent<Issues> = () => {
     newOptions[index] = value;
     setOptions(newOptions);
   };
+
+  if (redirect) {
+    return <Redirect to={{ pathname: redirect, state: { from: "/issues" } }} />;
+  }
 
   return (
     <div className="site-dashboard">
