@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config({ path: 'jwt.env' });
 import { Request, Response, NextFunction } from 'express';
-
+import Option from '../models/option.model';
 import Dashboard from '../models/dashboard.model';
 
 class DashboardController {
@@ -50,8 +50,10 @@ class DashboardController {
         }
 
         const options = await dashboard.$get('options');
-        dashboard.options = options;
-        return res.send(dashboard);
+        res.status(200).json({
+            dashboard,
+            options,
+        });
     };
 
     update = async (req: Request, res: Response, next: NextFunction) => {
@@ -86,6 +88,39 @@ class DashboardController {
                     return res.status(400).send({
                         message: 'Invalid form data.',
                     });
+                }
+                const curOptions = await dashboard.$get('options');
+                // Create new options if they don't exist.
+                if (options.length > curOptions.length) {
+                    const optionsToAdd = options.length - curOptions.length;
+                    for (let i = 0; i < optionsToAdd; i++) {
+                        const desc = options[i + curOptions.length];
+                        const opt = new Option({
+                            option_title: `Option ${i + 1}`,
+                            option_desc: desc,
+                            option_num: i,
+                            dashboard_id: dashboard.id,
+                        });
+                        await opt.save();
+                        dashboard.$add('options', opt);
+                    }
+                }
+                // Update existing options.
+                for (let i = 0; i < curOptions.length; i++) {
+                    curOptions[i].set({
+                        option_title: `Option ${i + 1}`,
+                        option_desc: options[i],
+                        option_num: i,
+                    });
+                    await curOptions[i].save();
+                }
+                // Delete options that are no longer needed.
+                if (options.length < curOptions.length) {
+                    for (let i = curOptions.length - 1; i > options.length - 1; i--) {
+                        const option = curOptions[i];
+                        dashboard.$remove('options', option);
+                        await option.destroy();
+                    }
                 }
                 dashboard.set({ summary: summary, dilemmas: dilemmas, role: role });
                 break;
