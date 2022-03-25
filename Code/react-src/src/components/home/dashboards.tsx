@@ -199,6 +199,7 @@ const EditDashboardModal: FunctionComponent<EditDashboardModalProps> = (
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     updateDashboard.mutate({
       id: props.id,
+      updateType: 'name',
       name: dashboardName,
     });
     props.closeModal();

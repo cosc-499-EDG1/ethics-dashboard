@@ -1,11 +1,6 @@
 import request from 'supertest';
 import { app } from '../app/app';
 
-/**
- * Test API routes and expected responses.
- * Note: Once the app is further along, these should have set response data.
- * Right now it only checks the resposne code which could still have errors.
- */
 describe('Routes', () => {
     //Test class group creation route
     it('CREATE /groups/create authorization integration test', async () => {

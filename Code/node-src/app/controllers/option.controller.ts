@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config({path: 'jwt.env'});
 import { Request, Response, NextFunction } from 'express';
-import option from "../models/option.model";
+import Option from "../models/option.model";
 
 class OptionController {
 
@@ -14,7 +14,7 @@ class OptionController {
             return;  
         }
 
-        const opt = new option({option_title: title, option_desc: description, option_num: number, dashboard_id: dashboard_id});
+        const opt = new Option({option_title: title, option_desc: description, option_num: number, dashboard_id: dashboard_id});
         opt.save().then( async () => {
             res.status(200).json({ message: 'Option created successfully.', success: true});
         }).catch(err => {

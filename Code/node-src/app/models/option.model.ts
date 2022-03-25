@@ -3,7 +3,7 @@ import Dashboard from './dashboard.model';
 
 
 @Table
-export default class option extends Model {
+export default class Option extends Model {
     @PrimaryKey
     @AutoIncrement
     @Column
@@ -22,6 +22,4 @@ export default class option extends Model {
     @ForeignKey(() => Dashboard)
     @Column
     dashboard_id: number;
-
-
 }
