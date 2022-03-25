@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config({ path: 'jwt.env' });
 import { Request, Response, NextFunction } from 'express';
-import Option from '../models/option.model';
+import CaseOption from '../models/option.model';
 import Dashboard from '../models/dashboard.model';
 
 class DashboardController {
@@ -95,7 +95,7 @@ class DashboardController {
                     const optionsToAdd = options.length - curOptions.length;
                     for (let i = 0; i < optionsToAdd; i++) {
                         const desc = options[i + curOptions.length];
-                        const opt = new Option({
+                        const opt = new CaseOption({
                             option_title: `Option ${i + 1}`,
                             option_desc: desc,
                             option_num: i,
