@@ -1,50 +1,71 @@
-import { FunctionComponent, useState } from "react";
-import { Link } from "react-router-dom";
-import IssuesOption from "../global/issues-option";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
+import IssuesOption from "./issues-option";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import DashboardService from "../../services/dashboard.service";
 import { useStoreState } from "../../stores/index.store";
 import Dashboard from "../../../../node-src/build/models/dashboard.model";
-import { useStoreRehydrated } from "easy-peasy";
+import { Button } from "../global/button";
+import CaseOption from "../../../../node-src/build/models/option.model";
 
 interface Issues {}
 
 const Issue: FunctionComponent<Issues> = () => {
-  const [numOptions, setNumOptions] = useState(2);
-  var options = new Array(numOptions).fill(0);
-  for (let i = 0; i < options.length; i++) {
-    options[i] = i + 1;
-  }
+  const [summary, setSummary] = useState("");
+  const [dilemmas, setDilemmas] = useState("");
+  const [role, setRole] = useState("");
+  const [options, setOptions] = useState(["", ""]);
+
+  const currentDashboard =
+    useStoreState((state) => state.dashboard.dashboard_id) ?? 0;
+  const {isLoading, isError} = useQuery("dashboard", async () => {
+    return await DashboardService.getDashboard({ id: currentDashboard });
+  }, { onSuccess: (data) => {
+    const dashboard = data.data.dashboard as Dashboard;
+    setSummary(dashboard.summary);
+    setDilemmas(dashboard.dilemmas);
+    setRole(dashboard.role);
+    setOptions(data.data.options.map((o: CaseOption) => o.option_desc));
+  }});
+
   const changeNumOptions = async (increase: boolean) => {
     if (increase === true) {
       if (options.length < 3) {
-        setNumOptions(options.length + 1);
+        setOptions([...options, ""]);
       }
     } else {
       if (options.length > 2) {
-        setNumOptions(options.length - 1);
+        setOptions([...options.slice(0, options.length - 1)]);
       }
     }
   };
 
-  const currentDashboard = useStoreState((state) => state.dashboard.dashboard_id) ?? 0;
-  const getDashboard = useQuery("dashboard", async () => {
-    return await DashboardService.getDashboard({ id: currentDashboard });
-  });
-
-  const dashboard = getDashboard.data?.data as Dashboard;
-  const existingSummary = dashboard?.summary ?? "";
-  const existingDilemmas = dashboard?.dilemmas ?? "";
-  const existingRoles = dashboard?.role ?? "";
-  const existingOptions = dashboard?.options ?? [];
-
   const queryClient = useQueryClient();
-
   const updateDashboard = useMutation(DashboardService.updateDashboard, {
     onSuccess: () => {
       queryClient.invalidateQueries("dashboard");
     },
   });
+
+  const updateForm = async () => {
+    const data = {
+      summary: summary,
+      dilemmas: dilemmas,
+      role: role,
+      options: options,
+    };
+
+    updateDashboard.mutate({
+      id: currentDashboard,
+      updateType: "data",
+      ...data,
+    });
+  };
+
+  const setOptionValue = (index: number, value: string) => {
+    const newOptions = [...options];
+    newOptions[index] = value;
+    setOptions(newOptions);
+  };
 
   return (
     <div className="site-dashboard">
@@ -72,7 +93,8 @@ const Issue: FunctionComponent<Issues> = () => {
             <textarea
               className="dashboard-block-text-input"
               placeholder="Describe the case summary..."
-              defaultValue={existingSummary}
+              value={summary}
+              onChange={(e) => setSummary(e.target.value)}
             ></textarea>
           </label>
         </div>
@@ -88,7 +110,8 @@ const Issue: FunctionComponent<Issues> = () => {
             <textarea
               className="dashboard-block-text-input"
               placeholder="Describe the dilemmas..."
-              defaultValue={existingDilemmas}
+              value={dilemmas}
+              onChange={(e) => setDilemmas(e.target.value)}
             ></textarea>
           </label>
         </div>
@@ -101,29 +124,37 @@ const Issue: FunctionComponent<Issues> = () => {
             <textarea
               className="dashboard-block-text-input"
               placeholder="Your role..."
-              defaultValue={existingRoles}
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
             ></textarea>
           </label>
         </div>
-        {existingOptions}
         <div className="dashboard-block">
           <label className="dashboard-block-title">
             Identify Your Options
             <p className="dashboard-block-description">
               Consider 2 or 3 options you will analyze.
             </p>
-            {options.map((optionNum) => (
-              <IssuesOption key={optionNum} option={{ id: optionNum, data: "" }} />
+            {options.map((text: string, idx: number) => (
+              <IssuesOption
+                key={idx}
+                option={{ id: idx, data: text }}
+                onChange={setOptionValue}
+              />
             ))}
             <div className="text-center justify-center">
               <button
-                className={`${options.length < 3 ? 'bg-primary' : 'bg-main'} hover:brightness-110 text-white text-lg font-bold py-2 mx-2 w-40 rounded-md focus:outline-none focus:shadow-outline`}
+                className={`${
+                  options.length < 3 ? "bg-primary" : "bg-main"
+                } hover:brightness-110 text-white text-lg font-bold py-2 mx-2 w-40 rounded-md focus:outline-none focus:shadow-outline`}
                 onClick={(e) => changeNumOptions(true)}
               >
                 Add Option
               </button>
               <button
-                className={`${options.length > 2 ? 'bg-primary' : 'bg-main'} hover:brightness-110 text-white text-lg font-bold py-2 mx-2 w-40 rounded-md focus:outline-none focus:shadow-outline`}
+                className={`${
+                  options.length > 2 ? "bg-primary" : "bg-main"
+                } hover:brightness-110 text-white text-lg font-bold py-2 mx-2 w-40 rounded-md focus:outline-none focus:shadow-outline`}
                 onClick={(e) => changeNumOptions(false)}
               >
                 Remove Option
@@ -133,11 +164,11 @@ const Issue: FunctionComponent<Issues> = () => {
         </div>
       </div>
       <div className="flex justify-center items-center m-6">
-        <Link to="/dashboard">
-          <button className="bg-primary hover:brightness-125 text-white text-lg font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Submit
-          </button>
-        </Link>
+        <Button
+          text={"Submit"}
+          formSubmit={false}
+          onClick={() => updateForm()}
+        ></Button>
       </div>
     </div>
   );

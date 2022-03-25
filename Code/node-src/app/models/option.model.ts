@@ -3,7 +3,7 @@ import Dashboard from './dashboard.model';
 
 
 @Table
-export default class Option extends Model {
+export default class CaseOption extends Model {
     @PrimaryKey
     @AutoIncrement
     @Column
