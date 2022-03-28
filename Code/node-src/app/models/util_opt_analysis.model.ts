@@ -1,6 +1,6 @@
 import { Table, Column, Model, PrimaryKey, AutoIncrement, HasOne, ForeignKey, DefaultScope, BelongsTo, DataType } from 'sequelize-typescript';
 import Dashboard from './dashboard.model';
-import option from './option.model';
+import CaseOption from './option.model';
 
 @Table
 export default class Util_Opt_Analysis extends Model {
@@ -30,7 +30,7 @@ export default class Util_Opt_Analysis extends Model {
     @Column
     long_pleasure: number;
 
-    @ForeignKey(() => option)
+    @ForeignKey(() => CaseOption)
     options_id: number;
 
     @ForeignKey(() => Dashboard)

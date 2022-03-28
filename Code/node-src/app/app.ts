@@ -10,7 +10,6 @@ import { classGroups } from './routes/classgroup.routes';
 import { dashboards } from './routes/dashboard.routes';
 import { stakeholders } from './routes/stakeholder.routes';
 import { deontologies } from './routes/deontology.routes';
-import { options } from './routes/option.routes';
 /* End Import Routes */
 
 export const app = express();
@@ -40,7 +39,6 @@ export const initApp = async (): Promise<Server> => {
     app.use('/api/dashboard', dashboards);
     app.use('/api/stakeholders', stakeholders);
     app.use('/api/deontology', deontologies);
-    app.use('/api/options', options);
     /* End Routes */
 
     const PORT = process.env.PORT || 8080;

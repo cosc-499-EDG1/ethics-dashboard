@@ -8,6 +8,8 @@ module.exports = {
       primary: "#42a5f5",
       secondary: "#e3f2fd",
       main: "#90caf9",
+      success: "#4ade80",
+      error: "#facc15",
       ...colors,
     },
     extend: {

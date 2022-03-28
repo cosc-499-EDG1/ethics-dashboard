@@ -14,8 +14,7 @@ export interface DashboardModel {
     dashboard_id: number | null;
     owner_id: number | null;
     setDashboardId: Action<DashboardModel, number>;
-    setOwnerId: Action<AccountModel, Account>;
-
+    setOwnerId: Action<DashboardModel, number>;
 }
 
 
@@ -28,9 +27,8 @@ const dashboardStore: DashboardModel = {
     }),
 
     setOwnerId: action((state, payload) => {
-        state.account = payload;
+        state.owner_id = payload;
     })
-
 };
 
 

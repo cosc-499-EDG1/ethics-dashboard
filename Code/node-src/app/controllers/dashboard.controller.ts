@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config({ path: 'jwt.env' });
 import { Request, Response, NextFunction } from 'express';
-
+import CaseOption from '../models/option.model';
 import Dashboard from '../models/dashboard.model';
 
 class DashboardController {
@@ -49,7 +49,13 @@ class DashboardController {
             return res.sendStatus(403);
         }
 
-        return res.send(dashboard);
+        const options = await dashboard.$get('options');
+        const stakeholders = await dashboard.$get('stakeholders');
+        res.status(200).json({
+            dashboard,
+            options,
+            stakeholders,
+        });
     };
 
     update = async (req: Request, res: Response, next: NextFunction) => {
@@ -61,18 +67,78 @@ class DashboardController {
             return res.sendStatus(404);
         }
 
-        // If requesting acocund is a student, then check that they own the dashboard.
+        // If requesting account is a student, then check that they own the dashboard.
         if (account.isStudent() && dashboard.ownerId !== account.id) {
             return res.sendStatus(403);
         }
 
-        const { name } = req.body;
-        if (!name) {
-            return res.status(400).send({
-                message: 'Invalid form data.',
-            });
+        const updateType = req.body.updateType;
+
+        switch (updateType) {
+            case 'name':
+                const { name } = req.body;
+                if (!name) {
+                    return res.status(400).send({
+                        message: 'Invalid form data.',
+                    });
+                }
+                dashboard.set({ name: name });
+                break;
+            case 'data':
+                const { summary, dilemmas, role, options } = req.body;
+                if (!summary || !dilemmas || !role || !options) {
+                    return res.status(400).send({
+                        message: 'Invalid form data.',
+                    });
+                }
+                const curOptions = await dashboard.$get('options');
+                // Create new options if they don't exist.
+                if (options.length > curOptions.length) {
+                    const optionsToAdd = options.length - curOptions.length;
+                    for (let i = curOptions.length; i < optionsToAdd + curOptions.length; i++) {
+                        const desc = options[i];
+                        const opt = new CaseOption({
+                            option_title: `Option ${i + 1}`,
+                            option_desc: desc,
+                            option_num: i,
+                            dashboard_id: dashboard.id,
+                        });
+                        await opt.save();
+                        dashboard.$add('options', opt);
+                    }
+                }
+                // Update existing options.
+                if (curOptions.length >= options.length) {
+                    for (let i = 0; i < options.length; i++) {
+                        const update = options[i];
+                        if (!update) {
+                            continue;
+                        }
+                        curOptions[i].set({
+                            option_title: `Option ${i + 1}`,
+                            option_desc: update,
+                            option_num: i,
+                        });
+                        await curOptions[i].save();
+                    }
+                }
+
+                // Delete options that are no longer needed.
+                if (options.length < curOptions.length) {
+                    for (let i = curOptions.length - 1; i > options.length - 1; i--) {
+                        const option = curOptions[i];
+                        dashboard.$remove('options', option);
+                        await option.destroy();
+                    }
+                }
+                dashboard.set({ summary: summary, dilemmas: dilemmas, role: role });
+                break;
+            default:
+                return res.status(400).send({
+                    message: 'Invalid update type.',
+                });
         }
-        dashboard.set({ name: name });
+
         await dashboard.save();
         return res.sendStatus(200);
     };

@@ -1,6 +1,4 @@
-import Stakeholder from "../../../node-src/build/models/stakeholder.model";
-import http from "../helpers/http";
-import  { StakeholderData } from "../stores/stakeholder.store";
+import http, { authHeader } from "../helpers/http";
 
 export interface StakeholderResponse {
     data: {
@@ -10,8 +8,8 @@ export interface StakeholderResponse {
 }
 
 class StakeholderService {
-    addStakeholder(data: StakeholderData): Promise<StakeholderResponse>{
-        return http.post("/stakeholders/addstakeholder", data);
+    updateStakeholders(data: any): Promise<StakeholderResponse>{
+        return http.put("/stakeholders/update", data, authHeader());
     }
 }
 

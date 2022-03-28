@@ -31,19 +31,23 @@ beforeAll(async () => {
     const userToken = jwt.sign({ sub: userResult[0] }, process.env.JSON_WEB_TOKEN_SECRET ?? '12345', { expiresIn: '7d' });
     global.userToken = userToken;
 
-    var sql = `
+    var classGroupInsert = `
            INSERT INTO ClassGroups (code, name)
            VALUES ('AAAAA', 'test class group');
      `;
-    db.getQueryInterface();
-    await db.query(sql, { type: QueryTypes.INSERT });
+    const classResult = await db.query(classGroupInsert, { type: QueryTypes.INSERT });
 
-    // sql = `SELECT id FROM Account WHERE username = admin`;
-    // db.getQueryInterface();
-    // var adminId = db.query(sql, {type:QueryTypes.SELECT});
-    // sql = `INSERT INTO Dashboards (name, ownerId, createdAt, updatedAt) VALUES ('adminDashboard',1, ` + moment().format("YYYY-MM-DD hh:mm:ss") + `, ` + moment().format("YYYY-MM-DD hh:mm:ss") + `)`;
-    // db.getQueryInterface();
-    // db.query(sql, {type: QueryTypes.INSERT});
+    const studentRelationInsert = `
+        INSERT IGNORE INTO Students (studentId, classId)
+        VALUES (${userResult[0]}, ${classResult[0]});
+        `;
+    await db.query(studentRelationInsert, { type: QueryTypes.INSERT });
+
+    const instructorRelationInsert = `
+        INSERT IGNORE INTO Instructors (instructorId, classId)
+        VALUES (${adminResult[0]}, ${classResult[0]});
+        `;
+    await db.query(instructorRelationInsert, { type: QueryTypes.INSERT });
 });
 
 /**

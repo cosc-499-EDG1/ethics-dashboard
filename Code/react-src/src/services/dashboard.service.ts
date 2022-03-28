@@ -5,6 +5,13 @@ export interface DashboardCreateReponse {
     success: boolean;
   };
 }
+
+interface UpdateDashboardData {
+  id: number;
+  updateType: string;
+  [key: string]: any;
+}
+
 class DashboardService {
   createDashboard(data: { name: string }): Promise<DashboardCreateReponse> {
     return http.post("/dashboard/create", data, authHeader());
@@ -14,8 +21,12 @@ class DashboardService {
     return http.delete(`/dashboard/delete/${data.id}`, authHeader());
   }
 
-  updateDashboard(data: { id: number, name: string }): Promise<any> {
+  updateDashboard(data: UpdateDashboardData): Promise<any> {
     return http.put(`/dashboard/update/${data.id}`, data, authHeader());
+  }
+
+  getDashboard(data: { id: number }): Promise<any> {
+    return http.get(`/dashboard/find/${data.id}`, authHeader());
   }
 }
 
