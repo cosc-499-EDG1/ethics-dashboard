@@ -3,11 +3,12 @@ dotenv.config({ path: 'jwt.env' });
 import { Request, Response, NextFunction } from 'express';
 import CaseOption from '../models/option.model';
 import Dashboard from '../models/dashboard.model';
+import ClassGroup from '../models/classgroup.model';
 
 class DashboardController {
     create = async (req: Request, res: Response, next: NextFunction) => {
-        const { name } = req.body;
-        if (!name) {
+        const { name, classId } = req.body;
+        if (!name || !classId) {
             res.status(400).send({
                 message: 'Invalid form data.',
             });
@@ -16,11 +17,24 @@ class DashboardController {
 
         const account = req.account;
 
+        const classGroup = await ClassGroup.findOne({
+            where: {
+                id: classId,
+            },
+        });
+
+        if (!classGroup) {
+            res.status(400).send({
+                message: 'Invalid class.',
+            });
+        }
+
         const dashboard = new Dashboard({ name: name });
         dashboard
             .save()
             .then(() => {
                 account.$add('dashboards', dashboard);
+                classGroup?.$add('dashboards', dashboard);
                 res.status(200).json({ message: 'Dashboard created successfully', success: true });
             })
             .catch(err => {
@@ -141,6 +155,14 @@ class DashboardController {
 
         await dashboard.save();
         return res.sendStatus(200);
+    };
+
+    progress = async (req: Request, res: Response, next: NextFunction) => {
+        return res.send(200);
+    };
+
+    updateProgress = async (req: Request, res: Response, next: NextFunction) => {
+        return res.send(200);
     };
 
     delete = async (req: Request, res: Response, next: NextFunction) => {

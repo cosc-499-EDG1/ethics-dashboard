@@ -292,8 +292,12 @@ const CreateDashboardModal: FunctionComponent<CreateDashboardModalProps> = (
   props
 ) => {
   const [dashboardName, setDashboardName] = useState("");
+  const [classId, setClassId] = useState(-1);
 
   const queryClient = useQueryClient();
+
+  const getClasses = useQuery("classList", AccountService.getClasses);
+  const classList = getClasses.data;
 
   const createDashboard = useMutation(DashboardService.createDashboard, {
     onSuccess: () => {
@@ -302,8 +306,12 @@ const CreateDashboardModal: FunctionComponent<CreateDashboardModalProps> = (
   });
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    if (!dashboardName || !classId) {
+      return;
+    }
     createDashboard.mutate({
       name: dashboardName,
+      classId: classId,
     });
     props.closeModal();
   };
@@ -313,7 +321,7 @@ const CreateDashboardModal: FunctionComponent<CreateDashboardModalProps> = (
   };
 
   return (
-    <div className="bg-white flex flex-col items-center justify-around rounded-lg shadow-lg absolute t-1/3 left-0 right-0 m-auto w-64 h-48">
+    <div className="bg-white flex flex-col items-center justify-around rounded-lg shadow-lg absolute t-1/3 left-0 right-0 m-auto w-64 h-64">
       <div className="w-48">
         <Form
           inputs={[
@@ -323,6 +331,16 @@ const CreateDashboardModal: FunctionComponent<CreateDashboardModalProps> = (
               placeholder={"Dashboard 1"}
               value={dashboardName}
               onChange={(e) => setDashboardName(e.target.value)}
+            ></FormInput>,
+            <FormInput
+              label={"Class"}
+              type={"select"}
+              placeholder={"Select a class"}
+              options={classList?.data.student?.map((classGroup) => {
+                return <option value={classGroup.id}>{classGroup.name}</option>
+              })}
+              value={classId}
+              onChange={(e) => setClassId(+e.target.value)}
             ></FormInput>,
           ]}
           actions={[

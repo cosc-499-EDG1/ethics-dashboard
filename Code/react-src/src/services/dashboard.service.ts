@@ -13,7 +13,7 @@ interface UpdateDashboardData {
 }
 
 class DashboardService {
-  createDashboard(data: { name: string }): Promise<DashboardCreateReponse> {
+  createDashboard(data: { name: string, classId: number }): Promise<DashboardCreateReponse> {
     return http.post("/dashboard/create", data, authHeader());
   }
 
@@ -27,6 +27,10 @@ class DashboardService {
 
   getDashboard(data: { id: number }): Promise<any> {
     return http.get(`/dashboard/find/${data.id}`, authHeader());
+  }
+
+  getDashboardProgress(data: { id: number }): Promise<any> {
+    return http.get(`/dashboard/progress/${data.id}`, authHeader());
   }
 }
 

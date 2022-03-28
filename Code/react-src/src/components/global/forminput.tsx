@@ -3,8 +3,11 @@ type FormInputProps = {
   type: string;
   placeholder: string;
   value?: any;
-  onChange: (e: React.ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => void;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement & HTMLTextAreaElement & HTMLSelectElement>
+  ) => void;
   maxLength?: number;
+  options?: any[];
 };
 
 export const FormInput = ({
@@ -14,6 +17,7 @@ export const FormInput = ({
   value,
   onChange,
   maxLength,
+  options,
 }: FormInputProps) => {
   return (
     <div className="mb-4">
@@ -23,7 +27,7 @@ export const FormInput = ({
       >
         {label}
       </label>
-      {type === "textarea" ? (
+      {type === "textarea" && (
         <textarea
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id={`formInput-${label}`}
@@ -32,7 +36,20 @@ export const FormInput = ({
           onChange={onChange}
           maxLength={maxLength}
         />
-      ) : (
+      )}
+      {type === "select" && (
+        <select
+          id={`formInput-${label}`}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        >
+          <option>{placeholder}</option>
+          {options}
+        </select>
+      )}
+      {type !== "textarea" && type !== "select" && (
         <input
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id={`formInput-${label}`}

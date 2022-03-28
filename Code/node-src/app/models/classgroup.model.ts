@@ -1,8 +1,9 @@
-import { Table, Column, Model, PrimaryKey, CreatedAt, UpdatedAt, Unique, AutoIncrement, Scopes, DefaultScope, Length, BelongsToMany } from 'sequelize-typescript';
+import { Table, Column, Model, PrimaryKey, CreatedAt, UpdatedAt, Unique, AutoIncrement, Scopes, DefaultScope, Length, BelongsToMany, HasMany } from 'sequelize-typescript';
 import Account from './account/account.model';
 import TeachingAssistant from './account/teaching_assistant.model';
 import Student from './account/student.model';
 import Instructor from './account/instructor.model';
+import Dashboard from './dashboard.model';
 
 @DefaultScope(() => ({
     include: [
@@ -71,6 +72,9 @@ export default class ClassGroup extends Model {
 
     @BelongsToMany(() => Account, () => Student)
     students: Account[];
+
+    @HasMany(() => Dashboard)
+    dashboards: Dashboard[];
 
     @CreatedAt
     @Column

@@ -25,6 +25,7 @@ export interface AccountModel {
   setAuthToken: Action<AccountModel, string>;
   logout: Action<AccountModel, boolean>;
   isLoggedIn: Computed<AccountModel, boolean>;
+  hasMarkingAccess: Computed<AccountModel, boolean>;
   login: Thunk<AccountModel, LoginData>;
 }
 
@@ -50,6 +51,14 @@ const accountStore: AccountModel = {
 
   isLoggedIn: computed((state) => {
     return !!state.account && !!state.authToken;
+  }),
+
+  hasMarkingAccess: computed((state) => {
+    return (
+      !!state.account &&
+      (state.account.type === "teaching_assistant" ||
+        state.account.type === "professor")
+    );
   }),
 
   login: thunk(async (actions, payload: LoginData) => {

@@ -18,3 +18,9 @@ dashboards.put('/update/:id', authorize(), DashboardController.update);
 
 // Delete a dashboard with id
 dashboards.delete('/delete/:id', authorize(), DashboardController.delete);
+
+// Get dashboard progress report
+dashboards.get('/progress/:id', authorize(), DashboardController.progress);
+
+// Update dashboard progress report
+dashboards.put('/progress/:id', authorize(), DashboardController.updateProgress);

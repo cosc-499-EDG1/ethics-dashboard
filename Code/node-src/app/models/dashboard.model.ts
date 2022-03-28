@@ -1,5 +1,6 @@
 import { Table, Column, Model, PrimaryKey, AutoIncrement, HasOne, ForeignKey, DefaultScope, BelongsTo, DataType, HasMany } from 'sequelize-typescript';
 import Account from './account/account.model';
+import ClassGroup from './classgroup.model';
 import Deontology_Categorical from './deontology_categorical.model';
 import CaseOption from './option.model';
 import Stakeholder from './stakeholder.model';
@@ -30,6 +31,13 @@ export default class Dashboard extends Model {
 
     @BelongsTo(() => Account)
     owner: Account;
+
+    @ForeignKey(() => ClassGroup)
+    @Column
+    classGroupId: number;
+
+    @BelongsTo(() => ClassGroup)
+    classGroup: ClassGroup;
 
     @Column
     deleted: boolean;
