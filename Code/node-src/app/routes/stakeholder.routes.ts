@@ -1,6 +1,7 @@
-import StakeholderController from "../controllers/stakeholder.controller";
+import StakeholderController from '../controllers/stakeholder.controller';
 import { Router } from 'express';
+import { authorize } from '../middleware/authorize';
 
 export const stakeholders = Router();
 
-stakeholders.post('/addstakeholder', StakeholderController.create); 
+stakeholders.put('/update', authorize(), StakeholderController.updateStakeholders);

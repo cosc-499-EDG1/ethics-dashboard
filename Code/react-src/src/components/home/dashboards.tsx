@@ -71,6 +71,7 @@ const DashboardHome: FunctionComponent<DashboardHomeProps> = () => {
           {dashboards &&
             dashboards.map((dashboard: Dashboard) => (
               <DashboardCard
+                key={dashboard.id}
                 dashboardName={dashboard.name}
                 dashboardId={dashboard.id}
                 clickHandler={handleCardClicked}

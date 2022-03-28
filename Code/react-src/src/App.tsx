@@ -37,7 +37,13 @@ import MyAccount from "./components/account/myaccount";
 import DashboardHome from "./components/dashboard-home/dashboard-home";
 import { QueryClient, QueryClientProvider } from "react-query";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function WaitForStateRehydration({ children }: any) {
   const isRehydrated = useStoreRehydrated();
@@ -56,69 +62,69 @@ function App() {
                 <Route exact path="/" component={Home} />
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
-                <Route path="/issues" component={Issues} />
-                <Route path="/dashboard" component={DashboardHome} />
+                <PrivateRoute path="/issues" component={Issues} />
+                <PrivateRoute path="/dashboard" component={DashboardHome} />
 
-                <Route path="/stakeholders" component={Stakeholders} />
-                <Route
+                <PrivateRoute path="/stakeholders" component={Stakeholders} />
+                <PrivateRoute
                   path="/utilitarianism-options"
                   component={UtilitarianismOptions}
                 />
-                <Route
+                <PrivateRoute
                   path="/utilitarianism-stakeholders"
                   component={UtilitarianismStakeholders}
                 />
-                <Route
+                <PrivateRoute
                   path="/utilitarianism-pleasure"
                   component={UtilitarianismPleasure}
                 />
-                <Route
+                <PrivateRoute
                   path="/utilitarianism-summary"
                   component={UtilitarianismSummary}
                 />
-                <Route
+                <PrivateRoute
                   path="/deontology-options"
                   component={DeontologyOptions}
                 />
-                <Route
+                <PrivateRoute
                   path="/deontology-hypothetical"
                   component={DeontologyHypothetical}
                 />
-                <Route
+                <PrivateRoute
                   path="/deontology-categorical"
                   component={DeontologyCategorical}
                 />
-                <Route
+                <PrivateRoute
                   path="/deontology-testing-categorical"
                   component={DeontologyTestingCategorical}
                 />
-                <Route
+                <PrivateRoute
                   path="/deontology-moral-law"
                   component={DeontologyMoralLaw}
                 />
-                <Route path="/virtueEthics-Ball" component={VirtueEthicsBall} />
-                <Route
+                <PrivateRoute path="/virtueEthics-Ball" component={VirtueEthicsBall} />
+                <PrivateRoute
                   path="/virtueEthics-BallBalanced"
                   component={VirtueEthicsBallBalanced}
                 />
-                <Route
+                <PrivateRoute
                   path="/virtueEthics-Character"
                   component={VirtueEthicsCharacter}
                 />
-                <Route
+                <PrivateRoute
                   path="/virtueEthics-Stakeholders"
                   component={VirtueEthicsStakeholders}
                 />
-                <Route
+                <PrivateRoute
                   path="/virtueEthics-RankBalance"
                   component={VirtueEthicsRankBal}
                 />
-                <Route path="/care-ethics" component={CareEthics} />
-                <Route
+                <PrivateRoute path="/care-ethics" component={CareEthics} />
+                <PrivateRoute
                   path="/my-progress-report"
                   component={MyProgressReport}
                 />
-                <Route path="/logout" component={Logout} />
+                <PrivateRoute path="/logout" component={Logout} />
                 <PrivateRoute exact path={"/myaccount"} component={MyAccount} />
               </Switch>
             </div>
