@@ -36,11 +36,9 @@ class StakeholderController {
                 dashboard.$add('stakeholders', sh);
             }
         }
-        console.log(stakeholders);
         // Update existing stakeholders.
         if (curStakeholders.length >= stakeholders.length) {
             for (let i = 0; i < stakeholders.length; i++) {
-                console.log('Updating', i);
                 const update = stakeholders[i];
                 if (!update) {
                     continue;
