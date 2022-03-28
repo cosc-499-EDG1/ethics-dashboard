@@ -133,6 +133,17 @@ class DashboardController {
                 }
                 dashboard.set({ summary: summary, dilemmas: dilemmas, role: role });
                 break;
+            case 'consequences':
+                const { optionShortConsequences, optionLongConsequences } = req.body;
+                const currentOptions = await dashboard.$get('options');
+                for(let i = 0; i < currentOptions.length; i++){
+                    currentOptions[i].set({
+                        short_consequences: optionShortConsequences[i],
+                        long_consequences: optionLongConsequences[i],
+                    });
+                    await currentOptions[i].save();
+                }
+            break;
             default:
                 return res.status(400).send({
                     message: 'Invalid update type.',
