@@ -1,7 +1,7 @@
 import { useStoreState } from "../../stores/index.store";
 import { FunctionComponent, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import DashboardService from "../../services/dashboard.service";
 import Util_Opt_Analysis from "../../../../node-src/build/models/util_opt_analysis.model"
 import CaseOption from "../../../../node-src/build/models/option.model";
@@ -13,7 +13,7 @@ import { Button } from "../global/button";
 interface UtilitarianismOptionsProps {}
 
 const UtilitarianismOptions: FunctionComponent<UtilitarianismOptionsProps> = () => {
-
+    
     const [optionShortConsequences, setOptionShortConsequences] = useState(["", ""]);
     const [optionLongConsequences, setOptionLongConsequences] = useState(["", ""]);
     const [options, setOptions] = useState(["",""]);
@@ -73,6 +73,10 @@ const UtilitarianismOptions: FunctionComponent<UtilitarianismOptionsProps> = () 
 
         setRedirect('/utilitarianism-stakeholders');
     };
+
+    if (redirect) {
+        return <Redirect to={{ pathname: redirect, state: { from: "/issues" } }} />;
+      }
     return(
         <div className="site-dashboard">
             <div className="dashboard-title">
