@@ -4,12 +4,16 @@ interface UtilitariansimOptionBlockProps {
     option: {
         id: number;
         data: string;
+        short: string;
+        long: string;
     }
     onChange: (index: number, value: string) => void;
+    shortChange: (index: number, value: string) => void;
+    longChange: (index: number, value: string) => void;
 }
 
 const UtilitarianismOptionBlock: FunctionComponent<UtilitariansimOptionBlockProps> =
-  ({option, onChange}) => {
+  ({option, shortChange, longChange}) => {
     return (
         <div className="dashboard-block">
             <label className="dashboard-block-title">
@@ -21,18 +25,18 @@ const UtilitarianismOptionBlock: FunctionComponent<UtilitariansimOptionBlockProp
                 rows={3}
                 className="dashboard-block-text-input"
                 placeholder={`Option ${option.id + 1} Short-term consequences...`}
-                defaultValue={option.data}
+                defaultValue={option.short}
                 onChange={(e) => {
-                onChange(option.id, e.target.value);
+                shortChange(option.id, e.target.value);
                 }}
             ></textarea>
             <textarea
             rows={3}
             className="dashboard-block-text-input"
             placeholder={`Option ${option.id +1} Long-term consequences...`}
-            defaultValue={option.data}
+            defaultValue={option.long}
             onChange={(e) => {
-                onChange(option.id, e.target.value);
+                longChange(option.id, e.target.value);
             }}>
             </textarea>  
             </label>
