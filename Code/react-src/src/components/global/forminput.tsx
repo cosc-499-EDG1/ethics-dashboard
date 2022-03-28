@@ -5,6 +5,7 @@ type FormInputProps = {
   value?: any;
   onChange: (e: React.ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => void;
   maxLength?: number;
+  accept?: string;
 };
 
 export const FormInput = ({
@@ -14,6 +15,7 @@ export const FormInput = ({
   value,
   onChange,
   maxLength,
+  accept,
 }: FormInputProps) => {
   return (
     <div className="mb-4">
@@ -41,6 +43,7 @@ export const FormInput = ({
           value={value}
           onChange={onChange}
           maxLength={maxLength}
+          accept={accept}
         />
       )}
     </div>
