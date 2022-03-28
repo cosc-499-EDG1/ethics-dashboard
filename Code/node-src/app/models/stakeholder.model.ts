@@ -18,6 +18,9 @@ export default class Stakeholder extends Model {
     @Column
     stakeholder_num: number;
 
+    @Column
+    util_reason: string;
+
     @ForeignKey(() => Dashboard)
     dashboard_id: number;
     
