@@ -50,9 +50,11 @@ class DashboardController {
         }
 
         const options = await dashboard.$get('options');
+        const stakeholders = await dashboard.$get('stakeholders');
         res.status(200).json({
             dashboard,
             options,
+            stakeholders,
         });
     };
 
@@ -65,7 +67,7 @@ class DashboardController {
             return res.sendStatus(404);
         }
 
-        // If requesting acocund is a student, then check that they own the dashboard.
+        // If requesting account is a student, then check that they own the dashboard.
         if (account.isStudent() && dashboard.ownerId !== account.id) {
             return res.sendStatus(403);
         }
@@ -93,8 +95,8 @@ class DashboardController {
                 // Create new options if they don't exist.
                 if (options.length > curOptions.length) {
                     const optionsToAdd = options.length - curOptions.length;
-                    for (let i = 0; i < optionsToAdd; i++) {
-                        const desc = options[i + curOptions.length];
+                    for (let i = curOptions.length; i < optionsToAdd + curOptions.length; i++) {
+                        const desc = options[i];
                         const opt = new CaseOption({
                             option_title: `Option ${i + 1}`,
                             option_desc: desc,
@@ -106,14 +108,21 @@ class DashboardController {
                     }
                 }
                 // Update existing options.
-                for (let i = 0; i < curOptions.length; i++) {
-                    curOptions[i].set({
-                        option_title: `Option ${i + 1}`,
-                        option_desc: options[i],
-                        option_num: i,
-                    });
-                    await curOptions[i].save();
+                if (curOptions.length >= options.length) {
+                    for (let i = 0; i < options.length; i++) {
+                        const update = options[i];
+                        if (!update) {
+                            continue;
+                        }
+                        curOptions[i].set({
+                            option_title: `Option ${i + 1}`,
+                            option_desc: update,
+                            option_num: i,
+                        });
+                        await curOptions[i].save();
+                    }
                 }
+
                 // Delete options that are no longer needed.
                 if (options.length < curOptions.length) {
                     for (let i = curOptions.length - 1; i > options.length - 1; i--) {

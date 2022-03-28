@@ -37,7 +37,13 @@ import MyAccount from "./components/account/myaccount";
 import DashboardHome from "./components/dashboard-home/dashboard-home";
 import { QueryClient, QueryClientProvider } from "react-query";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function WaitForStateRehydration({ children }: any) {
   const isRehydrated = useStoreRehydrated();

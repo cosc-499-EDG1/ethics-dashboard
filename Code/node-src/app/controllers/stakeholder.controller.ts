@@ -1,48 +1,67 @@
 import dotenv from 'dotenv';
 dotenv.config({ path: 'jwt.env' });
 import { Request, Response, NextFunction } from 'express';
-import Stakeholder from "../models/stakeholder.model";
+import Dashboard from '../models/dashboard.model';
+import Stakeholder from '../models/stakeholder.model';
 
 class StakeholderController {
+    updateStakeholders = async (req: Request, res: Response, next: NextFunction) => {
+        const id = req.body.id;
+        const account = req.account;
 
-
-
-    create = async (req: Request, res: Response, next: NextFunction) => {
-        const {title, description, num, dashboard_id} = req.body;
-        if (!title || !description || !num || dashboard_id === undefined) {
-            res.status(400).send({
-                message: 'Invalid form data.',
-            });
-            return;  
+        const dashboard = await Dashboard.findByPk(id);
+        if (!dashboard) {
+            return res.sendStatus(404);
         }
 
-        const stakeholder = new Stakeholder({stakeholder_title: title, stakeholder_desc: description, stakeholder_num: num, dashboard_id: dashboard_id});
-        stakeholder.save().then(async () => {
-            res.status(200).json({ message: 'Stakeholders created successfully.', success: true});
-        })
-        .catch(err => {
-            res.status(400).json({
-                message: 'Error creating stakeholder' , 
-            });
-        });
-    };
+        // If requesting account is a student, then check that they own the dashboard.
+        if (account.isStudent() && dashboard.ownerId !== account.id) {
+            return res.sendStatus(403);
+        }
 
-    findAll = async (req: Request, res: Response, next: NextFunction) => {
-        //TODO: IMPLEMENT
-        return res.sendStatus(200);
-    };
-
-    findOne = async (req: Request, res: Response, next: NextFunction) => {
-
-    };
-
-    update = async (req: Request, res: Response, next: NextFunction) => {
-        //TODO: IMPLEMENT
-        return res.sendStatus(200);
-    };
-
-    delete = (req: Request, res: Response, next: NextFunction) => {
-        //TODO: IMPLEMENT
+        const stakeholders = req.body.data;
+        const curStakeholders = await dashboard.$get('stakeholders');
+        // Create new stakeholders if they don't exist.
+        if (stakeholders.length > curStakeholders.length) {
+            const stakeholdersToAdd = stakeholders.length - curStakeholders.length;
+            for (let i = curStakeholders.length; i < stakeholdersToAdd + curStakeholders.length; i++) {
+                const cur = stakeholders[i];
+                const sh = new Stakeholder({
+                    title: cur.title,
+                    description: cur.description,
+                    num: i,
+                    dashboard_id: dashboard.id,
+                });
+                await sh.save();
+                dashboard.$add('stakeholders', sh);
+            }
+        }
+        console.log(stakeholders);
+        // Update existing stakeholders.
+        if (curStakeholders.length >= stakeholders.length) {
+            for (let i = 0; i < stakeholders.length; i++) {
+                console.log('Updating', i);
+                const update = stakeholders[i];
+                if (!update) {
+                    continue;
+                }
+                curStakeholders[i].set({
+                    title: update.title,
+                    description: update.description,
+                    num: i,
+                });
+                await curStakeholders[i].save();
+            }
+        }
+        // Delete stakeholders that are no longer needed.
+        if (stakeholders.length < curStakeholders.length) {
+            for (let i = curStakeholders.length - 1; i > stakeholders.length - 1; i--) {
+                const stakeholder = curStakeholders[i];
+                dashboard.$remove('stakeholders', stakeholder);
+                await stakeholder.destroy();
+            }
+        }
+        await dashboard.save();
         return res.sendStatus(200);
     };
 }
