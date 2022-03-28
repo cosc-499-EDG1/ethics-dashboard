@@ -5,6 +5,9 @@ interface StakeholderCareEthicsInputProps {
         id: number;
         data: string;
         desc: string;
+        attentivenessValue: number;
+        competenceValue: number;
+        responsivenessValue: number;
         onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     }
 }

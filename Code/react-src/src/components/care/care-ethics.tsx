@@ -7,7 +7,6 @@ import DashboardService from "../../services/dashboard.service";
 import { useStoreState } from "../../stores/index.store";
 import Dashboard from "../../../../node-src/build/models/dashboard.model";
 import { Button } from "../global/button";
-import CaseOption from "../../../../node-src/build/models/option.model";
 import { Redirect } from "react-router";
 import CaseCareEthics from "../../../../node-src/build/models/care_ethics_options.model";
 
@@ -18,8 +17,12 @@ const CareEthics: FunctionComponent<CareEthicsProps> = () => {
 
   const [valueChanged, setValue] = useState(50);
 
+  const testAttentiveness = [5, 5, 5, 5, 5];
   const [options, setOptions] = useState(["", ""]);
   const [stakeholders, setStakeholders] = useState(["", ""]);
+  const [attentiveness, setAttentiveness] = useState(testAttentiveness);
+  const [competence, setCompetence] = useState(testAttentiveness);
+  const [responsiveness, setResponsiveness] = useState(testAttentiveness);
 
   const currentDashboard =
     useStoreState((state) => state.dashboard.dashboard_id) ?? 0;
@@ -27,7 +30,11 @@ const CareEthics: FunctionComponent<CareEthicsProps> = () => {
     return await DashboardService.getDashboard({ id: currentDashboard });
   }, { onSuccess: (data) => {
     const dashboard = data.data.dashboard as Dashboard;
-    setOptions(data.data.options.map((o: CaseOption) => o.option_desc));
+    setOptions(data.data.options.map((o: CaseCareEthics) => o.option_id));
+    setStakeholders(data.data.stakeholders.map((s: CaseCareEthics) => s.stakeholder_id));
+    setAttentiveness(data.data.stakeholders.map((a: CaseCareEthics) => a.stakeholder_attentiveness));
+    setCompetence(data.data.stakeholders.map((c: CaseCareEthics) => c.stakeholder_competence));
+    setResponsiveness(data.data.stakeholders.map((r: CaseCareEthics) => r.stakeholder_responsiveness));
   }});
 
   const changedValue = async (value: string, id: string) => {
@@ -114,11 +121,27 @@ const CareEthics: FunctionComponent<CareEthicsProps> = () => {
           <p className="dashboard-block-description">
             I can put loyalty to the company...
           </p>
-          <StakeholderCareEthicsInput
+          {stakeholders.map((text: string, idx: number) => (
+            <StakeholderCareEthicsInput
+              stakeholder={{
+                id: 1,
+                data: `Stakeholder ${idx}`,
+                desc: text.slice(0, 20),
+                attentivenessValue: attentiveness[idx],
+                competenceValue: competence[idx],
+                responsivenessValue: responsiveness[idx],
+                onChange: (e) => changedValue(e.target.value, e.target.id),
+              }}
+            />
+          ))}
+          {/* <StakeholderCareEthicsInput
             stakeholder={{
               id: 1,
               data: "Stakeholder 1",
               desc: "The engineer asked to design the VW defeat...",
+              attentivenessValue: number,
+              competenceValue: number,
+              responsivenessValue: number,
               onChange: (e) => changedValue(e.target.value, e.target.id),
             }}
           />
@@ -137,7 +160,7 @@ const CareEthics: FunctionComponent<CareEthicsProps> = () => {
               desc: "Blah, blah, blah...",
               onChange: (e) => changedValue(e.target.value, e.target.id),
             }}
-          />
+          /> */}
         </div>
         <div className="dashboard-block-1 w-1/2 ml-2">
           <OptionCareEthicsInput
