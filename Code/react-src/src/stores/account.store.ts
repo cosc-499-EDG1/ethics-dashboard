@@ -25,6 +25,7 @@ export interface AccountModel {
   setAuthToken: Action<AccountModel, string>;
   logout: Action<AccountModel, boolean>;
   isLoggedIn: Computed<AccountModel, boolean>;
+  refetchAccount: Thunk<AccountModel, void>;
   login: Thunk<AccountModel, LoginData>;
 }
 
@@ -50,6 +51,16 @@ const accountStore: AccountModel = {
 
   isLoggedIn: computed((state) => {
     return !!state.account && !!state.authToken;
+  }),
+
+  refetchAccount: thunk(async (actions, payload) => {
+    const response = await AccountService.getAccount();
+    const account = response.data;
+    if (account) {
+      actions.setAccount(account);
+    } else {
+      actions.logout(true);
+    }
   }),
 
   login: thunk(async (actions, payload: LoginData) => {

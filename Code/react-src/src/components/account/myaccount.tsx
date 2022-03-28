@@ -37,7 +37,7 @@ const MyAccount: FunctionComponent<MyAccountProps> = () => {
                       <img
                         src={account.avatar as unknown as string}
                         alt={account?.first_name}
-                        className="w-24 h-24 rounded-full max-w-max"
+                        className="w-24 h-24 rounded-full"
                       />
                     </span>
                   )}
@@ -54,19 +54,24 @@ const MyAccount: FunctionComponent<MyAccountProps> = () => {
             </div>
             <hr className="border-b-1 border-coolGray-400 w-full pt-2 mt-2" />
             <div className="flex flex-col justify-start items-start w-full">
-              <div className="w-1/2">
+              <div className="w-full">
                 <h1 className="text-2xl pt-3">My Classes</h1>
                 <div className="flex flex-col w-full">
                   <div className="text-2xl pt-3">
                     {classList &&
                     classList.data.student &&
                     classList.data.student.length > 0 ? (
-                      <div className="divide-y">
+                      <div className="divide-y m-2">
                         {classList.data.student?.map((classData) => (
-                          <div key={classData.id}>
-                            <h1 className="text-xl rounded-md shadow-lg p-4 mb-4">
+                          <div key={classData.id} className="flex justify-around text-xl bg-white rounded-md p-3">
+                            <div>
                               {classData.name}
-                            </h1>
+                            </div>
+                            <div>
+                              {`${classData.students.length} student${
+                                classData.students.length > 1 ? "s" : ""
+                              }`}
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -86,7 +91,9 @@ const MyAccount: FunctionComponent<MyAccountProps> = () => {
           </div>
         </div>
       </div>
-      {showEditProfile && <EditProfileModal closeModal={() => setShowEditProfile(false)} />}
+      {showEditProfile && (
+        <EditProfileModal closeModal={() => setShowEditProfile(false)} />
+      )}
     </div>
   );
 };

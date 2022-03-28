@@ -1,4 +1,7 @@
 import { FormEvent, FunctionComponent, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import AccountService from "../../services/account.service";
+import { useStoreActions } from "../../stores/index.store";
 import { Button } from "../global/button";
 import { Form } from "../global/form";
 import { FormInput } from "../global/forminput";
@@ -21,14 +24,39 @@ const EditProfileModal: FunctionComponent<EditProfileModalProps> = (props) => {
   const [uploadMessage, setUploadMessage] = useState<any>();
   const [avatar, setAvatar] = useState<Blob>();
 
+  const refetchAccount = useStoreActions((actions) => actions.accounts.refetchAccount);
+
   var currentUpload: any;
   var fileReader: FileReader;
-  const readFile = () => {
+  const readFile = async () => {
     const content = fileReader.result;
     currentUpload = content;
+
+    setIsUploading(true);
+    setUploadMessage("Uploading...");
+
+    await updateAccount.mutateAsync({
+      updateType: "avatar",
+      avatar: currentUpload,
+    });
+
+    setIsUploadSuccess(true);
+    setUploadMessage(
+      <div>
+        <div>Uploaded!</div>
+        <img
+          alt="Profile"
+          className="w-32 h-32 rounded-full m-auto"
+          src={currentUpload}
+        />
+      </div>
+    );
+    setIsUploading(false);
   };
 
-  const handlePasswordChange = (e: FormEvent<HTMLFormElement>) => {
+  const queryClient = useQueryClient();
+
+  const handlePasswordChange = async (e: FormEvent<HTMLFormElement>) => {
     // Update user account password
     if (!password || !newPassword || !confirmPassword) {
       return;
@@ -44,38 +72,38 @@ const EditProfileModal: FunctionComponent<EditProfileModalProps> = (props) => {
     setPassword("");
     setNewPassword("");
     setConfirmPassword("");
-    setTimeout(() => {
-      setPasswordChanged(true);
-      setPasswordMessage("Saved!");
-      setIsLoading(false);
-    }, 5000);
+
+    const response = await updateAccount.mutateAsync({
+      updateType: "password",
+      oldPassword: password,
+      newPassword: newPassword,
+    });
+
+    setIsLoading(false);
+    if (response.data.message) {
+      setPasswordChanged(false);
+      setPasswordMessage(response.data.message);
+      return;
+    }
+    setPasswordChanged(true);
+    setPasswordMessage("Saved!");
     // props.closeModal();
   };
 
-  const handleAvatarChange = (e: FormEvent<HTMLFormElement>) => {
+  const updateAccount = useMutation(AccountService.updateAccount, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("account");
+      refetchAccount();
+    },
+  });
+
+  const handleAvatarChange = async (e: FormEvent<HTMLFormElement>) => {
     // Update user account avatar
     if (!avatar) return;
 
     fileReader = new FileReader();
     fileReader.onloadend = readFile;
     fileReader.readAsDataURL(avatar);
-
-    setIsUploading(true);
-    setUploadMessage("Uploading...");
-    setTimeout(() => {
-      setIsUploadSuccess(true);
-      setUploadMessage(
-        <div>
-          <div>Uploaded!</div>
-          <img
-            alt="Profile"
-            className="w-32 h-32 rounded-full m-auto"
-            src={currentUpload}
-          />
-        </div>
-      );
-      setIsUploading(false);
-    }, 5000);
   };
 
   const handleClose = () => {
@@ -89,8 +117,9 @@ const EditProfileModal: FunctionComponent<EditProfileModalProps> = (props) => {
           <Form
             inputs={[
               <FormInput
-                label={"Upload File"}
+                label={"Upload Avatar"}
                 type={"file"}
+                accept={'image/*'}
                 placeholder={""}
                 onChange={(e) => {
                   if (e.target.files && e.target.files.length > 0) {

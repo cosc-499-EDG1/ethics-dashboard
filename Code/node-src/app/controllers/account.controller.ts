@@ -102,6 +102,15 @@ class AccountController {
         return res.send(dashboards);
     };
 
+    fetchAccount = async (req: Request, res: Response, next: NextFunction) => {
+        const account = await Account.findOne({
+            where: {
+                id: req.account.id,
+            },
+        });
+        return res.send(account);
+    };
+
     findAll = (req: Request, res: Response, next: NextFunction) => {
         //TODO: IMPLEMENT
         return res.sendStatus(200);
@@ -116,7 +125,40 @@ class AccountController {
      * For account security, check the type of req.account in these functions.
      */
     update = async (req: Request, res: Response, next: NextFunction) => {
-        //TODO: IMPLEMENT
+        const account = req.account;
+        const { updateType } = req.body;
+        switch (updateType) {
+            case 'password':
+                const { oldPassword, newPassword } = req.body;
+                if (!oldPassword || !newPassword) {
+                    res.send({
+                        message: 'Invalid form data.',
+                    });
+                    return;
+                }
+                const withPassword = await Account.scope('withPassword').findOne({ where: { id: account.id } });
+
+                if (!withPassword || !(await bcrypt.compare(oldPassword, withPassword.password))) {
+                    res.send({
+                        message: 'Invalid password',
+                    });
+                    return;
+                }
+
+                const newPasswordHash = await bcrypt.hash(newPassword, bcrypt.genSaltSync(10));
+                await Account.update({ password: newPasswordHash }, { where: { id: account.id } });
+                break;
+            case 'avatar':
+                const { avatar } = req.body;
+                if (!avatar) {
+                    res.send({
+                        message: 'Invalid form data.',
+                    });
+                    return;
+                }
+                await Account.update({ avatar }, { where: { id: account.id } });
+                break;
+        }
         return res.sendStatus(200);
     };
 

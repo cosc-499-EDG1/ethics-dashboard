@@ -50,7 +50,7 @@ const StakeholdersHome: FunctionComponent<StakeholdersHomeProps> = () => {
       <label className="font-bold m-2">Stakeholders</label>
       {!!stakeholders.length && (
         <div className="text-lg">
-          <div className="text-lg max-h-64 overflow-y-auto">
+          <div className="text-lg max-h-92 overflow-y-auto">
             {stakeholders.map((stakeholder, i) => (
               <div key={i}>
                 <p className="mx-2 my-2 py-2 rounded-md bg-secondary">

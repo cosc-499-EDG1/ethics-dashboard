@@ -55,7 +55,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               <img
                 src={account.avatar as unknown as string}
                 alt={account?.first_name}
-                className="w-8 h-8 rounded-full max-w-max"
+                className="w-8 h-8 rounded-full"
               />
             </span>
           )}
