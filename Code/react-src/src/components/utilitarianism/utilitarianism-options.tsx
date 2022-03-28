@@ -1,28 +1,22 @@
 import { useStoreState } from "../../stores/index.store";
 import { FunctionComponent, useState } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import DashboardService from "../../services/dashboard.service";
 import Util_Opt_Analysis from "../../../../node-src/build/models/util_opt_analysis.model"
 import CaseOption from "../../../../node-src/build/models/option.model";
 import Dashboard from "../../../../node-src/build/models/dashboard.model";
 import UtilitarianismOptionBlock from "./utilitarianism-options-block";
+import { Button } from "../global/button";
 
 
 interface UtilitarianismOptionsProps {}
 
 const UtilitarianismOptions: FunctionComponent<UtilitarianismOptionsProps> = () => {
-    const [option1_short, setOption1_short] = useState("");
-    const [option2_short, setOption2_short] = useState("");
-    const [option3_short, setOption3_short] = useState("");
 
-    const [option1_long, setOption1_long] = useState("");
-    const [option2_long, setOption2_long] = useState("");
-    const [option3_long, setOption3_long] = useState("");
-
-    const [optionConsequences, setOptionConsequences] = useState(["", ""]);
-
-    const [options, setOptions] = useState(["","", "", ""]);
+    const [optionShortConsequences, setOptionShortConsequences] = useState(["", ""]);
+    const [optionLongConsequences, setOptionLongConsequences] = useState(["", ""]);
+    const [options, setOptions] = useState(["",""]);
 
     const [errorMessage, setErrorMessage] = useState("");
     const [redirect, setRedirect] = useState("");
@@ -31,23 +25,53 @@ const UtilitarianismOptions: FunctionComponent<UtilitarianismOptionsProps> = () 
     const numOptions = useStoreState(((state) => state.options.num_options) ?? 0);
    
     const queryClient = useQueryClient();
+
     const {isLoading, isError} = useQuery("dashboard", async () => {
         return await DashboardService.getDashboard({ id: currentDashboard });
       }, { onSuccess: (data) => {
         const dashboard = data.data.dashboard as Dashboard;
         setOptions(data.data.options.map((o: CaseOption) => o.option_desc) );
+        setOptionShortConsequences(data.data.options.map((o: CaseOption) => o.short_consequences))
+        setOptionLongConsequences(data.data.options.map((o: CaseOption) => o.long_consequences))
       }}); 
 
      const setOptionValue = (index: number, value: string) => {
-       const newOptions = [...optionConsequences];
+       const newOptions = [...options];
        newOptions[index] = value;
-       setOptionConsequences(newOptions);
+       setOptions(newOptions);
     };
 
+    const setShortValue = (index: number, value: string) => {
+        const newShortConsequences = [...optionShortConsequences];
+        newShortConsequences[index] = value;
+        setOptionShortConsequences(newShortConsequences);
+    };
+
+    const setLongValue = (index: number, value: string) => {
+        const newLongConsequence = [...optionLongConsequences];
+        newLongConsequence[index] = value;
+        setOptionLongConsequences(newLongConsequence);
+    };
+
+    const updateDashboard = useMutation(DashboardService.updateDashboard, {
+        onSuccess: () => {
+          queryClient.invalidateQueries("dashboard");
+        },
+      });
+
     const attemptUpload = async () => {
+        const consequences = {
+            optionShortConsequences: optionShortConsequences,
+            optionLongConsequences: optionLongConsequences,
+        };
 
+         await updateDashboard.mutateAsync({
+            id: currentDashboard,
+            updateType: "consequences",
+            ...consequences,
+            });
 
-        return;
+        setRedirect('/utilitarianism-stakeholders');
     };
     return(
         <div className="site-dashboard">
@@ -64,19 +88,22 @@ const UtilitarianismOptions: FunctionComponent<UtilitarianismOptionsProps> = () 
             </div>
             <div className="dashboard-page">
                 
-                
                 {options.map((text: string, idx: number) => (
               <UtilitarianismOptionBlock
                 key={idx}
-                option={{ id: idx, data: text }}
+                option={{ id: idx, data: text, short: optionShortConsequences[idx], long: optionLongConsequences[idx] }}
                 onChange={setOptionValue}
+                shortChange={setShortValue}
+                longChange={setLongValue}
               />
             ))}
             </div>
-            <div className="flex justify-center items-center m-6">
-                <button className="bg-primary hover:brightness-125 text-white font-bold w-1/12 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                <Link to="/utilitarianism-stakeholders">Submit</Link>
-                </button>
+            <div className="flex justify-center items-center m-6 bg-primary hover:brightness-125 text-white font-bold w-1/12 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                <Button
+                text={"Submit"}
+                formSubmit={false}
+                onClick={() => attemptUpload()}
+                ></Button>
             </div>
         </div>
     );
