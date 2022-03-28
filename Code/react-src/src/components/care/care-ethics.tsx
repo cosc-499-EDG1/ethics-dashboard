@@ -2,20 +2,33 @@ import { FunctionComponent, useState } from "react";
 import { Link } from "react-router-dom";
 import StakeholderCareEthicsInput from "./stakeholder-care-ethics-input";
 import OptionCareEthicsInput from "./option-care-ethics-input";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import DashboardService from "../../services/dashboard.service";
+import { useStoreState } from "../../stores/index.store";
+import Dashboard from "../../../../node-src/build/models/dashboard.model";
+import { Button } from "../global/button";
+import CaseOption from "../../../../node-src/build/models/option.model";
+import { Redirect } from "react-router";
+import CaseCareEthics from "../../../../node-src/build/models/care_ethics_options.model";
 
 interface CareEthicsProps {}
 
-const numStakeholder = 2;
-var stakeholderValues = new Array(numStakeholder);
-for (let value = 0; value < stakeholderValues.length; value++) {
-  stakeholderValues[value] = new Array(3);
-  for (let value1 = 0; value1 < stakeholderValues[value].length; value1++) {
-    stakeholderValues[value][value1] = 50;
-  }
-}
-
 const CareEthics: FunctionComponent<CareEthicsProps> = () => {
+  const [redirect, setRedirect] = useState("");
+
   const [valueChanged, setValue] = useState(50);
+
+  const [options, setOptions] = useState(["", ""]);
+  const [stakeholders, setStakeholders] = useState(["", ""]);
+
+  const currentDashboard =
+    useStoreState((state) => state.dashboard.dashboard_id) ?? 0;
+  const {isLoading, isError} = useQuery("dashboard", async () => {
+    return await DashboardService.getDashboard({ id: currentDashboard });
+  }, { onSuccess: (data) => {
+    const dashboard = data.data.dashboard as Dashboard;
+    setOptions(data.data.options.map((o: CaseOption) => o.option_desc));
+  }});
 
   const changedValue = async (value: string, id: string) => {
     const cValue = parseInt(value) * 10;
@@ -36,6 +49,47 @@ const CareEthics: FunctionComponent<CareEthicsProps> = () => {
     average = average / (numStakeholder * 3);
     setValue(average);
   };
+
+  const queryClient = useQueryClient();
+  const updateDashboard = useMutation(DashboardService.updateDashboard, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("dashboard");
+    },
+  });
+
+  const updateForm = async () => {
+    const data = {
+      options: options,
+    };
+
+    await updateDashboard.mutateAsync({
+      id: currentDashboard,
+      updateType: "data",
+      ...data,
+    });
+
+    setRedirect('/care-ethics');
+  };
+
+  const setOptionValue = (index: number, value: string) => {
+    const newOptions = [...options];
+    newOptions[index] = value;
+    setOptions(newOptions);
+  };
+
+  const numStakeholder = 2;
+  var stakeholderValues = new Array(numStakeholder);
+  for (let value = 0; value < stakeholderValues.length; value++) {
+    stakeholderValues[value] = new Array(3);
+    for (let value1 = 0; value1 < stakeholderValues[value].length; value1++) {
+      stakeholderValues[value][value1] = 50;
+    }
+  }
+
+  if (redirect) {
+    return <Redirect to={{ pathname: redirect, state: { from: "/care-ethics" } }} />;
+  }
+
   return (
     <div className="site-dashboard">
       <div className="dashboard-title">
@@ -55,7 +109,7 @@ const CareEthics: FunctionComponent<CareEthicsProps> = () => {
       <div className="dashboard-page md:flex">
         <div className="dashboard-block w-1/2 mr-2">
           <p className="dashboard-block-title">
-            Option 1 -&nbsp;
+            Option 1
           </p>
           <p className="dashboard-block-description">
             I can put loyalty to the company...
@@ -105,18 +159,11 @@ const CareEthics: FunctionComponent<CareEthicsProps> = () => {
         </div>
       </div>
       <div className="flex justify-center items-center m-6">
-        <div className="grid grid-cols-2 gap-20">
-          <Link to="/dashboard">
-            <button className="bg-gray-600 hover:bg-gray-500 text-white text-2xl font-bold py-2 px-4 w-64 rounded focus:outline-none focus:shadow-outline">
-              Go Back
-            </button>
-          </Link>
-          <Link to="/dashboard">
-            <button className="bg-primary hover:brightness-125 text-white text-2xl font-bold py-2 px-4 w-64 rounded focus:outline-none focus:shadow-outline">
-              Finish
-            </button>
-          </Link>
-        </div>
+        <Button
+          text={"Next"}
+          formSubmit={false}
+          onClick={() => updateForm()}
+        ></Button>
       </div>
     </div>
   );
