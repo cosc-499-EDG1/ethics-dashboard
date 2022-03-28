@@ -24,9 +24,9 @@ const Issue: FunctionComponent<Issues> = () => {
     return await DashboardService.getDashboard({ id: currentDashboard });
   }, { onSuccess: (data) => {
     const dashboard = data.data.dashboard as Dashboard;
-    setSummary(dashboard.summary);
-    setDilemmas(dashboard.dilemmas);
-    setRole(dashboard.role);
+    setSummary(dashboard.summary ?? "");
+    setDilemmas(dashboard.dilemmas ?? "");
+    setRole(dashboard.role ?? "");
     setOptions(data.data.options.map((o: CaseOption) => o.option_desc));
   }});
 
