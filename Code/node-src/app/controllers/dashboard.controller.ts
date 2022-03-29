@@ -3,6 +3,8 @@ dotenv.config({ path: 'jwt.env' });
 import { Request, Response, NextFunction } from 'express';
 import CaseOption from '../models/option.model';
 import Dashboard from '../models/dashboard.model';
+import Stakeholder from '../models/stakeholder.model';
+import Care_Ethics_Options from '../models/care_ethics_options.model';
 
 class DashboardController {
     create = async (req: Request, res: Response, next: NextFunction) => {
@@ -39,7 +41,9 @@ class DashboardController {
         const id = req.params.id;
         const account = req.account;
 
-        const dashboard = await Dashboard.findByPk(id);
+        const dashboard = await Dashboard.findByPk(id, {
+            include: [{ all: true, nested: true }],
+        });
         if (!dashboard) {
             return res.sendStatus(404);
         }
@@ -48,14 +52,7 @@ class DashboardController {
         if (account.isStudent() && dashboard.ownerId !== account.id) {
             return res.sendStatus(403);
         }
-
-        const options = await dashboard.$get('options');
-        const stakeholders = await dashboard.$get('stakeholders');
-        res.status(200).json({
-            dashboard,
-            options,
-            stakeholders,
-        });
+        res.status(200).json(dashboard);
     };
 
     update = async (req: Request, res: Response, next: NextFunction) => {
@@ -136,14 +133,14 @@ class DashboardController {
             case 'consequences':
                 const { optionShortConsequences, optionLongConsequences } = req.body;
                 const currentOptions = await dashboard.$get('options');
-                for(let i = 0; i < currentOptions.length; i++){
+                for (let i = 0; i < currentOptions.length; i++) {
                     currentOptions[i].set({
                         short_consequences: optionShortConsequences[i],
                         long_consequences: optionLongConsequences[i],
                     });
                     await currentOptions[i].save();
                 }
-            break;
+                break;
             default:
                 return res.status(400).send({
                     message: 'Invalid update type.',

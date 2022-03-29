@@ -20,7 +20,4 @@ export default class Stakeholder extends Model {
 
     @ForeignKey(() => Dashboard)
     dashboard_id: number;
-    
-    @HasMany(() => Care_Ethics_Options)
-    care_ethics_options: Care_Ethics_Options[];
 }

@@ -20,15 +20,21 @@ const Issue: FunctionComponent<Issues> = () => {
 
   const currentDashboard =
     useStoreState((state) => state.dashboard.dashboard_id) ?? 0;
-  const {isLoading, isError} = useQuery("dashboard", async () => {
-    return await DashboardService.getDashboard({ id: currentDashboard });
-  }, { onSuccess: (data) => {
-    const dashboard = data.data.dashboard as Dashboard;
-    setSummary(dashboard.summary ?? "");
-    setDilemmas(dashboard.dilemmas ?? "");
-    setRole(dashboard.role ?? "");
-    setOptions(data.data.options.map((o: CaseOption) => o.option_desc));
-  }});
+  const { isLoading, isError } = useQuery(
+    "dashboard",
+    async () => {
+      return await DashboardService.getDashboard({ id: currentDashboard });
+    },
+    {
+      onSuccess: (data) => {
+        const dashboard = data.data as Dashboard;
+        setSummary(dashboard.summary ?? "");
+        setDilemmas(dashboard.dilemmas ?? "");
+        setRole(dashboard.role ?? "");
+        setOptions(dashboard.options.map((o) => o.option_desc));
+      },
+    }
+  );
 
   const changeNumOptions = async (increase: boolean) => {
     if (increase === true) {
@@ -63,7 +69,7 @@ const Issue: FunctionComponent<Issues> = () => {
       ...data,
     });
 
-    setRedirect('/dashboard');
+    setRedirect("/dashboard");
   };
 
   const setOptionValue = (index: number, value: string) => {
