@@ -55,12 +55,12 @@ setImmediate(async () => {
 
         const stakeholderInsert = `
             INSERT IGNORE INTO Stakeholders (title, description, num, dashboard_id)
-            VALUES ('Test Stakeholder 1', 'Testing Stakeholder 1', 1, ${dashboardResult[0]}),
-            ('Test Stakeholder 2', 'Testing Stakeholder 2', 2, ${dashboardResult[0]}),
-            ('Test Stakeholder 3', 'Testing Stakeholder 3', 3, ${dashboardResult[0]}),
-            ('Test Stakeholder 4', 'Testing Stakeholder 4', 4, ${dashboardResult[0]}),
-            ('Test Stakeholder 5', 'Testing Stakeholder 4', 4, ${dashboardResult[0]}),
-            ('Test Stakeholder 6', 'Testing Stakeholder 4', 4, ${dashboardResult[0]});
+            VALUES ('Test Stakeholder 1', 'Testing Stakeholder 1', 0, ${dashboardResult[0]}),
+            ('Test Stakeholder 2', 'Testing Stakeholder 2', 1, ${dashboardResult[0]}),
+            ('Test Stakeholder 3', 'Testing Stakeholder 3', 2, ${dashboardResult[0]}),
+            ('Test Stakeholder 4', 'Testing Stakeholder 4', 3, ${dashboardResult[0]}),
+            ('Test Stakeholder 5', 'Testing Stakeholder 5', 4, ${dashboardResult[0]}),
+            ('Test Stakeholder 6', 'Testing Stakeholder 6', 5, ${dashboardResult[0]});
         `;
         await db.query(stakeholderInsert, { type: QueryTypes.INSERT });
     }

@@ -44,7 +44,7 @@ const StakeholderCareEthicsInput: FunctionComponent<StakeholderCareEthicsInputPr
                         Attentiveness
                     </p>
                     <p className="inline mx-3 font-bold text-xl">Low</p>
-                    <input className="w-6/12" type="range" min="0" max="10" defaultValue={stakeholder.attentivenessValue} onChange={(e) => {handleAttentivenessChange(1, stakeholder.id, e.target.value);}} id={stakeholder.id.toString()+"-1"}></input>
+                    <input className="w-6/12" type="range" min="0" max="10" value={stakeholder.attentivenessValue} onChange={(e) => {handleAttentivenessChange(1, stakeholder.id, e.target.value);}} id={stakeholder.id.toString()+"-1"}></input>
                     <p className="inline mx-3 font-bold text-xl">High</p>
                 </div>
                 <div className="w-6/12 text-center my-2">
@@ -52,7 +52,7 @@ const StakeholderCareEthicsInput: FunctionComponent<StakeholderCareEthicsInputPr
                         Competence
                     </p>
                     <p className="inline mx-3 font-bold text-xl">Low</p>
-                    <input className="w-6/12" type="range" min="0" max="10" defaultValue={stakeholder.competenceValue} onChange={(e) => {handleResponsivenessChange(2, stakeholder.id, e.target.value);}} id={stakeholder.id.toString()+"-2"}></input>
+                    <input className="w-6/12" type="range" min="0" max="10" value={stakeholder.competenceValue} onChange={(e) => {handleCompetenceChange(2, stakeholder.id, e.target.value);}} id={stakeholder.id.toString()+"-2"}></input>
                     <p className="inline mx-3 font-bold text-xl">High</p>
                 </div>
             </div>
@@ -61,7 +61,7 @@ const StakeholderCareEthicsInput: FunctionComponent<StakeholderCareEthicsInputPr
                     Responsiveness
                 </p>
                 <p className="inline mx-3 font-bold text-xl">Low</p>
-                <input className="w-6/12" type="range" min="0" max="10" defaultValue={stakeholder.responsivenessValue} onChange={(e) => {handleCompetenceChange(3, stakeholder.id, e.target.value);}} id={stakeholder.id.toString()+"-3"}></input>
+                <input className="w-6/12" type="range" min="0" max="10" value={stakeholder.responsivenessValue} onChange={(e) => {handleResponsivenessChange(3, stakeholder.id, e.target.value);}} id={stakeholder.id.toString()+"-3"}></input>
                 <p className="inline mx-3 font-bold text-xl">High</p>
             </div>
         </div>

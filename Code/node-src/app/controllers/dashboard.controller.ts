@@ -97,7 +97,7 @@ class DashboardController {
                         const opt = new CaseOption({
                             option_title: `Option ${i + 1}`,
                             option_desc: desc,
-                            option_num: i,
+                            option_num: i + 1,
                             dashboard_id: dashboard.id,
                         });
                         await opt.save();
@@ -114,7 +114,7 @@ class DashboardController {
                         curOptions[i].set({
                             option_title: `Option ${i + 1}`,
                             option_desc: update,
-                            option_num: i,
+                            option_num: i + 1,
                         });
                         await curOptions[i].save();
                     }

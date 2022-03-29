@@ -7,21 +7,26 @@ export default class Care_Ethics_Options extends Model {
     @PrimaryKey
     @AutoIncrement
     @Column
-    care_ethics_options_id: number;
+    id: number;
 
     @Column
-    stakeholder_attentiveness: number;
+    attentiveness: number;
 
     @Column
-    stakeholder_competence: number;
+    competence: number;
 
     @Column
-    stakeholder_responsiveness: number;
+    responsiveness: number;
+
+    @Column
+    option_num: number;
+
+    @BelongsTo(() => CaseOption)
+    option: CaseOption;
 
     @ForeignKey(() => CaseOption)
     option_id: number;
 
     @ForeignKey(() => Stakeholder)
     stakeholder_id: number;
-
 }
