@@ -1,10 +1,44 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import Stakeholder from "../../../../node-src/build/models/stakeholder.model";
+import Virtue from "../../../../node-src/build/models/virtue.model";
+import dashboardService from "../../services/dashboard.service";
+import virtuesService from "../../services/virtues.service";
+import { useStoreState } from "../../stores/index.store";
 import VirtueEthicsStakeholderInput from "./virtueEthicsProps/virtueEthics-stakeholderInputs";
 
 interface VirtueEthicsProps {}
 
 const VirtueEthicsStakeholders: FunctionComponent<VirtueEthicsProps> = () => {
+  const [virtues, setVirtues] = useState<Virtue[]>([]);
+  const { isLoading, isError } = useQuery(
+    "virtues",
+    virtuesService.getVirtues,
+    {
+      onSuccess: (data) => {
+        setVirtues(data.data);
+      },
+    }
+  );
+
+  const [stakeholders, setStakeholders] = useState<Stakeholder[]>([]);
+
+  const currentDashboard =
+    useStoreState((state) => state.dashboard.dashboard_id) ?? 0;
+
+  useQuery(
+    "dashboard",
+    async () => {
+      return await dashboardService.getDashboard({ id: currentDashboard });
+    },
+    {
+      onSuccess: (data) => {
+        setStakeholders(data.data.stakeholders);
+      },
+    }
+  );
+
   return (
     <div className="site-dashboard">
       <div className="dashboard-title">
@@ -19,6 +53,20 @@ const VirtueEthicsStakeholders: FunctionComponent<VirtueEthicsProps> = () => {
           </p>
         </div>
       </div>
+
+      {virtues.map((v) => (
+        <div className="capitalize">
+          {v.excess} - {v.mean} - {v.deficiency}
+        </div>
+      ))}
+
+      {stakeholders.map((s) => (
+        <div className="capitalize">
+          {s.title} - {s.description} - {s.virtue_value} -{" "}
+          {s.virtue?.virtue.mean} - {s.virtue?.virtue.excess} -{" "}
+          {s.virtue?.virtue.deficiency}
+        </div>
+      ))}
 
       <div className="dashboard-page md:flex">
         <div className="dashboard-block w-1/2 mr-2">
@@ -85,8 +133,7 @@ const VirtueEthicsStakeholders: FunctionComponent<VirtueEthicsProps> = () => {
           </div>
           <div className="dashboard-block">
             <label className="dashboard-block-title">
-              Stakeholder 1
-              <p className="dashboard-block-description">Greed</p>
+              Stakeholder 1<p className="dashboard-block-description">Greed</p>
               <div className="h-24 my-2 flex justify-center items-center bg-white">
                 <p className="inline mx-3">Virtue</p>
                 <input type="range" min="1" max="10" value="9"></input>

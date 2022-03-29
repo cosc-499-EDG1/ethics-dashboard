@@ -1,5 +1,7 @@
-import { Table, Column, Model, PrimaryKey, CreatedAt, UpdatedAt, Unique, AutoIncrement, Scopes, DefaultScope, Length, BelongsToMany, ForeignKey, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, PrimaryKey, CreatedAt, UpdatedAt, Unique, AutoIncrement, Scopes, DefaultScope, Length, BelongsToMany, ForeignKey, DataType, HasOne, HasMany } from 'sequelize-typescript';
+import CaseOptionVirtue from './caseoptionvirtues.model';
 import Dashboard from './dashboard.model';
+import Virtue from './virtue.model';
 
 
 @Table
@@ -21,6 +23,12 @@ export default class CaseOption extends Model {
     
     @Column
     short_consequences: string;
+
+    @HasOne(() => CaseOptionVirtue)
+    virtue: CaseOptionVirtue;
+
+    @Column
+    virtue_value: number;
 
     @Column
     long_consequences: string;

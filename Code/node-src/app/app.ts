@@ -10,6 +10,7 @@ import { classGroups } from './routes/classgroup.routes';
 import { dashboards } from './routes/dashboard.routes';
 import { stakeholders } from './routes/stakeholder.routes';
 import { deontologies } from './routes/deontology.routes';
+import { virtues } from './routes/virtues.routes';
 /* End Import Routes */
 
 export const app = express();
@@ -38,6 +39,7 @@ export const initApp = async (): Promise<Server> => {
     app.use('/api/groups', classGroups);
     app.use('/api/dashboard', dashboards);
     app.use('/api/stakeholders', stakeholders);
+    app.use('/api/virtues', virtues);
     app.use('/api/deontology', deontologies);
     /* End Routes */
 

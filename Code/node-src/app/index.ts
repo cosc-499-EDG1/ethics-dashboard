@@ -8,6 +8,39 @@ import { db } from './database';
 setImmediate(async () => {
     await initApp();
 
+    db.getQueryInterface();
+    const virtueResult = `
+        INSERT INTO Virtues(mean, deficiency, excess)
+        VALUES         
+            ('Loyalty', 'Disloyalty', 'Blind Devotion'),
+            ('Honesty', 'Dishonesty', 'Over-sharing'),
+            ('Integrity', 'Deceit', 'Righteousness'),
+            ('Courage', 'Cowardice', 'Rashness'),
+            ('Frugality', 'Greed', 'Generosity'),
+            ('Creativity', 'Conformity', 'Eccentricity'),
+            ('curiosity', 'boredom', 'nosiness'),
+            ('judgment', 'gullibility', 'cynicism'),
+            ('perspective', 'foolishness', 'ivory tower'),
+            ('persistence', 'helplessness', 'obsessiveness'),
+            ('vitality', 'lifelessness', 'hyperactivity'),
+            ('Intimacy', 'loneliness', 'emotional promiscuity'),
+            ('kindness', 'cruelty', 'intrusiveness'),
+            ('social intelligence', 'self-deception', 'psychobabbling'),
+            ('citizenship', 'narcissism', 'chauvinism'),
+            ('fairness', 'prejudice', 'detachment'),
+            ('leadership', 'sabotage', 'despotism'),
+            ('forgiveness', 'vengefulness', 'permissiveness'),
+            ('humility', 'arrogance', 'self-deprecation'),
+            ('prudence', 'recklessness', 'prudishness'),
+            ('self regulation', 'impulsivity', 'inhibition'),
+            ('Awe', 'criticism', 'snobbery'),
+            ('spirituality', 'alienation', 'fanaticism'),
+            ('gratitude', 'entitlement', 'ingratiation'),
+            ('hope', 'despair', 'Pollyannaism'),
+            ('humor', 'dourness', 'buffoonery');
+        `;
+    await db.query(virtueResult, { type: QueryTypes.INSERT });
+
     /* Debug Accounts */
     if ((process.env.NODE_ENV ?? 'development') === 'development') {
         const createUser = async (username, email, first_name, last_name, password, type) => {
@@ -18,7 +51,6 @@ setImmediate(async () => {
                  `;
             return db.query(sql, { type: QueryTypes.INSERT });
         };
-        db.getQueryInterface();
         const adminResult = await createUser('admin', 'admin@admin.com', 'Admin', 'Admin', 'admin', 'manager');
         const userResult = await createUser('user', 'user@user.com', 'User', 'User', 'user', 'student');
         const classGroupInsert = `

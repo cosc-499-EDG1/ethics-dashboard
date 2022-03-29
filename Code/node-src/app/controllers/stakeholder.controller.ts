@@ -3,6 +3,7 @@ dotenv.config({ path: 'jwt.env' });
 import { Request, Response, NextFunction } from 'express';
 import Dashboard from '../models/dashboard.model';
 import Stakeholder from '../models/stakeholder.model';
+import Virtue from '../models/virtue.model';
 
 class StakeholderController {
     updateStakeholders = async (req: Request, res: Response, next: NextFunction) => {
@@ -61,6 +62,49 @@ class StakeholderController {
         }
         await dashboard.save();
         return res.sendStatus(200);
+    };
+
+    /**
+     * Expects:
+     *  stakeholder_num - Stakeholder number to update
+     *  virtue - Virtue object to use ({mean, excess, deficiency})
+     *  value - Slider value
+     */
+    updateVirtues = async (req: Request, res: Response, next: NextFunction) => {
+        const id = req.body.id;
+        const account = req.account;
+
+        const dashboard = await Dashboard.findByPk(id);
+        if (!dashboard) {
+            return res.sendStatus(404);
+        }
+
+        // If requesting account is a student, then check that they own the dashboard.
+        if (account.isStudent() && dashboard.ownerId !== account.id) {
+            return res.sendStatus(403);
+        }
+
+        const { stakeholder_num, virtue, value } = req.body;
+        const stakeholders = await dashboard.$get('stakeholders', { include: [{ all: true }] });
+        const stakeholder = stakeholders.find(stakeholder => stakeholder.num === stakeholder_num);
+        if (!stakeholder) {
+            return res.sendStatus(404);
+        }
+
+        const v = await Virtue.findByPk(virtue.id);
+        if (!v) {
+            // Create new virtue
+            const newVirtue = await Virtue.create({
+                mean: virtue.mean,
+                excess: virtue.excess,
+                deficiency: virtue.deficiency,
+            });
+            stakeholder.$set('virtue', newVirtue);
+        } else {
+            stakeholder.$set('virtue', v);
+        }
+        stakeholder.virtue_value = value;
+        await stakeholder.save();
     };
 }
 
