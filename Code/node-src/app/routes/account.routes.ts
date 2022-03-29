@@ -15,8 +15,8 @@ accounts.get('/', authorize(), AccountController.findAll);
 // Retrieve a single account by id
 accounts.get('/find/:id', authorize(), AccountController.findOne);
 
-// Update an account with id
-accounts.put('/update/:id', authorize(), AccountController.update);
+// Update own account
+accounts.put('/update', authorize(), AccountController.update);
 
 // Delete an account with id
 accounts.delete('/delete/:id', authorize(), AccountController.delete);
@@ -26,3 +26,5 @@ accounts.get('/classes', authorize(), AccountController.getClassGroups);
 
 // Retrieve dashboards for own account
 accounts.get('/dashboards', authorize(), AccountController.getDashboards);
+
+accounts.get('/fetchAccount', authorize(), AccountController.fetchAccount);

@@ -19,6 +19,12 @@ export default class CaseOption extends Model {
     @Column
     option_num: number;
     
+    @Column
+    short_consequences: string;
+
+    @Column
+    long_consequences: string;
+
     @ForeignKey(() => Dashboard)
     @Column
     dashboard_id: number;

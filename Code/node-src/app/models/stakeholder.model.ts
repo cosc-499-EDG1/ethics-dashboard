@@ -7,16 +7,16 @@ export default class Stakeholder extends Model {
     @PrimaryKey
     @AutoIncrement
     @Column
-    stakeholder_id: number;
+    id: number;
 
     @Column
-    stakeholder_title: string;
+    title: string;
+
+    @Column(DataType.TEXT)
+    description: string;
 
     @Column
-    stakeholder_desc: string;
-
-    @Column
-    stakeholder_num: number;
+    num: number;
 
     @ForeignKey(() => Dashboard)
     dashboard_id: number;

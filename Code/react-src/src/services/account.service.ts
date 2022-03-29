@@ -47,6 +47,14 @@ class AccountService {
   getDashboards(): Promise<DashboardResponse> {
     return http.get("/account/dashboards", authHeader());
   }
+
+  updateAccount(data: any): Promise<AccountResponse> {
+    return http.put("/account/update", data, authHeader());
+  }
+
+  getAccount(): Promise<{ data: Account}> {
+    return http.get("/account/fetchAccount", authHeader());
+  }
 }
 
 export default new AccountService();
