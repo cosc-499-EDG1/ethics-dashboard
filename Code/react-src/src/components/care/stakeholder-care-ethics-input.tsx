@@ -8,7 +8,7 @@ interface StakeholderCareEthicsInputProps {
         attentivenessValue: string;
         competenceValue: string;
         responsivenessValue: string;
-        onChange: (change: number, index: number, value: string) => void;
+        onChange: () => void;
         onAttentivenessChange: (index: number, value: string) => void;
         onCompetenceChange: (index: number, value: string) => void;
         onResponsivenessChange: (index: number, value: string) => void;
@@ -18,15 +18,15 @@ interface StakeholderCareEthicsInputProps {
 const StakeholderCareEthicsInput: FunctionComponent<StakeholderCareEthicsInputProps> =
   ({stakeholder}) => {
     const handleAttentivenessChange = (change: number, id: number, value: string) => {
-        stakeholder.onChange(change, id, value); 
+        stakeholder.onChange(); 
         stakeholder.onAttentivenessChange(id, value);
     };
     const handleCompetenceChange = (change: number,  id: number, value: string) => {
-        stakeholder.onChange(change, id, value); 
+        stakeholder.onChange(); 
         stakeholder.onCompetenceChange(id, value);
     };
     const handleResponsivenessChange = (change: number,  id: number, value: string) => {
-        stakeholder.onChange(change, id, value); 
+        stakeholder.onChange(); 
         stakeholder.onResponsivenessChange(id, value);
     };
     return (

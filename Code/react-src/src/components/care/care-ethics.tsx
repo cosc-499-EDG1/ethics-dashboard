@@ -46,28 +46,29 @@ const CareEthics: FunctionComponent<CareEthicsProps> = () => {
         setAttentiveness(ethics?.map((e) => e.attentiveness ?? 5) ?? []);
         setCompetence(ethics?.map((e) => e.competence ?? 5) ?? []);
         setResponsiveness(ethics?.map((e) => e.responsiveness ?? 5) ?? []);
+        console.log(attentiveness);
+        if (attentiveness.length === 0 || competence.length === 0 || responsiveness.length === 0) {
+          var defaultValues = new Array(dashboard.stakeholders.length);
+          for (let i = 0; i < dashboard.stakeholders.length; i++) {
+              defaultValues[i] = 5;
+          }
+          setAttentiveness(defaultValues);
+          setCompetence(defaultValues);
+          setResponsiveness(defaultValues);
+        }
       },
     }
   );
 
-  const changedValue = async (change: number, id: number, value: string) => {
-    const cValue = parseInt(value) * 10;
-    // this will need to be redone with the new state variables
-    // const cID = id;
-    // const docID = change;
-    // var average = 0;
-    // for (let i = 0; i < stakeholderValues.length; i++) {
-    //   for (let j = 0; j < 3; j++) {
-    //     if (i === cID) {
-    //       if (j === docID - 1) {
-    //         stakeholderValues[i][j] = cValue;
-    //       }
-    //     }
-    //     average = average + stakeholderValues[i][j];
-    //   }
-    // }
-    // average = average / (stakeholders.length * 3);
-    // setValue(average);
+  const changedValue = async () => {
+    var average = 0;
+    for (let i = 0; i < attentiveness.length; i++) {
+      average = average + attentiveness[i]*10;
+      average = average + competence[i]*10;
+      average = average + responsiveness[i]*10;
+    }
+    average = average / (stakeholders.length * 3);
+    setValue(average);
   };
 
   const queryClient = useQueryClient();
@@ -78,6 +79,7 @@ const CareEthics: FunctionComponent<CareEthicsProps> = () => {
   });
 
   const updateForm = async () => {
+    setCurrentOption(currentOption+1);
     const data = {
       attentiveness: attentiveness,
       competence: competence,
@@ -91,7 +93,9 @@ const CareEthics: FunctionComponent<CareEthicsProps> = () => {
       ...data,
     });
 
-    // setRedirect("/dashboard");
+    if (currentOption >= options.length) {
+      setRedirect("/dashboard");
+    }
   };
 
   const setAttentivenessValue = (index: number, value: string) => {
@@ -140,7 +144,7 @@ const CareEthics: FunctionComponent<CareEthicsProps> = () => {
         <div className="dashboard-block w-1/2 mr-2">
           <p className="dashboard-block-title">{option.option_title}</p>
           <p className="dashboard-block-description">{option.option_desc}</p>
-          <div className="max-h-128 overflow-y-auto">
+          <div className="max-h-120 overflow-y-auto">
             {stakeholders.map((stakeholder: Stakeholder, idx: number) => (
               <StakeholderCareEthicsInput
                 key={idx}
@@ -161,22 +165,18 @@ const CareEthics: FunctionComponent<CareEthicsProps> = () => {
           </div>
         </div>
         <div className="dashboard-block-1 w-1/2 ml-2">
-          <OptionCareEthicsInput
-            option={{
-              id: 1,
-              data: "Option 1",
-              color: "text-black",
-              value: valueChanged,
-            }}
-          />
-          <OptionCareEthicsInput
-            option={{
-              id: 2,
-              data: "Option 2",
-              color: "text-gray-400",
-              value: 50,
-            }}
-          />
+          <div className="max-h-144 overflow-y-auto">
+          {options.map((option: CaseOption, idx: number) => (
+            <OptionCareEthicsInput
+              option={{
+                id: idx+1,
+                data: `Option ${idx+1}`,
+                color: idx+1 === currentOption ? "text-black":"text-gray-200",
+                value: idx+1 === currentOption ? valueChanged:50,
+              }}
+            />
+          ))}
+          </div>
         </div>
       </div>
       <div className="flex justify-center items-center m-6">
