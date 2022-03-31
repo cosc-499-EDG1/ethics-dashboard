@@ -1,4 +1,5 @@
-import { Table, Column, Model, PrimaryKey, CreatedAt, UpdatedAt, Unique, AutoIncrement, Scopes, DefaultScope, Length, BelongsToMany, ForeignKey, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, PrimaryKey, CreatedAt, UpdatedAt, Unique, AutoIncrement, Scopes, DefaultScope, Length, BelongsToMany, ForeignKey, DataType, HasMany } from 'sequelize-typescript';
+import Care_Ethics_Options from './care_ethics_options.model';
 import Dashboard from './dashboard.model';
 
 
@@ -28,4 +29,7 @@ export default class CaseOption extends Model {
     @ForeignKey(() => Dashboard)
     @Column
     dashboard_id: number;
+
+    @HasMany(() => Care_Ethics_Options)
+    care_ethics_options: Care_Ethics_Options[];
 }

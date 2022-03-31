@@ -3,6 +3,7 @@ import { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
 import EthicalIssue from "./ethical-issue";
 import StakeholdersHome from "./stakeholders";
+import CareEthicsHome from "./care-ethics";
 
 interface DashboardHomeProps {}
 
@@ -68,18 +69,7 @@ const DashboardHome: FunctionComponent<DashboardHomeProps> = () => {
           </div>
         </div>
         <div className="dashboard-home-grid-item">
-          <div className="grid h-full content-between">
-            <label className="text-3xl font-bold m-2">Care Ethics</label>
-            <div className="text-lg flex justify-center">
-              <Link
-                to="/care-ethics"
-                className="font-bold mb-2 w-40"
-              >
-                <p className="my-2 py-2 rounded-md w-full bg-primary">View Page</p>
-              </Link>
-            </div>
-            <p className="mx-2 my-2 py-2 font-bold text-xl rounded-md bg-gray-200">Progress: Incomplete</p>
-          </div>
+          <CareEthicsHome />
         </div>
       </div>
     </div>
