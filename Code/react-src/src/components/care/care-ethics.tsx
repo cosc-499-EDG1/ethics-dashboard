@@ -46,7 +46,6 @@ const CareEthics: FunctionComponent<CareEthicsProps> = () => {
         setAttentiveness(ethics?.map((e) => e.attentiveness ?? 5) ?? []);
         setCompetence(ethics?.map((e) => e.competence ?? 5) ?? []);
         setResponsiveness(ethics?.map((e) => e.responsiveness ?? 5) ?? []);
-        console.log(attentiveness);
         if (attentiveness.length === 0 || competence.length === 0 || responsiveness.length === 0) {
           var defaultValues = new Array(dashboard.stakeholders.length);
           for (let i = 0; i < dashboard.stakeholders.length; i++) {
