@@ -7,15 +7,14 @@ import Dashboard from "../../../../node-src/build/models/dashboard.model";
 import CaseOption from "../../../../node-src/build/models/option.model";
 import { Button } from "../global/button";
 import Stakeholder from "../../../../node-src/build/models/stakeholder.model";
-import { StakeholderInputData } from "../stakeholders/stakeholders";
+import Care_Ethics_Options from "../../../../node-src/build/models/care_ethics_options.model";
 
-interface StakeholdersHomeProps {}
+interface CareEthicsHomeProps {}
 
-const StakeholdersHome: FunctionComponent<StakeholdersHomeProps> = () => {
-  const [stakeholders, setStakeholders] = useState<StakeholderInputData[]>([
-    { title: "", description: "" },
-    { title: "", description: "" },
-  ]);
+const CareEthicsHome: FunctionComponent<CareEthicsHomeProps> = () => {
+  const [options, setOptions] = useState<CaseOption[]>([]);
+  const [stakeholders, setStakeholders] = useState<Stakeholder[]>([]);
+  const [careEthics, setCareEthics] = useState<Care_Ethics_Options[]>([]);
 
   const currentDashboard =
     useStoreState((state) => state.dashboard.dashboard_id) ?? 0;
@@ -26,20 +25,16 @@ const StakeholdersHome: FunctionComponent<StakeholdersHomeProps> = () => {
     },
     {
       onSuccess: (data) => {
-        setStakeholders(
-          data.data.stakeholders.map((o: Stakeholder) => {
-            return {
-              title: o.title,
-              description: o.description,
-            };
-          })
-        );
+        const dashboard = data.data as Dashboard;
+        setOptions(dashboard.options);
+        setStakeholders(dashboard.stakeholders);
+        setCareEthics(dashboard.options[2 ?? 1].care_ethics_options);
       },
     }
   );
 
   const isComplete = () => {
-    if (!stakeholders.length || stakeholders.length < 5) {
+    if (!careEthics.length || (careEthics.length*stakeholders.length) < (options.length*stakeholders.length)) {
       return false;
     }
     return true;
@@ -47,23 +42,9 @@ const StakeholdersHome: FunctionComponent<StakeholdersHomeProps> = () => {
 
   return (
     <div className="grid h-full content-between">
-      <label className="font-bold m-2">Stakeholders</label>
-      {!!stakeholders.length && (
-        <div className="text-lg">
-          <div className="text-lg max-h-92 overflow-y-auto">
-            {stakeholders.map((stakeholder, i) => (
-              <div key={i}>
-                <p className="mx-2 my-2 py-2 rounded-md bg-secondary">
-                  {stakeholder.title.slice(0, 200)}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-      <div>
-        <div className="text-lg flex justify-center mt-2">
-          <Link to="/stakeholders" className="w-64">
+      <label className="text-3xl font-bold m-2">Care Ethics</label>
+        <div className="text-lg flex justify-center">
+          <Link to="/care-ethics" className="w-40">
             <Button text="View Page"></Button>
           </Link>
         </div>
@@ -74,9 +55,8 @@ const StakeholdersHome: FunctionComponent<StakeholdersHomeProps> = () => {
         >
           {isComplete() ? "Complete" : "Incomplete"}
         </p>
-      </div>
     </div>
   );
 };
 
-export default StakeholdersHome;
+export default CareEthicsHome;

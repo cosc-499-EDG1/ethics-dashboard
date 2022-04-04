@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config({ path: 'jwt.env' });
 import { Request, Response, NextFunction } from 'express';
 import { getSystemErrorMap } from 'util';
+import Care_Ethics_Options from '../models/care_ethics_options.model';
 import Dashboard from '../models/dashboard.model';
 import Stakeholder from '../models/stakeholder.model';
 import dashboardController from './dashboard.controller';
@@ -71,18 +72,16 @@ class StakeholderController {
     updateReasoning = async(req: Request, res: Response, next: NextFunction) => {
         const id = req.body.id;
         const account = req.account;
-        
-        const dashboard = await Dashboard.findByPk(id);
+      
+         const dashboard = await Dashboard.findByPk(id);
         if (!dashboard) {
             return res.sendStatus(404);
         }
-        
-        
-        // If requesting account is a student, then check that they own the dashboard.
+         
+      // If requesting account is a student, then check that they own the dashboard.
         if (account.isStudent() && dashboard.ownerId !== account.id) {
             return res.sendStatus(403);
-        }
-        
+        }        
         const updReasons  = req.body.reasoning;
         const curStakeholders = await dashboard.$get('stakeholders');
 
@@ -122,6 +121,73 @@ class StakeholderController {
         });
     };
 
+
+    updateCareEthics = async (req: Request, res: Response, next: NextFunction) => {
+        const id = req.body.id;
+        const account = req.account;
+
+        const dashboard = await Dashboard.findByPk(id);
+        if (!dashboard) {
+            return res.sendStatus(404);
+        }
+
+        // If requesting account is a student, then check that they own the dashboard.
+        if (account.isStudent() && dashboard.ownerId !== account.id) {
+            return res.sendStatus(403);
+        }
+
+        const { option_num, attentiveness, competence, responsiveness } = req.body;
+        if (!option_num || !attentiveness || !competence || !responsiveness) {
+            return res.status(400).send({
+                message: 'Invalid form data.',
+            });
+        }
+
+        const curOptions = await dashboard.$get('options', {
+            include: [{ all: true }],
+        });
+        const option = curOptions[option_num - 1];
+        if (!option) {
+            return res.status(404).send({
+                message: 'Option not found.',
+            });
+        }
+
+        const stakeholders = await dashboard.$get('stakeholders');
+
+        const existingCareEthics = await option.$get('care_ethics_options');
+
+        for (let i = 0; i < stakeholders.length; i++) {
+            const att = attentiveness[i] ?? 5;
+            const comp = competence[i] ?? 5;
+            const resp = responsiveness[i] ?? 5;
+            const stakeholder = stakeholders[i];
+
+            // Check for existing option.
+            if (existingCareEthics[i]) {
+                existingCareEthics[i].set({
+                    attentiveness: att,
+                    competence: comp,
+                    responsiveness: resp,
+                });
+                await existingCareEthics[i].save();
+            } else {
+                const careOption = new Care_Ethics_Options({
+                    attentiveness: att,
+                    competence: comp,
+                    responsiveness: resp,
+                    option_num: option.option_num,
+                    option_id: option.id,
+                    stakeholder_id: stakeholder.id,
+                });
+                await careOption.save();
+                option.$add('care_ethics_options', careOption);
+            }
+        }
+        await option.save();
+        await dashboard.save();
+        return res.sendStatus(200);
+    };
 
 }
 

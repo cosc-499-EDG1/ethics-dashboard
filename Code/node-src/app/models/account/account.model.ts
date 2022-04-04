@@ -108,8 +108,8 @@ export default class Account extends Model {
     type: 'manager' | 'professor' | 'teaching_assistant' | 'student';
 
     @Column(DataType.BLOB('long'))
-    get avatar(): Blob {
-        return this.getDataValue('avatar') ?? `https://ui-avatars.com/api/?name=${this.getDataValue('first_name')}+${this.getDataValue('last_name')}&background=random`;
+    get avatar(): string {
+        return this.getDataValue('avatar')?.toString('utf8') ?? `https://ui-avatars.com/api/?name=${this.getDataValue('first_name')}+${this.getDataValue('last_name')}&background=random`;
     }
 
     @CreatedAt

@@ -25,7 +25,7 @@ describe('Routes', () => {
     it('GET /dashboard/find/id integration test', async () => {
         const req = await request(app).get('/api/dashboard/find/2').set('Authorization', `Bearer ${global.userToken}`);
         expect(req.statusCode).toBe(200);
-        expect(req.body.dashboard.name).toBe('Dashboard Test User');
+        expect(req.body.name).toBe('Dashboard Test User');
     });
 
     it('PUT /dashboard/update/id name integration test', async () => {
@@ -35,7 +35,7 @@ describe('Routes', () => {
             .send({ updateType: 'name', name: 'Dashboard Test User 2' });
         expect(req.statusCode).toBe(200);
         const req2 = await request(app).get('/api/dashboard/find/2').set('Authorization', `Bearer ${global.userToken}`);
-        expect(req2.body.dashboard.name).toBe('Dashboard Test User 2');
+        expect(req2.body.name).toBe('Dashboard Test User 2');
     });
 
     it('PUT /dashboard/update/id data integration test', async () => {
@@ -49,11 +49,11 @@ describe('Routes', () => {
         const req = await request(app).put('/api/dashboard/update/2').set('Authorization', `Bearer ${global.userToken}`).send(updateData);
         expect(req.statusCode).toBe(200);
         const req2 = await request(app).get('/api/dashboard/find/2').set('Authorization', `Bearer ${global.userToken}`);
-        const dashboard = req2.body.dashboard as Dashboard;
+        const dashboard = req2.body as Dashboard;
         expect(dashboard.summary).toBe(updateData.summary);
         expect(dashboard.dilemmas).toBe(updateData.dilemmas);
         expect(dashboard.role).toBe(updateData.role);
-        expect(req2.body.options.map((option: CaseOption) => option.option_desc)).toEqual(updateData.options);
+        expect(dashboard.options.map((option: CaseOption) => option.option_desc)).toEqual(updateData.options);
     });
 
     it('PUT /stakeholders/update data integration test', async () => {

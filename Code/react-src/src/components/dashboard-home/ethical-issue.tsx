@@ -24,11 +24,11 @@ const EthicalIssue: FunctionComponent<EthicalIssueProps> = () => {
     },
     {
       onSuccess: (data) => {
-        const dashboard = data.data.dashboard as Dashboard;
+        const dashboard = data.data as Dashboard;
         setSummary(dashboard.summary);
         setDilemmas(dashboard.dilemmas);
         setRole(dashboard.role);
-        setOptions(data.data.options.map((o: CaseOption) => o.option_desc));
+        setOptions(dashboard.options.map((o) => o.option_desc));
       },
     }
   );
