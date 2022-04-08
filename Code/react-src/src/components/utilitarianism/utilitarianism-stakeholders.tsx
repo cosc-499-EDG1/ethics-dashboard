@@ -1,6 +1,13 @@
 import { FunctionComponent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import StakeholderService from "../../services/stakeholder.service";
+import { useStoreState } from "../../stores/index.store";
+import Dashboard from "../../../../node-src/build/models/dashboard.model";
+import Stakeholder from "../../../../node-src/build/models/stakeholder.model";
+import DashboardService from "../../services/dashboard.service";
+import { Button } from "../global/button";
 
 interface UtilitarianismStakeholdersProps {}
 
@@ -8,22 +15,35 @@ const stakeholderItems = [
     {
         id: '0',
         option: 'Stakeholder 1',
-        optionName: 'Stakeholder 1 (Inputed from Stakeholders page)',
+        title: 'Stakeholder 1 (Inputed from Stakeholders page)',
+        reason: "",
     },
     {
         id: '1',
         option: 'Stakeholder 2',
-        optionName: 'Stakeholder 2 (Inputed from Stakeholders page)',
+        title: 'Stakeholder 2 (Inputed from Stakeholders page)',
+        reason: "",
     },
     {
         id: '2',
         option: 'Stakeholder 3',
-        optionName: 'Stakeholder 3 (Inputed from Stakeholders page)',
+        title: 'Stakeholder 3 (Inputed from Stakeholders page)',
+        reason: "",
     }
 ];
 
 const UtilitarianismStakeholders: FunctionComponent<UtilitarianismStakeholdersProps> = () => {
-    const [stakeholders, updateStakeholders] = useState(stakeholderItems);
+    const [stakeholders, setStakeholders] = useState(stakeholderItems);
+    const [reasons, setReasons] = useState(["", ""]);
+    const [redirect, setRedirect] = useState("");
+
+    const setReasonsValue = (index: number, value: string) => {
+        const newReasons = [...reasons];
+        newReasons[index] = value;
+        setReasons(newReasons);
+    };
+
+    const currentDashboard = useStoreState((state) => state.dashboard.dashboard_id) ?? 0;
 
     function handleOnDragEnd(result: any) {
         if (!result.destination) return;
@@ -31,8 +51,49 @@ const UtilitarianismStakeholders: FunctionComponent<UtilitarianismStakeholdersPr
         const [reorderedItem] = items.splice(result.source.index, 1);
         items.splice(result.destination.index, 0, reorderedItem);
 
-        updateStakeholders(items);
+        setStakeholders(items);
     }
+
+    const queryClient = useQueryClient();
+    
+    const {isLoading, isError } = useQuery("stakeholders", async () => {
+        return await StakeholderService.getStakeholders({id: currentDashboard});
+    }, { onSuccess: (data) => {
+        setStakeholders(data.data.stakeholders.map((o: Stakeholder) => {
+            return{
+                id: o.num,
+                option: "Stakeholder " + o.num,
+                title: o.title,
+                reason: o.util_reason ?? "Provide Reasoning...",
+
+            }
+        }));
+    }});
+
+
+    const updateReasoning = useMutation(StakeholderService.updateReasoning, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("dashboard");
+          }, 
+    });
+
+    const attemptUpload = async () => {
+        console.log(reasons.toString());
+        const util_reasons = {
+            reasoning: reasons,
+        };
+
+         await updateReasoning.mutateAsync({
+            id: currentDashboard,
+            updateType: "reasoning",
+            ...util_reasons,
+            });
+
+        setRedirect('/utilitarianism-pleasure');
+    };
+    if (redirect) {
+        return <Redirect to={{ pathname: redirect, state: { from: "/utilitarianism-stakeholders" } }} />;
+      }
     return (
         <div className="site-dashboard">
             <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -52,9 +113,9 @@ const UtilitarianismStakeholders: FunctionComponent<UtilitarianismStakeholdersPr
                 <Droppable droppableId="droppable-1">
                     {(provided) => (
                     <div ref={provided.innerRef} {...provided.droppableProps}>
-                        {stakeholders.map(({id, option, optionName}, index) => {
+                        {stakeholders.map(({id, option, title, reason}, index) => {
                             return (
-                            <Draggable key={id} draggableId={id} index={index}>
+                            <Draggable key={id} draggableId={id.toString()} index={index}>
                             {(provided) => (
                                 <li>
                                     <div className="dashboard-block" ref={provided.innerRef} {...provided.draggableProps}>
@@ -65,9 +126,9 @@ const UtilitarianismStakeholders: FunctionComponent<UtilitarianismStakeholdersPr
                                         <label className="dashboard-block-title">
                                             {option}
                                             <p className="dashboard-block-description">
-                                                {optionName}
+                                                {title}
                                             </p>
-                                            <textarea rows={5} className="dashboard-block-text-input" placeholder="Provide Reasoning...">
+                                            <textarea rows={5} className="dashboard-block-text-input"  placeholder={"Provide Reasoning..."} defaultValue={reason} onChange={(e) => {setReasonsValue(index, e.target.value)}}>
                                             </textarea>
                                         </label>
                                     </div>
@@ -87,9 +148,11 @@ const UtilitarianismStakeholders: FunctionComponent<UtilitarianismStakeholdersPr
                     <button className="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     <Link to="/utilitarianism-options">Go Back</Link>
                     </button>
-                    <button className="bg-primary hover:brightness-125 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    <Link to="/utilitarianism-pleasure">Submit</Link>
-                    </button>
+                    <Button
+                    text={"Submit"}
+                    formSubmit={false}
+                      onClick={() => attemptUpload()}
+                    ></Button>
                 </div>
             </div>
         </div>
@@ -98,3 +161,7 @@ const UtilitarianismStakeholders: FunctionComponent<UtilitarianismStakeholdersPr
 };
 
 export default UtilitarianismStakeholders;
+
+function setRedirect(arg0: string) {
+    throw new Error("Function not implemented.");
+}
