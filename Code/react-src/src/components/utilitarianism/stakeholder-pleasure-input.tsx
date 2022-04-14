@@ -5,53 +5,56 @@ interface StakeholderPleasureInputProps {
         id: number;
         data: string;
         value: number;
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+        optionId: number;
+        explanation: string;
     }
+    ValueChange: (optindex: number, stkindex: number, value: string) => void;
+    PleasureChange: (optindex: number, stkindex: number, value: string) => void;
+    explanationChange: (optindex: number, stkindex: number, value: string) => void;
 }
 
 const StakeholderPleasureInput: FunctionComponent<StakeholderPleasureInputProps> =
-  ({stakeholder}) => {
+  ({stakeholder, ValueChange, PleasureChange, explanationChange}) => {
     return (
       <div className="dashboard-block-1">
-        <p className="dashboard-block-title">Stakeholder {stakeholder.id}</p>
+        <p className="dashboard-block-title">Stakeholder {stakeholder.id + 1}</p>
         <p className="dashboard-block-description">
           {stakeholder.data}
         </p>
+        
         <div className="flex flex-wrap">
           <div className="w-1/2 h-24 my-2 flex justify-center items-center bg-white">
             <p className="inline mx-3 text-lg">Pleasure</p>
-            <input className="w-1/2" type="range" min="0" max="10" defaultValue={stakeholder.value} onChange={stakeholder.onChange} id={stakeholder.id.toString()}></input>
+            <input className="w-1/2" type="range" min="0" max="10" defaultValue={stakeholder.value} onChange={(e) => ValueChange(0, stakeholder.id, e.target.value)} id={stakeholder.id.toString()}></input>
             <p className="inline mx-3 text-lg">Pain</p>
           </div>
           <div className="w-1/2 h-24 my-2 grid place-items-center bg-secondary">
-            <input
-              type="text"
-              className="w-4/6 h-6 border-2 border-black bg-white"
-              placeholder="Explanation..."
-            ></input>
+            <textarea
+            rows={2}
+            className="dashboard-block-text-input"
+            placeholder={"Explanation..."}
+            defaultValue={stakeholder.explanation}
+            onChange={(e) => {
+              explanationChange(stakeholder.optionId, stakeholder.id, e.target.value);
+            }}
+            ></textarea>
             <div className="inline-flex text-base">
               <p className="inline mx-2">Pleasure: </p>
               <label>
-                High
+                Is this a High Pleasure?
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="pleasure"
                   value="High"
                   className="mx-2"
-                ></input>
-              </label>
-              <label>
-                Low
-                <input
-                  type="radio"
-                  name="pleasure"
-                  value="Low"
-                  className="mx-2"
+                  onChange={(e) => {
+                    PleasureChange(0, stakeholder.id, e.target.value);
+                  }}
                 ></input>
               </label>
             </div>
           </div>
-        </div>
+        </div> 
       </div>
     );
   };

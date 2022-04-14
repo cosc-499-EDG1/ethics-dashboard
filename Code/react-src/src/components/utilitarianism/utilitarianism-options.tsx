@@ -102,7 +102,7 @@ const UtilitarianismOptions: FunctionComponent<UtilitarianismOptionsProps> = () 
               />
             ))}
             </div>
-            <div className="flex justify-center items-center m-6 bg-primary hover:brightness-125 text-white font-bold w-1/12 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            <div className="flex justify-center items-center">
                 <Button
                 text={"Submit"}
                 formSubmit={false}

@@ -2,6 +2,11 @@ import { FunctionComponent, useState } from "react";
 import { Link } from "react-router-dom";
 import StakeholderPleasureInput from "./stakeholder-pleasure-input";
 import OptionsPleasureOutput from "./options-pleasure-output";
+import { useStoreState } from "../../stores/index.store";
+import DashboardService from "../../services/dashboard.service";
+import { useQuery } from "react-query";
+import Dashboard from "../../../../node-src/build/models/dashboard.model";
+import UtilitarianismPleasureBlock from "./utilitarianism-pleasure-block";
 
 interface UtilitarianismPleasureProps {}
 const numStakeholder = 3;
@@ -12,6 +17,66 @@ for (let value = 0; value < stakeholderValues.length; value++) {
 
 const UtilitarianismPleasure: FunctionComponent<UtilitarianismPleasureProps> = () => {
     const [valueChanged, setValue] = useState(50);
+
+    //get details from the db
+    const [stakeholderTitles, setStakeholderTitles] = useState(["", ""]);
+    const [shortAmount, setShortAmount] = useState([[0],[0]]);
+    const [longAmount, setLongAmount] = useState([[0],[0]]);
+    const [shortTF, setShortTF] = useState([[false],[false]]);
+    const [longTF, setLongTF] = useState(false);
+    const [shortExp, setShortExp] = useState([[""],[""]]);
+    const [longExp, setLongExp] = useState(["", ""]);
+    const [options, setOptions] = useState(["",""]);
+    const [redirect, setRedirect] = useState("");
+    
+    const currentDashboard = useStoreState((state) => state.dashboard.dashboard_id) ?? 0;
+    
+    const { isLoading, isError } = useQuery("dashboard", async () => {
+            return await DashboardService.getDashboard({ id: currentDashboard });
+        },
+        {
+            onSuccess: (data) => {
+                const dashboard = data.data as Dashboard;
+                setOptions(dashboard.options.map((o) => o.option_desc));
+                setStakeholderTitles(dashboard.stakeholders.map((o) => o.title));
+                
+            },
+        }
+        );
+
+    const numberOfOptions = options.length ?? 0;
+        
+
+    const setShortAmountValue = (optindex: number, stkindex:number, value: string) => {
+        const newSAV = [...shortAmount];
+        newSAV[optindex][stkindex] = +value;
+        setShortAmount(newSAV);
+    };
+
+    const setShortPleasure = (optindex: number, stkindex: number, value: string) => {
+        const newSP = [...shortTF];
+        newSP[optindex][stkindex] = (value === "true");
+    };
+
+    const setShortExplanation = (optindex: number, stkindex: number, value: string) => {
+        const newSE = [...shortExp];
+        newSE[optindex][stkindex] = value;
+        setShortExp(newSE);
+    };
+
+    const setLongAmountValue = (optindex: number, stkindex:number, value: string) => {
+        const newLAV = [...shortAmount];
+        newLAV[optindex][stkindex] = +value;
+        setLongAmount(newLAV);
+    };
+
+    const setLongPleasure = (optindex: number, stkindex: number, value: string) => {
+
+    };
+
+    const setLongExplanation = (optindex: number, stkindex: number, value: string) => {
+
+    };
 
     const changedValue = async (value: string, id: string) => {
         const cValue = parseInt(value) * 10;
@@ -26,7 +91,9 @@ const UtilitarianismPleasure: FunctionComponent<UtilitarianismPleasureProps> = (
         average = average / numStakeholder;
         setValue(average);
     };
-
+    
+    console.log(stakeholderTitles);
+if(stakeholderTitles !== undefined || options !== undefined){
     return(
         <div className="site-dashboard">
             <div className="dashboard-title">
@@ -42,17 +109,17 @@ const UtilitarianismPleasure: FunctionComponent<UtilitarianismPleasureProps> = (
                 </div>
             </div>
             <div className="dashboard-page md:flex">
-                <div className="dashboard-block w-2/3 mr-2">
-                    <label className="dashboard-block-title">
-                        Option 1
-                        <p className="dashboard-block-title text-primary my-4">
-                            Short-term Consequences
-                        </p>
-                        <StakeholderPleasureInput stakeholder={{id: 1, data: "Stakeholder 1 (Inputed from Stakeholders page)", value: 5, onChange: (e) => changedValue(e.target.value, e.target.id)}} />
-                        <StakeholderPleasureInput stakeholder={{id: 2, data: "Stakeholder 2 (Inputed from Stakeholders page)", value: 5, onChange: (e) => changedValue(e.target.value, e.target.id)}} />
-                        <StakeholderPleasureInput stakeholder={{id: 3, data: "Stakeholder 3 (Inputed from Stakeholders page)", value: 5, onChange: (e) => changedValue(e.target.value, e.target.id)}} />
-                    </label>
+                <div className="dashboard-block-1 w-2/3">
+                     {options.map((text: string, idx: number) =>(
+                   <UtilitarianismPleasureBlock
+                   data={{optionId: idx, optionTitle: text, short: true, stakeholders: stakeholderTitles, values: shortAmount[idx] , explanations: shortExp[idx], pleasure: shortTF[idx] }}
+                   changeValue={setShortAmountValue}
+                    changeExplanation={setShortExplanation}
+                    changePleasure={setShortPleasure}
+                   />
+               ))}
                 </div>
+              
                 <div className="dashboard-block-1 w-1/3 ml-2">
                     <OptionsPleasureOutput option={{id: 1, valueST: valueChanged, valueLT: 50}} />
                     <OptionsPleasureOutput option={{id: 2, valueST: 50, valueLT: 50}} />
@@ -69,7 +136,15 @@ const UtilitarianismPleasure: FunctionComponent<UtilitarianismPleasureProps> = (
                 </div>
             </div>
         </div>
-    );
+    );}
+    else{
+        return (<div>
+            <p className="dashboard-title">
+                There was an issue with the API please go back and try again.
+            </p>
+        </div>
+        )
+    }
 
 };
 
