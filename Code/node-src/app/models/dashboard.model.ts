@@ -53,7 +53,7 @@ export default class Dashboard extends Model {
     utilitarianism: Utilitarianism;
 
     @HasOne(() => Util_Opt_Analysis)
-    util_opt_analysis: Util_Opt_Analysis;
+    util_opt_analysis: Util_Opt_Analysis[];
 
     @HasOne(() => Deontology_Categorical)
     deontology_categorical: Deontology_Categorical;

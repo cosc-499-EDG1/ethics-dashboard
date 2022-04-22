@@ -4,53 +4,62 @@ import StakeholderPleasureInput from "./stakeholder-pleasure-input";
 import OptionsPleasureOutput from "./options-pleasure-output";
 import { useStoreState } from "../../stores/index.store";
 import DashboardService from "../../services/dashboard.service";
-import { useQuery } from "react-query";
+import utilitarianismService from "../../services/utilitarianism.service";
+import { QueryClient, useQuery, useQueryClient, useMutation } from "react-query";
 import Dashboard from "../../../../node-src/build/models/dashboard.model";
 import UtilitarianismPleasureBlock from "./utilitarianism-pleasure-block";
+import { Button } from "../global/button";
 
 interface UtilitarianismPleasureProps {}
-const numStakeholder = 3;
-var stakeholderValues = new Array(numStakeholder);
-for (let value = 0; value < stakeholderValues.length; value++) {
-    stakeholderValues[value] = 50;
-}
+
 
 const UtilitarianismPleasure: FunctionComponent<UtilitarianismPleasureProps> = () => {
     const [valueChanged, setValue] = useState(50);
-
+    
     //get details from the db
     const [stakeholderTitles, setStakeholderTitles] = useState(["", ""]);
-    const [shortAmount, setShortAmount] = useState([[0],[0]]);
+    const [shortAmount, setShortAmount] = useState([[0],[0],[0], [0], [0]]);
     const [longAmount, setLongAmount] = useState([[0],[0]]);
-    const [shortTF, setShortTF] = useState([[false],[false]]);
+    const [shortTF, setShortTF] = useState([[false],[false], [false]]);
     const [longTF, setLongTF] = useState(false);
-    const [shortExp, setShortExp] = useState([[""],[""]]);
+    const [shortExp, setShortExp] = useState([[""],[""], [""], [""], [""]]);
     const [longExp, setLongExp] = useState(["", ""]);
     const [options, setOptions] = useState(["",""]);
     const [redirect, setRedirect] = useState("");
     
     const currentDashboard = useStoreState((state) => state.dashboard.dashboard_id) ?? 0;
-    
     const { isLoading, isError } = useQuery("dashboard", async () => {
-            return await DashboardService.getDashboard({ id: currentDashboard });
+        return await DashboardService.getDashboard({ id: currentDashboard });
+    },
+    {
+        onSuccess: (data) => {
+            const dashboard = data.data as Dashboard;
+            setOptions(dashboard.options.map((o) => o.option_desc));
+            setStakeholderTitles(dashboard.stakeholders.map((o) => o.title));
+            
         },
-        {
-            onSuccess: (data) => {
-                const dashboard = data.data as Dashboard;
-                setOptions(dashboard.options.map((o) => o.option_desc));
-                setStakeholderTitles(dashboard.stakeholders.map((o) => o.title));
-                
-            },
-        }
-        );
-
+    }
+    );
     const numberOfOptions = options.length ?? 0;
-        
+    
+    for(let i = 1; i < stakeholderTitles.length; i++){
+        shortTF[0][i] = false;
+        shortTF[1][i] = false;
+        shortTF[2][i] = false;
+        shortAmount[0][i] = 5;
+        shortAmount[1][i] = 5;
+        shortAmount[2][i] = 5;
+        shortExp[0][i] = "";
+        shortExp[1][i] = "";
+        shortExp[2][i] = "";
+    }
+  
 
     const setShortAmountValue = (optindex: number, stkindex:number, value: string) => {
         const newSAV = [...shortAmount];
         newSAV[optindex][stkindex] = +value;
         setShortAmount(newSAV);
+        //console.log(newSAV);
     };
 
     const setShortPleasure = (optindex: number, stkindex: number, value: string) => {
@@ -78,21 +87,42 @@ const UtilitarianismPleasure: FunctionComponent<UtilitarianismPleasureProps> = (
 
     };
 
-    const changedValue = async (value: string, id: string) => {
-        const cValue = parseInt(value) * 10;
-        const cID = parseInt(id);
-        var average = 0;
-        for (let i = 0; i < stakeholderValues.length; i++) {
-            if (i === (cID-1)) {
-                stakeholderValues[i] = cValue;
-            }
-            average = average + stakeholderValues[i];
-        }
-        average = average / numStakeholder;
-        setValue(average);
-    };
     
-    console.log(stakeholderTitles);
+    const queryClient = useQueryClient();
+    const updateUtilitarianism = useMutation(utilitarianismService.updateUtilitarianismShort, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("dashboard");
+        }
+    })
+    
+    const attemptUpload = async () => {
+        if(options.length === 0 || stakeholderTitles.length === 0){
+            console.log("There aren't enough options or Stakeholders.");
+            return;
+        }
+        const shortData = [{}];
+        console.log(shortAmount);
+        console.log(shortTF);
+        for(let i = 0; i < options.length; i++){
+            for(let j = 0; j < stakeholderTitles.length; i++){
+                shortData.push({
+                    short_amount: shortAmount[i][j],
+                    short_explanation: shortExp[i][j],
+                    short_pleasure: shortTF[i][j],
+                    options_id: i + 1,
+                    stakeholder_num: j +1,
+                })
+            }
+        }
+
+        await updateUtilitarianism.mutateAsync({
+            id: currentDashboard,
+            ...shortData,
+        });
+        setRedirect('/utilitarianism-summary');
+    };
+
+    
 if(stakeholderTitles !== undefined || options !== undefined){
     return(
         <div className="site-dashboard">
@@ -130,14 +160,15 @@ if(stakeholderTitles !== undefined || options !== undefined){
                     <button className="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     <Link to="/utilitarianism-stakeholders">Go Back</Link>
                     </button>
-                    <button className="bg-primary hover:brightness-125 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    <Link to="/utilitarianism-summary">Next</Link>
-                    </button>
+                    <Button
+                        text={"Submit"}
+                        formSubmit={false}
+                        onClick={() => attemptUpload()}
+                    ></Button>
                 </div>
             </div>
         </div>
-    );}
-    else{
+    );}else{
         return (<div>
             <p className="dashboard-title">
                 There was an issue with the API please go back and try again.
