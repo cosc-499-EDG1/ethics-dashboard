@@ -1,6 +1,4 @@
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import moment from 'moment';
 import { QueryTypes } from 'sequelize';
 import { initApp } from './app';
 import { db } from './database';

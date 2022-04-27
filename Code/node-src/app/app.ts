@@ -18,7 +18,9 @@ export const app = express();
 export const initApp = async (): Promise<Server> => {
     //TODO: setup cors on deployment server
     const corsOptions = {
-        origin: ['http://localhost:3000'],
+        origin:'*', 
+        credentials: true,  
+        optionSuccessStatus: 200,
     };
 
     app.use(cors(corsOptions));
@@ -31,8 +33,8 @@ export const initApp = async (): Promise<Server> => {
 
     //Init DB - uncomment the await db.sync() once you want to keep data in the DB.
     // remember to comment the "force: true" one afterwards
-    //await db.sync();
-    await db.sync({ force: true });
+    await db.sync();
+    // await db.sync({ force: true });
 
     /* Routes */
     app.use('/api/account', accounts);

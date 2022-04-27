@@ -3,7 +3,7 @@ import MainStore from "../stores/index.store";
 
 //TODO: replace with environment variable
 export default axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: process.env.baseURL ?? "http://localhost:8080/api",
   headers: {
     "Content-type": "application/json",
   },
