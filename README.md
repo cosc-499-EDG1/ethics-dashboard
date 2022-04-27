@@ -10,6 +10,19 @@ We have two separate runtimes in this project, node-src is for the backend frame
 2. NPM package manager
 3. MySQL DB (MariaDB via Docker preferred)
 
+## Environment Variables
+
+These are required to be placed in a .env file in the root of the application (or PM2 config)
+1. node-src: 
+```
+PORT=8080
+JSON_WEB_TOKEN_SECRET=AppleBananaOrangeMango
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=password
+DB_NAME=cosc499
+```
+3. react-src: ```REACT_APP_BASE_URL```
 
 ### Creating Database
 
