@@ -1,6 +1,6 @@
 import { Table, Column, Model, PrimaryKey, AutoIncrement, HasOne, ForeignKey, DefaultScope, BelongsTo, DataType, HasMany } from 'sequelize-typescript';
 import Account from './account/account.model';
-import Deontology_Categorical from './deontology_categorical.model';
+import MoralLaw from './morallaw.model';
 import CaseOption from './option.model';
 import Stakeholder from './stakeholder.model';
 import Utilitarianism from './utilitarianism.model';
@@ -54,7 +54,4 @@ export default class Dashboard extends Model {
 
     @HasOne(() => Util_Opt_Analysis)
     util_opt_analysis: Util_Opt_Analysis;
-
-    @HasOne(() => Deontology_Categorical)
-    deontology_categorical: Deontology_Categorical;
 }

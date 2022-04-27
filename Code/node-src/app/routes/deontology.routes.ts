@@ -3,4 +3,5 @@ import { Router } from 'express';
 
 export const deontologies = Router();
 
-deontologies.post('/adddeontology', DeontologyController.create);
+deontologies.post('/update', DeontologyController.updateOption);
+deontologies.post('/updateLaw', DeontologyController.updateMoralLaw);

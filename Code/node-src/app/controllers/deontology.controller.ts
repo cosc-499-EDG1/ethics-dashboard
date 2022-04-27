@@ -1,46 +1,53 @@
 import dotenv from 'dotenv';
 dotenv.config({ path: 'jwt.env' });
 import { Request, Response, NextFunction } from 'express';
-import Deontology_Categorical from '../models/deontology_categorical.model';
+import Dashboard from '../models/dashboard.model';
+import MoralLaw from '../models/morallaw.model';
 
 class DeontologyController {
+    updateOption = async (req: Request, res: Response, next: NextFunction) => {
+        const id = req.body.id;
+        const account = req.account;
 
-    create = async (req: Request, res: Response, next: NextFunction) => {
-        const {motivations, description, moral_law_1, moral_law_2, moral_law_3, moral_law_4, moral_law_5, dashboard_id} = req.body;
-        if (!motivations || !description || !moral_law_1 || !dashboard_id) {
-            res.status(400).send({
-                message: 'Invalid form data.',
-            });
-            return;  
+        const dashboard = await Dashboard.findByPk(id);
+        if (!dashboard) {
+            return res.sendStatus(404);
         }
 
-        const deontology = new Deontology_Categorical({motivations: motivations, deontology_categorical_desc: description, moral_law_1: moral_law_1, moral_law_2: moral_law_2, moral_law_3: moral_law_3, moral_law_4: moral_law_4, moral_law_5: moral_law_5,  dashboard_id: dashboard_id});
-        deontology.save().then(async () => {
-            res.status(200).json({ message: 'Deontology created successfully.', success: true});
-        })
-        .catch(err => {
-            res.status(400).json({
-                message: 'Error creating deontology' , 
+        // If requesting account is a student, then check that they own the dashboard.
+        if (account?.isStudent() && dashboard.ownerId !== account.id) {
+            return res.sendStatus(403);
+        }
+
+        const { option_num } = req.body;
+        if (!option_num) {
+            return res.status(400).send({
+                message: 'Invalid form data.',
             });
-        });
-    };
-
-    findAll = async (req: Request, res: Response, next: NextFunction) => {
-        //TODO: IMPLEMENT
+        }
         return res.sendStatus(200);
     };
 
-    findOne = async (req: Request, res: Response, next: NextFunction) => {
+    updateMoralLaw = async (req: Request, res: Response, next: NextFunction) => {
+        const id = req.body.id;
+        const account = req.account;
 
-    };
+        const dashboard = await Dashboard.findByPk(id);
+        if (!dashboard) {
+            return res.sendStatus(404);
+        }
 
-    update = async (req: Request, res: Response, next: NextFunction) => {
-        //TODO: IMPLEMENT
-        return res.sendStatus(200);
-    };
+        // If requesting account is a student, then check that they own the dashboard.
+        if (account?.isStudent() && dashboard.ownerId !== account.id) {
+            return res.sendStatus(403);
+        }
 
-    delete = (req: Request, res: Response, next: NextFunction) => {
-        //TODO: IMPLEMENT
+        const { option_num } = req.body;
+        if (!option_num) {
+            return res.status(400).send({
+                message: 'Invalid form data.',
+            });
+        }
         return res.sendStatus(200);
     };
 }

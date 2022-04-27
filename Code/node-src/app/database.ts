@@ -14,13 +14,13 @@ import CaseOption from './models/option.model';
 import Stakeholder from './models/stakeholder.model';
 import Utilitarianism from './models/utilitarianism.model';
 import Util_Opt_Analysis from './models/util_opt_analysis.model';
-import Deontology_Categorical from './models/deontology_categorical.model';
+import MoralLaw from './models/morallaw.model';
 import Care_Ethics_Options from './models/care_ethics_options.model';
 
 /**
  * Models must also be added to this.
  */
-const MODELS = [Account, ClassGroup, Student, Instructor, TeachingAssistant, Dashboard, CaseOption, Stakeholder, Utilitarianism, Util_Opt_Analysis, Deontology_Categorical, Care_Ethics_Options];
+const MODELS = [Account, ClassGroup, Student, Instructor, TeachingAssistant, Dashboard, CaseOption, Stakeholder, Utilitarianism, Util_Opt_Analysis, MoralLaw, Care_Ethics_Options];
 
 const sequelize = new Sequelize(process.env.DB_NAME ?? 'cosc499', process.env.DB_USER ?? 'root', process.env.DB_PASSWORD ?? 'password', {
     host: process.env.DB_HOST ?? 'localhost',

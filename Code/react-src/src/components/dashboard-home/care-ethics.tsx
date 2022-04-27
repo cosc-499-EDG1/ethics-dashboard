@@ -28,7 +28,7 @@ const CareEthicsHome: FunctionComponent<CareEthicsHomeProps> = () => {
         const dashboard = data.data as Dashboard;
         setOptions(dashboard.options);
         setStakeholders(dashboard.stakeholders);
-        setCareEthics(dashboard.options[2 ?? 1].care_ethics_options);
+        setCareEthics(dashboard.options[2 ?? 1]?.care_ethics_options ?? []);
       },
     }
   );
